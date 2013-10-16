@@ -1,0 +1,1 @@
+.menu{padding:0 0 .5em;margin-bottom:2em;list-style:none;border-bottom:.1em solid black}.menu:before{content:"["}.menu:after{content:"]"}.menu>li{display:inline}.menu>li:before{padding-right:.3em;content:"|"}.menu>li:nth-child(1):before{padding:0;content:""}
