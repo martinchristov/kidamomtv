@@ -3,26 +3,27 @@
 <head>
   <meta charset="utf-8">
   <title>KidamomTV</title>
-  <link rel="stylesheet" href="css/app.css"/>
+  <link rel="stylesheet" href="app.css"/>
 </head>
 <body ng-controller="Main">
-Keycode:{{keyCode}}
-  <ul class="menu">
-    <li><a href="#/view1">view1</a></li>
-    <li><a href="#/view2">view2</a></li>
+  Keycode2:{{keyCode}}
+  <shortcut></shortcut>
+  <ul id="menu" style="top:{{-menuItem*60}}px" mainmenu>
+    <li ng-class="{current:(menuItem==0)}"><a icon="src"></a></li>
+    <li ng-class="{current:(menuItem==1)}"><a icon="v-5"></a></li>
+    <li ng-class="{current:(menuItem==2)}"><a icon="people"></a></li>
+    <li ng-class="{current:(menuItem==3)}"><a icon="sticker"></a></li>
+    <li ng-class="{current:(menuItem==4)}"><a icon="eye"></a></li>
+    <li ng-class="{current:(menuItem==5)}"><a icon="heart"></a></li>
+    <li ng-class="{current:(menuItem==6)}"><a icon="folder"></a></li>
+    <li ng-class="{current:(menuItem==7)}"><a icon="logout"></a></li>
   </ul>
-
-  <div ng-view></div>
  
-  <div>Angular seed app: v<span app-version></span></div>
-
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-  -->
   <script type="text/javascript" src='lib/jquery/min.js'></script>
   <script src="lib/angular/angular.js"></script>
   <script src="lib/angular/angular-route.js"></script>
   <script src="js/app.min.js"></script>
+
   <script src="http://localhost:35729/livereload.js"></script>
 </body>
 </html>

@@ -6,8 +6,7 @@ var kidamom = angular.module('kidamom', [
   'ngRoute',
   'kidamom.filters',
   'kidamom.services',
-  // 'kidamom.directives',
+  'kidamom.directives',
   'kidamom.controllers'
 ])
 
-kidamom.directive('asd',function(){console.log('wtf')})

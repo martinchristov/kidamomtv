@@ -1,30 +1,40 @@
 /* app css stylesheet */
 
-.menu {
+.scale(@what){
+  -moz-transform:scale(@what);
+  -o-transform:scale(@what);
+  -webkit-transform:scale(@what);
+  transform:scale(@what);
+}
+.transition(@what){
+  -moz-transition:@what;
+  -o-transition:@what;
+  -webkit-transition:@what;
+  transition:@what;
+}
+
+#menu{
+  position: absolute;
+  z-index: 99;
+  left:100px;
   list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
-}
+  padding:0; margin:70px 0 0;
+  top:20px;
+  li{
+    a{
+      @size:50px; 
+      width:@size; height:@size; background:rgba(0,0,0,0.5); display: block;
+      margin:5px 0;
+    }
 
-.menu:before {
-  content: "[";
-}
+    .transition(all .3s);
 
-.menu:after {
-  content: "]";
-}
+    &.current{
+      .scale(1.6);
+      margin:20px 0;
+    }
 
-.menu > li {
-  display: inline;
-}
+  }
 
-.menu > li:before {
-  content: "|";
-  padding-right: 0.3em;
-}
-
-.menu > li:nth-child(1):before {
-  content: "";
-  padding: 0;
+  .transition(top .3s ease-out);
 }
