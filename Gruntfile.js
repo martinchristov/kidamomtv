@@ -48,10 +48,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-recess');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
-  //grunt.loadNpmTasks('grunt-contrib-less');
 
   // Default task(s).
   grunt.registerTask('dist-css', ['recess']);
-  //grunt.registerTask('default', ['less']);
+  grunt.registerTask('default', ['recess', 'concat']);
 
 };
