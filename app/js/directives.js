@@ -33,10 +33,19 @@ angular.module('kidamom.directives', []).
 					if(scope.menuItem>0)scope.menuItem--;
 		  		}
 		  		else if(e.which==40){
-		  			//down
+		  			//down 
 		  			if(scope.menuItem<menuItems)scope.menuItem++;
 		  		}
 			}
+		}
+	}
+})
+.directive('icon',function(){
+	return {
+		restrict:"A",
+		link:function link (scope,el,attrs) {
+			console.log(attrs);
+			attrs.icon
 		}
 	}
 })

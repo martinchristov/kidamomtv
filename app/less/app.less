@@ -21,10 +21,15 @@
   padding:0; margin:70px 0 0;
   top:20px;
   li{
+    float:left;
+    clear:left;
     a{
       @size:50px; 
-      width:@size; height:@size; background:rgba(0,0,0,0.5); display: block;
-      margin:5px 0;
+      width:@size; height:@size; display: block;
+      margin:0 0;
+      i{
+        width:@size;height:@size;display:block;
+      }
     }
 
     .transition(all .3s);
@@ -37,4 +42,20 @@
   }
 
   .transition(top .3s ease-out);
+}
+
+#titles{
+  position: absolute;
+  top:95px; left:200px;
+  h1{
+    position: absolute;
+    width:500px;
+    opacity: 0;
+    .scale(0.5);
+    .transition(all .3s);
+    &.current{
+      opacity:1;
+      .scale(1);
+    }
+  }
 }
