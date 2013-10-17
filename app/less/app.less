@@ -12,13 +12,15 @@
   -webkit-transition:@what;
   transition:@what;
 }
-
+body{
+  font-family: Roboto;
+}
 #menu{
   position: absolute;
   z-index: 99;
   left:100px;
   list-style: none;
-  padding:0; margin:70px 0 0;
+  padding:0; margin:55px 0 0;
   top:20px;
   li{
     float:left;
@@ -35,7 +37,7 @@
     .transition(all .3s);
 
     &.current{
-      .scale(1.6);
+      .scale(1.8);
       margin:20px 0;
     }
 
@@ -46,11 +48,13 @@
 
 #titles{
   position: absolute;
-  top:95px; left:200px;
+  top:80px; left:200px;
   h1{
-    position: absolute;
+    position: absolute; font-weight: 300; font-size: 50px; color:#737070; line-height: 30px;
     width:500px;
+    // border-bottom: 5px solid #ff2e43; padding-bottom: 15px;
     opacity: 0;
+    -webkit-transform-origin:0% 50%;
     .scale(0.5);
     .transition(all .3s);
     &.current{
@@ -58,4 +62,7 @@
       .scale(1);
     }
   }
+}
+#underline{
+  // margin-top:125px; margin-left:190px; height:5px; background: #ff2e43;
 }
