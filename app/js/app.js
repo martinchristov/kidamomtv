@@ -10,3 +10,10 @@ var kidamom = angular.module('kidamom', [
   'kidamom.controllers'
 ])
 
+.config(["$routeProvider",function($routeProvider){
+	$routeProvider
+		.when('/',{controller:"Movies", templateUrl:"partials/movies.html"})
+		.when('/#playlists', {controller:"Playlists", templateUrl:"partials/playlists.html"})
+
+}])
+

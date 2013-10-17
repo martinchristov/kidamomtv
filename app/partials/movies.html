@@ -1,0 +1,13 @@
+<shortcut></shortcut>
+<div class="carousel">
+	<div class="holder" style="width:{{movies.length*180+160}}px">
+		<div class="item" ng-repeat="movie in movies" ng-class="{current:(movie==currentMovie)}">
+			<img ng-src="{{movie.photo}}">
+		</div>
+	</div>
+</div>
+
+<div class="info">
+	<h1 ng-bind="currentMovie.title"></h1>
+	<p ng-bind="currentMovie.desc"></p>
+</div>

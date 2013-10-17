@@ -44,8 +44,18 @@ angular.module('kidamom.directives', []).
 	return {
 		restrict:"A",
 		link:function link (scope,el,attrs) {
-			console.log(attrs);
-			attrs.icon
+			// attrs.icon
+			scope.$watch('menuItem',function(newVal,oldVal){
+				if(attrs.index==oldVal){
+					if(el.data('svg'))
+					el.data('svg').animate({fill:"#5b5b5b"},300)
+				}
+				else if(attrs.index==newVal){
+					if(el.data('svg'))
+					el.data('svg').animate({fill:"#ff2e43"},300)
+
+				}
+			})
 		}
 	}
 })
