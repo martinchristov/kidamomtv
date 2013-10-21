@@ -13,13 +13,13 @@ angular.module('kidamom.controllers', []).
   	}
   }]).
 
-  controller('Search', ['$scope','depth','$http', function ($scope, depth, $http) {
+  controller('Search', ['$scope','depth','$http', '$rootScope', function ($scope, depth, $http, $rootScope) {
   	
   	$scope.items=[];
   	var tmt = 0;
   	$scope.$watch('s',function () {
   		clearInterval(tmt);
-  		// if($scope.s.length>0)
+  		if($scope.s.length>0)
   		tmt = setTimeout(function(){
   			$http.get(appURI.search+"?s="+$scope.s).success(function(data) {
 				$scope.items = data;
@@ -28,21 +28,20 @@ angular.module('kidamom.controllers', []).
 		  	});
   		},200);
   	})
-
-  	$scope.keyPressed = function(e){
-  		if(e.which==13){
-  			e.preventDefault();
-  			// window.location.href="";
-  			depth.more();
-  			if(depth.get()==1){
-  				document.getElementById('searchInput').focus();
-  			}
-  		}
-  		else if(e.which==8){
-  			e.preventDefault();
-  			depth.less();
-  		}
-  	}
+    $rootScope.$on('keyPressed',function(_e,e){
+      if(e.which==13){
+        e.preventDefault();
+        // window.location.href="";
+        depth.more();
+        if(depth.get()==1){
+          document.getElementById('searchInput').focus();
+        }
+      }
+      else if(e.which==8){
+        e.preventDefault();
+        depth.less();
+      }
+    })
   }]).
 
   controller('Movies', ['$scope','$routeParams', function($scope, $routeParams){

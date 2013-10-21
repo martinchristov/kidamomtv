@@ -9,20 +9,22 @@ angular.module('kidamom.directives', []).
       elm.text(version);
     };
   }])
-.directive('shortcut', function() {
+.directive('shortcut', ['$rootScope',function(rootScope) {
   return {
     restrict: 'E',
     replace: true,
     scope: true,
     link:    function postLink(scope, iElement, iAttrs){
       jQuery(document).on('keydown', function(e){
-         scope.$apply(scope.keyPressed(e));
+      	rootScope.$emit('keyPressed',e);
+      	scope.$apply();
+         // scope.$apply(scope.keyPressed(e));
          // scope.keyCode = e.which;
        });
     }
   };
-})
-.directive('mainmenu',['depth',function(depth){
+}])
+.directive('mainmenu',['depth','$rootScope',function(depth,rootScope){
 	return {
 		restrict:"E",
 		replace:true,
@@ -87,7 +89,7 @@ angular.module('kidamom.directives', []).
 				]
 			}
 			scope.menuItem=1;
-			scope.keyPressed = function(e){
+			rootScope.$on('keyPressed',function(_e,e){
 				if(depth.get()==0){
 					if(e.which==38){
 						//up
@@ -97,7 +99,6 @@ angular.module('kidamom.directives', []).
 							scope.tmt = setTimeout(function(){
 								window.location.href=scope.menu[scope.menuItem].href;
 							},300);
-							
 						}
 			  		}
 			  		else if(e.which==40){
@@ -111,7 +112,7 @@ angular.module('kidamom.directives', []).
 						}
 			  		}
 			  	}
-			}
+			})
 		}
 	}
 }])
@@ -135,7 +136,7 @@ angular.module('kidamom.directives', []).
 	}
 }).
 
-directive('carousel', [function () {
+directive('carousel', ['$rootScope',function (rootScope) {
 	return {
 		restrict: 'E',
 		template:
@@ -149,9 +150,8 @@ directive('carousel', [function () {
 		link: function (scope, iElement, iAttrs) {
 			scope.currentItemIndex=0;
 			scope.currentItem = scope.items[0];
-
-			scope.keyPressed=function(e){
-		  		if(e.which==37){
+			rootScope.$on('keyPressed', function(_e,e){
+				if(e.which==37){
 		  			scope.currentItemIndex--;
 		  			if(scope.currentItemIndex<0)scope.currentItemIndex=0;
 		  		}
@@ -160,7 +160,7 @@ directive('carousel', [function () {
 		  			if(scope.currentItemIndex>=scope.items.length)scope.currentItemIndex=scope.items.length-1;
 		  		}
 		  		scope.currentItem = scope.items[scope.currentItemIndex];
-		  	}
+			})
 		}
 	};
 }])
