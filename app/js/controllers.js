@@ -13,8 +13,22 @@ angular.module('kidamom.controllers', []).
   	}
   }]).
 
-  controller('Search', ['$scope','depth', function ($scope, depth) {
+  controller('Search', ['$scope','depth','$http', function ($scope, depth, $http) {
   	
+  	$scope.items=[];
+  	var tmt = 0;
+  	$scope.$watch('s',function () {
+  		clearInterval(tmt);
+  		// if($scope.s.length>0)
+  		tmt = setTimeout(function(){
+  			$http.get(appURI.search+"?s="+$scope.s).success(function(data) {
+				$scope.items = data;
+				$scope.currentItemIndex=0;
+				$scope.currentItem = data[0];
+		  	});
+  		},200);
+  	})
+
   	$scope.keyPressed = function(e){
   		if(e.which==13){
   			e.preventDefault();
@@ -32,7 +46,7 @@ angular.module('kidamom.controllers', []).
   }]).
 
   controller('Movies', ['$scope','$routeParams', function($scope, $routeParams){
-  	$scope.movies = [
+  	$scope.items = [
   		{
   			photo:"/sampledata/1.jpg",
   			title:"The nut job",
@@ -62,23 +76,6 @@ angular.module('kidamom.controllers', []).
   			age:6
   		}
   	]
-  	$scope.currentMovieIndex = 0;
-  	$scope.currentMovie = $scope.movies[0];
-  	$scope.playlist = $routeParams.playlist;
-
-
-
-  	$scope.keyPressed=function(e){
-  		if(e.which==37){
-  			$scope.currentMovieIndex--;
-  			if($scope.currentMovieIndex<0)$scope.currentMovieIndex=0;
-  		}
-  		else if(e.which==39){
-  			$scope.currentMovieIndex++;
-  			if($scope.currentMovieIndex>=$scope.movies.length)$scope.currentMovieIndex=$scope.movies.length-1;
-  		}
-  		$scope.currentMovie = $scope.movies[$scope.currentMovieIndex];
-  	}
 
   }]).
 

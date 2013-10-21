@@ -133,4 +133,34 @@ angular.module('kidamom.directives', []).
 			})
 		}
 	}
-})
+}).
+
+directive('carousel', [function () {
+	return {
+		restrict: 'E',
+		template:
+			'<div class="carousel">'+
+				'<div class="holder" style="width:{{items.length*180+160+125}}px; margin-left:{{-currentItemIndex*180-135}}px">'+
+					'<div class="item" ng-repeat="item in items" ng-class="{current:(item==currentItem)}">'+
+						'<img ng-src="{{item.photo}}">'+
+					'</div>'+
+				'</div>'+
+			'</div>',
+		link: function (scope, iElement, iAttrs) {
+			scope.currentItemIndex=0;
+			scope.currentItem = scope.items[0];
+
+			scope.keyPressed=function(e){
+		  		if(e.which==37){
+		  			scope.currentItemIndex--;
+		  			if(scope.currentItemIndex<0)scope.currentItemIndex=0;
+		  		}
+		  		else if(e.which==39){
+		  			scope.currentItemIndex++;
+		  			if(scope.currentItemIndex>=scope.items.length)scope.currentItemIndex=scope.items.length-1;
+		  		}
+		  		scope.currentItem = scope.items[scope.currentItemIndex];
+		  	}
+		}
+	};
+}])
