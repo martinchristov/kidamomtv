@@ -10,5 +10,6 @@
 <div class="info">
 	<h1 ng-bind="currentMovie.title"></h1>
 	<p ng-bind="currentMovie.desc"></p>
-	{{playlist}}
+	<span ng-bind="currentMovie.age + '+'" class="age"></span> <span ng-bind="currentMovie.duration" class="duration"><i icon></i></span><br />
+	<a class="button">Play Movie</a>
 </div>
