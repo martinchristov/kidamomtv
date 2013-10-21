@@ -9,31 +9,40 @@ angular.module('kidamom.controllers', []).
   	$scope.loggedIn=false;
   }]).
 
-  controller('Movies', ['$scope', function($scope){
+  controller('Movies', ['$scope','$routeParams', function($scope, $routeParams){
   	$scope.movies = [
   		{
   			photo:"/sampledata/1.jpg",
   			title:"The nut job",
-  			desc:"lorem"
+  			desc:"lorem",
+  			duration:95,
+  			age:6
   		},
   		{
   			photo:"/sampledata/2.jpg",
   			title:"Epic",
-  			desc:"lorem"
+  			desc:"lorem",
+  			duration:95,
+  			age:6
   		},
   		{
   			photo:"/sampledata/3.jpg",
   			title:"The croods",
-  			desc:"lorem"
+  			desc:"lorem",
+  			duration:95,
+  			age:6
   		},
   		{
   			photo:"/sampledata/4.jpg",
   			title:"Cloudy with a chance of meatballs",
-  			desc:"lorem"
+  			desc:"lorem",
+  			duration:95,
+  			age:6
   		}
   	]
   	$scope.currentMovieIndex = 0;
   	$scope.currentMovie = $scope.movies[0];
+  	$scope.playlist = $routeParams.playlist;
 
 
 
@@ -52,6 +61,11 @@ angular.module('kidamom.controllers', []).
   }]).
 
   controller('Playlists', ['$scope', function($scope){
+  	
+
+  }]).
+
+  controller('Users', ['$scope', function($scope){
   	
 
   }])

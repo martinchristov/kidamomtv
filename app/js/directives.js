@@ -30,7 +30,7 @@ angular.module('kidamom.directives', []).
 			'<div>'+
 			'<ul id="menu" style="top:{{-menuItem*50}}px">'+
 				'<li ng-repeat="item in menu" ng-class="{current:menuItem==$index}">'+
-					'<a><i icon data-index="{{$index}}" class="{{item.icon}}"></i></a>'+
+					'<a><i icon data-index="{{$index}}" class="{{item.icon}}" data-attrs=\'{"transform":"{{item.tsf}}"}\'></i></a>'+
 				'</li>'+
 			'</ul>'+
 			'<div id="titles">'+
@@ -47,25 +47,25 @@ angular.module('kidamom.directives', []).
 						icon:"src", tsf:"s1", href:"#/search"
 					},{
 						title:"Recommended",
-						icon:"v-5", tsf:"s1", href:"#/recommended"
+						icon:"v-5", tsf:"s1", href:"#/movies/recommended"
 					},{
 						title:"Popular",
-						icon:"people", tsf:"s1.35", href:"#/popular"
+						icon:"people", tsf:"s1.35", href:"#/movies/popular"
 					},{
 						title:"New",
-						icon:"sticker", tsf:"s1.3", href:"#/new"
+						icon:"sticker", tsf:"s1.3", href:"#/movies/new"
 					},{
 						title:"Last watched",
-						icon:"eye", tsf:"s1.2", href:"#/lastwatch"
+						icon:"eye", tsf:"s1.2", href:"#/movies/lastwatch"
 					},{
 						title:"Favorites",
-						icon:"heart", tsf:"s1", href:"#/favorites"
+						icon:"heart", tsf:"s1", href:"#/movies/favorites"
 					},{
 						title:"Playlists",
 						icon:"folder", tsf:"s1", href:"#/playlists"
 					},{
 						title:"Users",
-						icon:"logout", tsf:"s1", href:"#/search"
+						icon:"logout", tsf:"s1", href:"#/users"
 					}
 				]
 			}
@@ -76,13 +76,13 @@ angular.module('kidamom.directives', []).
 						icon:"src", tsf:"s1", href:"#/search"
 					},{
 						title:"Popular",
-						icon:"people", tsf:"s1.35", href:"#/popular"
+						icon:"people", tsf:"s1.35", href:"#/movies/popular"
 					},{
 						title:"New",
-						icon:"sticker", tsf:"s1.3", href:"#/new"
+						icon:"sticker", tsf:"s1.3", href:"#/movies/new"
 					},{
 						title:"Users",
-						icon:"logout", tsf:"s1", href:"#/search"
+						icon:"logout", tsf:"s1", href:"#/users"
 					}
 				]
 			}
@@ -90,11 +90,24 @@ angular.module('kidamom.directives', []).
 			scope.keyPressed = function(e){
 				if(e.which==38){
 					//up
-					if(scope.menuItem>0)scope.menuItem--;
+					if(scope.menuItem>0){
+						scope.menuItem--;
+						clearInterval(scope.tmt);
+						scope.tmt = setTimeout(function(){
+							window.location.href=scope.menu[scope.menuItem].href;
+						},300);
+						
+					}
 		  		}
 		  		else if(e.which==40){
 		  			//down 
-		  			if(scope.menuItem<scope.menu.length-1)scope.menuItem++;
+		  			if(scope.menuItem<scope.menu.length-1){
+		  				scope.menuItem++;
+						clearInterval(scope.tmt);
+						scope.tmt = setTimeout(function(){
+							window.location.href=scope.menu[scope.menuItem].href;
+						},300);
+					}
 		  		}
 			}
 		}
