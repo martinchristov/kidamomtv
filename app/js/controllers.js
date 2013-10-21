@@ -6,7 +6,7 @@ angular.module('kidamom.controllers', []).
   
   controller('Main', ['$scope', function($scope){
   	$scope.scrollH = 50;
-  	
+  	$scope.loggedIn=false;
   }]).
 
   controller('Movies', ['$scope', function($scope){
