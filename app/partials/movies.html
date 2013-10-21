@@ -1,6 +1,6 @@
 <shortcut></shortcut>
 <div class="carousel">
-	<div class="holder" style="width:{{movies.length*180+160}}px">
+	<div class="holder" style="width:{{movies.length*180+160+60}}px; margin-left:{{-currentMovieIndex*180-60}}px">
 		<div class="item" ng-repeat="movie in movies" ng-class="{current:(movie==currentMovie)}">
 			<img ng-src="{{movie.photo}}">
 		</div>
