@@ -22,13 +22,13 @@ angular.module('kidamom.directives', []).
     }
   };
 })
-.directive('mainmenu',function(){
+.directive('mainmenu',['depth',function(depth){
 	return {
 		restrict:"E",
 		replace:true,
 		template: 
 			'<div>'+
-			'<ul id="menu" style="top:{{-menuItem*50}}px">'+
+			'<ul id="menu" ng-class="{inactive:isMenuInactive()}" style="top:{{-menuItem*50}}px">'+
 				'<li ng-repeat="item in menu" ng-class="{current:menuItem==$index}">'+
 					'<a><i icon data-index="{{$index}}" class="{{item.icon}}" data-attrs=\'{"transform":"{{item.tsf}}"}\'></i></a>'+
 				'</li>'+
@@ -88,31 +88,33 @@ angular.module('kidamom.directives', []).
 			}
 			scope.menuItem=1;
 			scope.keyPressed = function(e){
-				if(e.which==38){
-					//up
-					if(scope.menuItem>0){
-						scope.menuItem--;
-						clearInterval(scope.tmt);
-						scope.tmt = setTimeout(function(){
-							window.location.href=scope.menu[scope.menuItem].href;
-						},300);
-						
-					}
-		  		}
-		  		else if(e.which==40){
-		  			//down 
-		  			if(scope.menuItem<scope.menu.length-1){
-		  				scope.menuItem++;
-						clearInterval(scope.tmt);
-						scope.tmt = setTimeout(function(){
-							window.location.href=scope.menu[scope.menuItem].href;
-						},300);
-					}
-		  		}
+				if(depth.get()==0){
+					if(e.which==38){
+						//up
+						if(scope.menuItem>0){
+							scope.menuItem--;
+							clearInterval(scope.tmt);
+							scope.tmt = setTimeout(function(){
+								window.location.href=scope.menu[scope.menuItem].href;
+							},300);
+							
+						}
+			  		}
+			  		else if(e.which==40){
+			  			//down 
+			  			if(scope.menuItem<scope.menu.length-1){
+			  				scope.menuItem++;
+							clearInterval(scope.tmt);
+							scope.tmt = setTimeout(function(){
+								window.location.href=scope.menu[scope.menuItem].href;
+							},300);
+						}
+			  		}
+			  	}
 			}
 		}
 	}
-})
+}])
 .directive('icon',function(){
 	return {
 		restrict:"A",
