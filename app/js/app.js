@@ -25,5 +25,6 @@ var kidamom = angular.module('kidamom', [
 
 
 var appURI = {
-	search:"sampledata/search.json"
+	search:"sampledata/search.json",
+	root:"/"
 }

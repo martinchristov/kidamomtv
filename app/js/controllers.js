@@ -6,7 +6,7 @@ angular.module('kidamom.controllers', []).
   
   controller('Main', ['$scope', 'depth', '$rootScope', function($scope, depth, rootScope){
   	
-    $scope.loggedIn=true;
+    $scope.loggedIn=true; 
 
   	$scope.isMenuInactive = function(){
   		if(depth.get()==0)return false;
@@ -67,42 +67,42 @@ angular.module('kidamom.controllers', []).
   controller('Movies', ['$scope','$routeParams', function($scope, $routeParams){
   	$scope.items = [
   		{
-  			photo:"/sampledata/1.jpg",
+  			photo:"sampledata/1.jpg",
   			title:"The nut job",
   			desc:"Surly, a curmudgeon, independent squirrel is banished from his park and forced to survive in the city. Lucky for him, he stumbles on the one thing that may be able to save his life, and the rest of park community, as they gear up for winter - Maury's Nut Store.",
   			duration:95,
   			age:6
   		},
   		{
-  			photo:"/sampledata/2.jpg",
+  			photo:"sampledata/2.jpg",
   			title:"Epic",
   			desc:"lorem ipsum some more text here",
   			duration:95,
   			age:6
   		},
   		{
-  			photo:"/sampledata/3.jpg",
+  			photo:"sampledata/3.jpg",
   			title:"The croods",
   			desc:"lorem ipsum some more text here",
   			duration:95,
   			age:6
   		},
   		{
-  			photo:"/sampledata/4.jpg",
+  			photo:"sampledata/4.jpg",
   			title:"Cloudy with a chance of meatballs",
   			desc:"lorem ipsum some more text here",
   			duration:95,
   			age:6
   		},
       {
-        photo:"/sampledata/3.jpg",
+        photo:"sampledata/3.jpg",
         title:"The croods",
         desc:"lorem ipsum some more text here",
         duration:95,
         age:6
       },
       {
-        photo:"/sampledata/4.jpg",
+        photo:"sampledata/4.jpg",
         title:"Cloudy with a chance of meatballs",
         desc:"lorem ipsum some more text here",
         duration:95,
@@ -115,31 +115,31 @@ angular.module('kidamom.controllers', []).
   controller('Playlists', ['$scope', function($scope){
   	$scope.items = [
       {
-        photo:"/sampledata/4.jpg",
+        photo:"sampledata/4.jpg",
         title:"Playlist 1",
         movies:[
-          "/sampledata/3.jpg", "/sampledata/2.jpg", "/sampledata/4.jpg"
+          "sampledata/3.jpg", "sampledata/2.jpg", "sampledata/4.jpg"
         ]
       },
       {
-        photo:"/sampledata/4.jpg",
+        photo:"sampledata/4.jpg",
         title:"Playlist 2",
         movies:[
-          "/sampledata/3.jpg", "/sampledata/2.jpg", "/sampledata/4.jpg"
+          "sampledata/3.jpg", "sampledata/2.jpg", "sampledata/4.jpg"
         ]
       },
       {
-        photo:"/sampledata/2.jpg",
+        photo:"sampledata/2.jpg",
         title:"Playlist 3",
         movies:[
-          "/sampledata/3.jpg", "/sampledata/2.jpg", "/sampledata/4.jpg"
+          "sampledata/3.jpg", "sampledata/2.jpg", "sampledata/4.jpg"
         ]
       },
       {
-        photo:"/sampledata/3.jpg",
+        photo:"sampledata/3.jpg",
         title:"Playlist 4",
         movies:[
-          "/sampledata/3.jpg", "/sampledata/2.jpg", "/sampledata/4.jpg"
+          "sampledata/3.jpg", "sampledata/2.jpg", "sampledata/4.jpg"
         ]
       }
     ]
@@ -149,23 +149,23 @@ angular.module('kidamom.controllers', []).
   controller('Users', ['$scope', 'depth', function($scope, depth){
     $scope.items = [
       {
-        photo:"/sampledata/user1.jpg",
-        title:"",
+        photo:"sampledata/user1.jpg",
+        name:"",
         id:0
       },
       {
-        photo:"/sampledata/user2.jpg",
-        title:"",
+        photo:"sampledata/user2.jpg",
+        name:"",
         id:0
       },
       {
-        photo:"/sampledata/user3.jpg",
-        title:"",
+        photo:"sampledata/user3.jpg",
+        name:"",
         id:0
       },
       {
-        photo:"/sampledata/logout.jpg",
-        title:"",
+        photo:"sampledata/logout.jpg",
+        name:"",
         id:0
       }
     ]
@@ -181,7 +181,7 @@ angular.module('kidamom.controllers', []).
         window.location.reload();
       }
       else {
-        window.location.href="/index.html#/movies/recommended"; 
+        window.location.href=appURI.root+"index.html#/movies/recommended"; 
         window.location.reload();
       }
     })
