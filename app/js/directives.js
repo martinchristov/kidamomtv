@@ -140,7 +140,6 @@ directive('carousel', ['$rootScope',function (rootScope) {
 			  		scope.currentItem = scope.items[scope.currentItemIndex];
 				})
 			scope.$on("keyright",function(){
-				console.log(scope.$parent)
 					scope.currentItemIndex++;
 		  			if(scope.currentItemIndex>=scope.items.length)scope.currentItemIndex=scope.items.length-1;
 		  			scope.currentItem = scope.items[scope.currentItemIndex];

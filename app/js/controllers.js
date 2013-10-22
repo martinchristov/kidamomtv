@@ -113,7 +113,36 @@ angular.module('kidamom.controllers', []).
   }]).
 
   controller('Playlists', ['$scope', function($scope){
-  	
+  	$scope.items = [
+      {
+        photo:"/sampledata/4.jpg",
+        title:"Playlist 1",
+        movies:[
+          "/sampledata/3.jpg", "/sampledata/2.jpg", "/sampledata/4.jpg"
+        ]
+      },
+      {
+        photo:"/sampledata/4.jpg",
+        title:"Playlist 2",
+        movies:[
+          "/sampledata/3.jpg", "/sampledata/2.jpg", "/sampledata/4.jpg"
+        ]
+      },
+      {
+        photo:"/sampledata/2.jpg",
+        title:"Playlist 3",
+        movies:[
+          "/sampledata/3.jpg", "/sampledata/2.jpg", "/sampledata/4.jpg"
+        ]
+      },
+      {
+        photo:"/sampledata/3.jpg",
+        title:"Playlist 4",
+        movies:[
+          "/sampledata/3.jpg", "/sampledata/2.jpg", "/sampledata/4.jpg"
+        ]
+      }
+    ]
 
   }]).
 
