@@ -5,7 +5,8 @@
 angular.module('kidamom.controllers', []).
   
   controller('Main', ['$scope', 'depth', '$rootScope', function($scope, depth, rootScope){
-  	$scope.scrollH=50; $scope.loggedIn=false;$scope.state=0;
+  	
+    $scope.loggedIn=true;
 
   	$scope.isMenuInactive = function(){
   		if(depth.get()==0)return false;
@@ -142,11 +143,17 @@ angular.module('kidamom.controllers', []).
     $scope.loggedIn = $scope.$parent.loggedIn;
   	$scope.logIn = function(){
       $scope.$parent.loggedIn = $scope.loggedIn = true;
+      window.location.reload();
     }
 
     $scope.$on("enter",function(){
-      if($scope.currentItem===$scope.items[$scope.items.length-1]){
+      if($scope.$$childTail.currentItem===$scope.items[$scope.items.length-1]){
         $scope.$parent.loggedIn = $scope.loggedIn = false;
+        window.location.reload();
+      }
+      else {
+        window.location.href="/index.html#/movies/recommended"; 
+        window.location.reload();
       }
     })
 

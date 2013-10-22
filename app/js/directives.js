@@ -27,7 +27,6 @@ directive('appVersion', ['version', function(version) {
 			'</div>'+
 			'</div>',
 		link:function(scope,el,attrs){
-			
 			if(scope.loggedIn){
 				scope.menu=[
 					{
@@ -74,6 +73,7 @@ directive('appVersion', ['version', function(version) {
 					}
 				]
 			}
+			scope.scrollH=50;
 			scope.menuItem=1;
 			scope.$on('keyup',function(){
 				if(depth.get()==0)
@@ -140,6 +140,7 @@ directive('carousel', ['$rootScope',function (rootScope) {
 			  		scope.currentItem = scope.items[scope.currentItemIndex];
 				})
 			scope.$on("keyright",function(){
+				console.log(scope.$parent)
 					scope.currentItemIndex++;
 		  			if(scope.currentItemIndex>=scope.items.length)scope.currentItemIndex=scope.items.length-1;
 		  			scope.currentItem = scope.items[scope.currentItemIndex];
