@@ -6,9 +6,7 @@
   <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Condensed:400,700|Oswald:300,400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="app.css"/>
 </head>
-<body ng-controller="Main">
-  <shortcut></shortcut>
-
+<body ng-controller="Main" ng-keydown="keyDown($event)">
   <!-- NAVIGATION -->
   <div id="underline"></div>
   

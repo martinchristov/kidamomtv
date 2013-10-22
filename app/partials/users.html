@@ -1,3 +1,16 @@
 <div id="users">
-	<h2>Change user</h2>
+	<div ng-switch on="loggedIn">
+		<div ng-switch-when="true">
+			<carousel></carousel>
+		</div>
+		<div ng-switch-default>
+			<form ng-submit="logIn()">
+				<input type="text" placeholder="Username">
+				<div class="clearfix"></div>
+				<input type="password" placeholder="Password">
+				<div class="clearfix"></div>
+				<button name="submit" class="small">Login</button>
+			</form>
+		</div>
+	</div>
 </div>

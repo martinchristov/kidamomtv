@@ -4,26 +4,12 @@
 
 
 angular.module('kidamom.directives', []).
-  directive('appVersion', ['version', function(version) {
-    return function(scope, elm, attrs) {
-      elm.text(version);
-    };
-  }])
-.directive('shortcut', ['$rootScope',function(rootScope) {
-  return {
-    restrict: 'E',
-    replace: true,
-    scope: true,
-    link:    function postLink(scope, iElement, iAttrs){
-      jQuery(document).on('keydown', function(e){
-      	rootScope.$emit('keyPressed',e);
-      	scope.$apply();
-         // scope.$apply(scope.keyPressed(e));
-         // scope.keyCode = e.which;
-       });
-    }
-  };
+directive('appVersion', ['version', function(version) {
+	return function(scope, elm, attrs) {
+		elm.text(version);
+	};
 }])
+
 .directive('mainmenu',['depth','$rootScope',function(depth,rootScope){
 	return {
 		restrict:"E",
@@ -89,33 +75,31 @@ angular.module('kidamom.directives', []).
 				]
 			}
 			scope.menuItem=1;
-			rootScope.$on('keyPressed',function(_e,e){
-				if(depth.get()==0){
-					if(e.which==38){
-						//up
-						if(scope.menuItem>0){
-							scope.menuItem--;
-							clearInterval(scope.tmt);
-							scope.tmt = setTimeout(function(){
-								window.location.href=scope.menu[scope.menuItem].href;
-							},300);
-						}
-			  		}
-			  		else if(e.which==40){
-			  			//down 
-			  			if(scope.menuItem<scope.menu.length-1){
-			  				scope.menuItem++;
-							clearInterval(scope.tmt);
-							scope.tmt = setTimeout(function(){
-								window.location.href=scope.menu[scope.menuItem].href;
-							},300);
-						}
-			  		}
-			  	}
+			scope.$on('keyup',function(){
+				if(depth.get()==0)
+				if(scope.menuItem>0){
+					scope.menuItem--;
+					clearInterval(scope.tmt);
+					scope.tmt = setTimeout(function(){
+						window.location.href=scope.menu[scope.menuItem].href;
+					},300);
+				}
 			})
+			scope.$on('keydown',function(){
+				if(depth.get()==0)
+				if(scope.menuItem<scope.menu.length-1){
+	  				scope.menuItem++;
+					clearInterval(scope.tmt);
+					scope.tmt = setTimeout(function(){
+						window.location.href=scope.menu[scope.menuItem].href;
+					},300);
+				}
+			})
+
 		}
 	}
 }])
+
 .directive('icon',function(){
 	return {
 		restrict:"A",
@@ -150,17 +134,17 @@ directive('carousel', ['$rootScope',function (rootScope) {
 		link: function (scope, iElement, iAttrs) {
 			scope.currentItemIndex=0;
 			scope.currentItem = scope.items[0];
-			rootScope.$on('keyPressed', function(_e,e){
-				if(e.which==37){
-		  			scope.currentItemIndex--;
+			scope.$on("keyleft",function(){
+					scope.currentItemIndex--;
 		  			if(scope.currentItemIndex<0)scope.currentItemIndex=0;
-		  		}
-		  		else if(e.which==39){
-		  			scope.currentItemIndex++;
+			  		scope.currentItem = scope.items[scope.currentItemIndex];
+				})
+			scope.$on("keyright",function(){
+					scope.currentItemIndex++;
 		  			if(scope.currentItemIndex>=scope.items.length)scope.currentItemIndex=scope.items.length-1;
-		  		}
-		  		scope.currentItem = scope.items[scope.currentItemIndex];
-			})
+		  			scope.currentItem = scope.items[scope.currentItemIndex];
+				})
+
 		}
 	};
 }])

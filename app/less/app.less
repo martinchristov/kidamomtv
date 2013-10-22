@@ -169,17 +169,54 @@ body{
    }
 
   .button{
-    background: #8ccd00; 
-    border: 3px solid #669500; 
+    border-width: 3px;
+    margin-top: 11px;
+    font-size: 26px;
+    padding: 8px 60px;
     border-radius: 10px; 
+    float:left;
+  }
+}
+.button, button{
+    background: #8ccd00; 
+    border: 2px solid #669500; 
+    border-radius: 6px; 
     color: #fff;
     text-transform: uppercase;
-    width: 220px;
-    padding: 8px;
-    font-size: 26px;
+    // width: 220px;
+    padding: 6px 40px;
+    font-size: 18px;
     font-weight: 700;
     display: block;
     text-align: center;
-    margin: 40px 0 20px;
 }
+
+#users{
+  float:left;
+  margin-left: 200px;
+  margin-top: 50px;
+  input{
+    width: 300px;
+    padding: 6px 10px;
+    font-size: 20px;
+    background: #eee;
+    border: 2px solid #ccc;
+    outline: none;
+  }
+  button{
+    float:left;
+    margin-top:5px;
+    margin-left: 0px;
+  }
+
+  .carousel{
+    margin-top: -30px;
+    margin-left: 0px;
+    .item{
+      height:170px;
+      &.current{
+        height: 330px;
+      }
+    }
+  }
 }
