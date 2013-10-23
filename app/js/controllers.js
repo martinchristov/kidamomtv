@@ -2,9 +2,14 @@
 
 /* Controllers */
 
-angular.module('kidamom.controllers', []).
+angular.module('kidamom.controllers', [])
+  .config(function ($sceDelegateProvider) {
+    $sceDelegateProvider.resourceUrlWhitelist([
+      '**'
+      ]);
+  })
   
-  controller('Main', ['$scope', 'depth', '$rootScope', function($scope, depth, rootScope){
+  .controller('Main', ['$scope', 'depth', '$rootScope', function($scope, depth, rootScope){
   	
     $scope.loggedIn=true; 
 
@@ -34,9 +39,9 @@ angular.module('kidamom.controllers', []).
       if(which!="")
         rootScope.$broadcast(which);
     }
-  }]).
+  }])
 
-  controller('Search', ['$scope','depth','$http', '$rootScope', function ($scope, depth, $http, $rootScope) {
+  .controller('Search', ['$scope','depth','$http', '$rootScope', function ($scope, depth, $http, $rootScope) {
   	
   	$scope.items=[];
   	var tmt = 0;
@@ -62,57 +67,33 @@ angular.module('kidamom.controllers', []).
     $scope.$on("back",function(){
       depth.less();
     })
-  }]).
+  }])
 
-  controller('Movies', ['$scope','$routeParams', function($scope, $routeParams){
-  	$scope.items = [
-  		{
-  			photo:"sampledata/1.jpg",
-  			title:"The nut job",
-  			desc:"Surly, a curmudgeon, independent squirrel is banished from his park and forced to survive in the city. Lucky for him, he stumbles on the one thing that may be able to save his life, and the rest of park community, as they gear up for winter - Maury's Nut Store.",
-  			duration:95,
-  			age:6
-  		},
-  		{
-  			photo:"sampledata/2.jpg",
-  			title:"Epic",
-  			desc:"lorem ipsum some more text here",
-  			duration:95,
-  			age:6
-  		},
-  		{
-  			photo:"sampledata/3.jpg",
-  			title:"The croods",
-  			desc:"lorem ipsum some more text here",
-  			duration:95,
-  			age:6
-  		},
-  		{
-  			photo:"sampledata/4.jpg",
-  			title:"Cloudy with a chance of meatballs",
-  			desc:"lorem ipsum some more text here",
-  			duration:95,
-  			age:6
-  		},
-      {
-        photo:"sampledata/3.jpg",
-        title:"The croods",
-        desc:"lorem ipsum some more text here",
-        duration:95,
-        age:6
-      },
-      {
-        photo:"sampledata/4.jpg",
-        title:"Cloudy with a chance of meatballs",
-        desc:"lorem ipsum some more text here",
-        duration:95,
-        age:6
+  .controller('Movies', ['$scope','$routeParams', 'movies', function ($scope, $routeParams, movies){
+  	$scope.items = movies.getAll();
+  }])
+
+  .controller('Play', ['$scope', '$routeParams', 'movies', function ($scope, $routeParams, movies) {
+    $scope.movie = movies.getSelected();
+    // move to directive after
+    $scope.video = document.querySelector('video');
+    $scope.videoPlaying = true;
+    $scope.$on("enter", function () {
+      if ($scope.videoPlaying == true) {
+        $scope.videoPlaying = false;
+        $scope.video.pause();
       }
-  	]
-
-  }]).
-
-  controller('Playlists', ['$scope', function($scope){
+      else {
+        $scope.videoPlaying = true;
+        $scope.video.play();
+      }
+    })
+    $scope.$on("back", function () {
+        $scope.video.pause();
+        window.location.href = "#/movies";
+    })
+  }])
+  .controller('Playlists', ['$scope', function($scope){
   	$scope.items = [
       {
         photo:"sampledata/4.jpg",
@@ -144,9 +125,9 @@ angular.module('kidamom.controllers', []).
       }
     ]
 
-  }]).
+  }])
 
-  controller('Users', ['$scope', 'depth', function($scope, depth){
+  .controller('Users', ['$scope', 'depth', function($scope, depth){
     $scope.items = [
       {
         photo:"sampledata/user1.jpg",

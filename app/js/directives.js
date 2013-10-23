@@ -120,7 +120,7 @@ directive('appVersion', ['version', function(version) {
 	}
 }).
 
-directive('carousel', ['$rootScope',function (rootScope) {
+directive('carousel', ['$rootScope', 'movies', function ($rootScope, movies) {
 	return {
 		restrict: 'E',
 		template:
@@ -132,7 +132,7 @@ directive('carousel', ['$rootScope',function (rootScope) {
 				'</div>'+
 			'</div>',
 		link: function (scope, iElement, iAttrs) {
-			scope.currentItemIndex=0;
+			scope.currentItemIndex = 0;
 			scope.currentItem = scope.items[0];
 			scope.$on("keyleft",function(){
 					scope.currentItemIndex--;
@@ -144,6 +144,10 @@ directive('carousel', ['$rootScope',function (rootScope) {
 		  			if(scope.currentItemIndex>=scope.items.length)scope.currentItemIndex=scope.items.length-1;
 		  			scope.currentItem = scope.items[scope.currentItemIndex];
 				})
+			scope.$on("enter", function () {
+				movies.select(scope.currentItemIndex);
+				window.location.href = "#/play";
+			});
 
 		}
 	};
