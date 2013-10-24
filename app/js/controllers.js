@@ -78,23 +78,6 @@ angular.module('kidamom.controllers', [])
     $scope.Menu.disable();
     
     $scope.movie = Movies.getSelected();
-    // move to directive after
-    $scope.video = document.querySelector('video');
-    $scope.videoPlaying = true;
-    $scope.$on("enter", function () {
-      if ($scope.videoPlaying == true) {
-        $scope.videoPlaying = false;
-        $scope.video.pause();
-      }
-      else {
-        $scope.videoPlaying = true;
-        $scope.video.play();
-      }
-    })
-    $scope.$on("back", function () {
-        $scope.video.pause();
-        window.location.href = "#/movies";
-    })
   }])
   .controller('Playlists', ['$scope', function($scope){
   	$scope.items = [
