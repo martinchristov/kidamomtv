@@ -9,7 +9,6 @@ directive('appVersion', ['version', function(version) {
 		elm.text(version);
 	};
 }])
-
 .directive('mainmenu',['depth','$rootScope',function(depth,rootScope){
 	return {
 		restrict:"E",
@@ -120,7 +119,7 @@ directive('appVersion', ['version', function(version) {
 	}
 }).
 
-directive('carousel', ['$rootScope', 'movies', function ($rootScope, movies) {
+directive('carousel', ['$rootScope', 'Movies', function ($rootScope, Movies) {
 	return {
 		restrict: 'E',
 		template:
@@ -145,7 +144,7 @@ directive('carousel', ['$rootScope', 'movies', function ($rootScope, movies) {
 		  			scope.currentItem = scope.items[scope.currentItemIndex];
 				})
 			scope.$on("enter", function () {
-				movies.select(scope.currentItemIndex);
+				Movies.select(scope.currentItemIndex);
 				window.location.href = "#/play";
 			});
 

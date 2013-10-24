@@ -23,7 +23,7 @@ angular.module('kidamom.services', [])
   		}
   	}
   }])
-  .service('movies', [function () {
+  .service('Movies', [function () {
     var movies = [
         {
           photo:"sampledata/1.jpg",
@@ -79,5 +79,12 @@ angular.module('kidamom.services', [])
       select: function (index) {
         selectedMovie = movies[index];
       }
+    }
+  }])
+  .service('Menu', ['depth', function (depth) {
+    return {
+      visible: true,
+      disable: function () { depth.more(); },
+      enable: function () { while (depth.get() != 0) depth.less(); this.visible = true; }
     }
   }])

@@ -9,8 +9,8 @@ angular.module('kidamom.controllers', [])
       ]);
   })
   
-  .controller('Main', ['$scope', 'depth', '$rootScope', function($scope, depth, rootScope){
-  	
+  .controller('Main', ['$scope', 'depth', '$rootScope', 'Menu', function ($scope, depth, rootScope, Menu){
+    $scope.Menu = Menu;
     $scope.loggedIn=true; 
 
   	$scope.isMenuInactive = function(){
@@ -68,13 +68,16 @@ angular.module('kidamom.controllers', [])
       depth.less();
     })
   }])
-
-  .controller('Movies', ['$scope','$routeParams', 'movies', function ($scope, $routeParams, movies){
-  	$scope.items = movies.getAll();
+  .controller('Movies', ['$scope','$routeParams', 'Movies', 'Menu', function ($scope, $routeParams, Movies, Menu){
+    Menu.enable();
+  	$scope.items = Movies.getAll();
   }])
 
-  .controller('Play', ['$scope', '$routeParams', 'movies', function ($scope, $routeParams, movies) {
-    $scope.movie = movies.getSelected();
+  .controller('Play', ['$scope', '$routeParams', 'Movies', 'Menu', function ($scope, $routeParams, Movies, Menu) {
+    console.log($scope.Menu);
+    Menu.visible = false;
+    Menu.disable();
+    $scope.movie = Movies.getSelected();
     // move to directive after
     $scope.video = document.querySelector('video');
     $scope.videoPlaying = true;
