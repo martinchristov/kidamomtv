@@ -117,9 +117,8 @@ directive('appVersion', ['version', function(version) {
 			})
 		}
 	}
-}).
-
-directive('carousel', ['$rootScope', 'Movies', function ($rootScope, Movies) {
+})
+.directive('carousel', ['$rootScope', 'Movies', function ($rootScope, Movies) {
 	return {
 		restrict: 'E',
 		template:
@@ -148,6 +147,17 @@ directive('carousel', ['$rootScope', 'Movies', function ($rootScope, Movies) {
 				window.location.href = "#/play";
 			});
 
+		}
+	};
+}])
+.directive('videoplayer', [function () {
+	return {
+		restrict: 'E',
+		templateUrl: "partials/videoplayer.html",
+		link: function (scope, iElement, iAttrs) {
+			videojs('videoplayer', {}, function () {
+
+			});
 		}
 	};
 }])

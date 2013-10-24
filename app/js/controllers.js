@@ -68,15 +68,15 @@ angular.module('kidamom.controllers', [])
       depth.less();
     })
   }])
-  .controller('Movies', ['$scope','$routeParams', 'Movies', 'Menu', function ($scope, $routeParams, Movies, Menu){
-    Menu.enable();
+  .controller('Movies', ['$scope','$routeParams', 'Movies', function ($scope, $routeParams, Movies){
+    $scope.Menu.enable();
   	$scope.items = Movies.getAll();
   }])
 
-  .controller('Play', ['$scope', '$routeParams', 'Movies', 'Menu', function ($scope, $routeParams, Movies, Menu) {
-    console.log($scope.Menu);
-    Menu.visible = false;
-    Menu.disable();
+  .controller('Play', ['$scope', '$routeParams', 'Movies', function ($scope, $routeParams, Movies) {
+    $scope.Menu.visible = false;
+    $scope.Menu.disable();
+    
     $scope.movie = Movies.getSelected();
     // move to directive after
     $scope.video = document.querySelector('video');
