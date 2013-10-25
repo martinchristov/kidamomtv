@@ -1,6 +1,3 @@
-<video id="videoplayer" class="video-js vjs-default-skin" controls autoplay width="100%" height="1000px"
-	preload="auto"
-	ng-attr-src="{{movie.url}}"> 
+<video id="videoplayer" class="video-js vjs-default-skin" data-controls="false" autoplay preload="auto"> 
+	<source ng-src="{{movie.url}}" type="video/mp4" />
 </video>
-<a class="button" style="width:10%">Play/Resume</a>
-<a class="button" style="width:10%">Go Back</a>

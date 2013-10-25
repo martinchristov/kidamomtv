@@ -22,10 +22,11 @@ angular.module('kidamom.services', [])
   			return state;
   		}
   	}
-  }])
-  .service('Movies', [function () {
-    var movies = [
-        {
+  }]).
+  service('Playlist', [function () {
+    var movieItems = [
+      {
+          id:22,
           photo:"sampledata/1.jpg",
           title:"The nut job",
           desc:"Surly, a curmudgeon, independent squirrel is banished from his park and forced to survive in the city. Lucky for him, he stumbles on the one thing that may be able to save his life, and the rest of park community, as they gear up for winter - Maury's Nut Store.",
@@ -34,6 +35,7 @@ angular.module('kidamom.services', [])
           url: 'http://www.auby.no/files/video_tests/h264_1080p_hp_4.1_40mbps_birds.mkv'
         },
         {
+          id:23,
           photo:"sampledata/2.jpg",
           title:"Epic",
           desc:"lorem ipsum some more text here",
@@ -41,6 +43,7 @@ angular.module('kidamom.services', [])
           age:6,
         },
         {
+          id:24,
           photo:"sampledata/3.jpg",
           title:"The croods",
           desc:"lorem ipsum some more text here",
@@ -48,6 +51,7 @@ angular.module('kidamom.services', [])
           age:6
         },
         {
+          id:25,
           photo:"sampledata/4.jpg",
           title:"Cloudy with a chance of meatballs",
           desc:"lorem ipsum some more text here",
@@ -55,6 +59,7 @@ angular.module('kidamom.services', [])
           age:6
         },
         {
+          id:26,
           photo:"sampledata/3.jpg",
           title:"The croods",
           desc:"lorem ipsum some more text here",
@@ -62,6 +67,66 @@ angular.module('kidamom.services', [])
           age:6
         },
         {
+          id:27,
+          photo:"sampledata/4.jpg",
+          title:"Cloudy with a chance of meatballs",
+          desc:"lorem ipsum some more text here",
+          duration:95,
+          age:6
+        }
+    ]
+
+    return {
+        getMovie:function(id){
+            
+        }
+    }
+  }])
+  .service('Movies', [function () {
+    var movies = [
+        {
+          id:22,
+          photo:"sampledata/1.jpg",
+          title:"The nut job",
+          desc:"Surly, a curmudgeon, independent squirrel is banished from his park and forced to survive in the city. Lucky for him, he stumbles on the one thing that may be able to save his life, and the rest of park community, as they gear up for winter - Maury's Nut Store.",
+          duration:95,
+          age:6,
+          url: 'http://www.auby.no/files/video_tests/h264_1080p_hp_4.1_40mbps_birds.mkv'
+        },
+        {
+          id:22,
+          photo:"sampledata/2.jpg",
+          title:"Epic",
+          desc:"lorem ipsum some more text here",
+          duration:95,
+          age:6,
+        },
+        {
+          id:22,
+          photo:"sampledata/3.jpg",
+          title:"The croods",
+          desc:"lorem ipsum some more text here",
+          duration:95,
+          age:6
+        },
+        {
+          id:22,
+          photo:"sampledata/4.jpg",
+          title:"Cloudy with a chance of meatballs",
+          desc:"lorem ipsum some more text here",
+          duration:95,
+          age:6
+        },
+        {
+          id:22,
+          photo:"sampledata/3.jpg",
+          title:"The croods",
+          desc:"lorem ipsum some more text here",
+          duration:95,
+          age:6
+        },
+        {
+          id:22,
           photo:"sampledata/4.jpg",
           title:"Cloudy with a chance of meatballs",
           desc:"lorem ipsum some more text here",

@@ -143,8 +143,8 @@ directive('appVersion', ['version', function(version) {
 		  			scope.currentItem = scope.items[scope.currentItemIndex];
 				})
 			scope.$on("enter", function () {
-				Movies.select(scope.currentItemIndex);
-				window.location.href = "#/play";
+				// Movies.select(scope.currentItemIndex);
+				window.location.href = "#/play/"+scope.currentItem.id;
 			});
 
 		}
@@ -155,9 +155,7 @@ directive('appVersion', ['version', function(version) {
 		restrict: 'E',
 		templateUrl: "partials/videoplayer.html",
 		link: function (scope, iElement, iAttrs) {
-			videojs('videoplayer', {}, function () {
-
-			});
+			// videojs('videoplayer', {}, function () {});
 		}
 	};
 }])
