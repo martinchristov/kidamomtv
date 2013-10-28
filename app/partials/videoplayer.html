@@ -3,9 +3,11 @@
 		<source ng-src="{{movie.url}}" type="video/mp4" />
 	</video>
 	<div id="controls" ng-class="{show:showControls}">
-		<ul style="width:{{controls.length*50+50}}px">
-			<li ng-repeat="control in controls" ng-class="{current:currentControl==$index}">
-				<a><i icon data-index="{{$index}}" class="{{control.icon}}" data-attrs='{"transform":"{{control.tsf}}", "fill":"{{control.fill}}"}'></i></a>
+		<ul style="width:{{controls.length*50+30}}px">
+			<li ng-repeat="control in controls" 
+				ng-class="{current:menuItem==$index}" 
+				ng-hide="(control.icon=='play'&&playing)||(control.icon=='pause'&&!playing)" >
+				<a><i icon iconfill="#fff" data-index="{{$index}}" data-color-class="current:#de2121" class="{{control.icon}}" data-attrs='{"transform":"{{control.tsf}}", "fill":"{{control.fill}}"}' data-stroke="8 rgba(0,0,0,0.5)"></i></a>
 			</li>
 		</ul>
 	</div>

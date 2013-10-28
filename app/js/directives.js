@@ -84,6 +84,7 @@ directive('appVersion', ['version', function(version) {
 				}
 			})
 
+
 		}
 	}
 }])
@@ -93,10 +94,11 @@ directive('appVersion', ['version', function(version) {
 		restrict:"A",
 		link:function link (scope,el,attrs) {
 			// attrs.icon
+			
 			scope.$watch('menuItem',function(newVal,oldVal){
 				if(attrs.index==oldVal){
 					if(el.data('svg'))
-					el.data('svg').animate({fill:"#5b5b5b"},300)
+					el.data('svg').animate({fill:attrs.iconfill},300)
 				}
 				else if(attrs.index==newVal){
 					if(el.data('svg'))
@@ -145,7 +147,8 @@ directive('appVersion', ['version', function(version) {
 		replace:true,
 		templateUrl: "partials/videoplayer.html",
 		link: function (scope, iElement, iAttrs) {
-			// videojs('videoplayer', {}, function () {});
+			
+			//instantiate player
 			var player;
 			setTimeout(function(){
 				var vjs = videojs("videoplayer",{controls:false});
@@ -153,14 +156,76 @@ directive('appVersion', ['version', function(version) {
 				iconFactory.produce($("#controls"))
 			},300);
 			
+			//setup video controls
 			scope.showControls = true;
-			scope.currentControl = 3;
+			scope.menuItem = 4;
+			scope.playing = false;
+
+			scope.controls = [
+				{ action:"search", icon:"src", fill:"#fff", tsf:"" },
+				{ action:"prev", icon:"next", fill:"#fff", tsf:"s0.9r180" },
+				{ action:"backward", icon:"forward", fill:"#fff", tsf:"s1.4r180" },
+				{ action:"pause", icon:"pause", fill:"#fff", tsf:"" },
+				{ action:"play", icon:"play", fill:"#fff", tsf:"" },
+				{ action:"forward", icon:"forward", fill:"#fff", tsf:"s1.4" },
+				{ action:"next", icon:"next", fill:"#fff", tsf:"s0.9" },
+				{ action:"subs", icon:"subs", fill:"#fff", tsf:"" }
+			];
+
+
+			//bind key listeners
+
+			//navigate controls
+
+			scope.$on("keyleft",function(){
+				if(scope.menuItem>0)scope.menuItem--;
+				if(!scope.playing&&scope.menuItem==3)scope.menuItem--;
+				else if(scope.playing&&scope.menuItem==4)scope.menuItem--;
+			})
+			scope.$on("keyright",function(){
+				if(scope.menuItem<scope.controls.length-1)scope.menuItem++;
+				if(scope.playing&&scope.menuItem==4)scope.menuItem++;
+				else if(!scope.playing&&scope.menuItem==3)scope.menuItem++;
+			})
+
+			//control actions on enter
+
 			scope.$on("enter",function(){
 				if (scope.showControls==false) {
 					scope.showControls=true;
-				};
-				// player.play();
-				console.log(player);
+				}
+				else {
+					var action = scope.controls[scope.menuItem].action;
+					
+					if(action=="pause" && scope.playing){
+						scope.playing=false;
+						scope.menuItem=4;
+						player.pause();
+					}
+					else if(action=="play" && !scope.playing) {
+						scope.playing=true;
+						scope.menuItem=3;
+						player.play();
+					}
+					else if(action=="backward"){
+
+					}
+					else if(action=="forward"){
+						
+					}
+					else if(action=="prev"){
+						
+					}
+					else if(action=="next"){
+						
+					}
+					else if(action=="subs"){
+						
+					}
+					else if(action=="search"){
+						
+					}
+				}
 			})
 			scope.$on("back",function(){
 				if (scope.showControls) {
@@ -170,16 +235,6 @@ directive('appVersion', ['version', function(version) {
 					history.back();
 				}
 			})
-
-			scope.controls = [
-				{ icon:"src",fill:"#fff", tsf:"" },
-				{ icon:"next",fill:"#fff", tsf:"s0.9r180" },
-				{ icon:"forward",fill:"#fff", tsf:"s1.4r180" },
-				{ icon:"pause",fill:"#fff", tsf:"" },
-				{ icon:"forward",fill:"#fff", tsf:"s1.4" },
-				{ icon:"next",fill:"#fff", tsf:"s0.9" },
-				{ icon:"subs",fill:"#fff", tsf:"" }
-			];
 
 		}
 	};
