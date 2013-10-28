@@ -1,0 +1,11 @@
+<div>
+<ul id="menu" ng-class="{inactive:isMenuInactive()}" style="top:{{-menuItem*50}}px">
+	<li ng-repeat="item in menu" ng-class="{current:menuItem==$index}">
+		<a><i icon iconfill="#5b5b5b" data-index="{{$index}}" class="{{item.icon}}" data-attrs={"transform":"{{item.tsf}}"}></i></a>
+	</li>
+</ul>
+<div id="titles">
+	<h1 ng-repeat="item in menu" ng-class="{current:menuItem==$index}" style="margin-top:{{(-menuItem+$index)*scrollH}}px">
+	{{item.title}}</h1>
+</div>
+</div>

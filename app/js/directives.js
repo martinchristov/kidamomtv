@@ -207,6 +207,7 @@ directive('appVersion', ['version', function(version) {
 						scope.menuItem=3;
 						player.play();
 					}
+
 					else if(action=="backward"){
 
 					}
