@@ -46,12 +46,20 @@ var IconFactory = (function () {
         var attrs = $.extend(defaults, $icon.data('attrs'));
         if ($icon.data('color-class') != undefined) {
             var vals = $icon.data('color-class').split(":");
-            if ($icon.parent().hasClass(vals[0])) {
+            if ($icon.parent().parent().hasClass(vals[0])) {
                 attrs.fill = vals[1];
             }
         }
 
         var canvas = Raphael($icon.get(0), w, h);
+
+
+        if($icon.data('stroke')!=undefined){
+            var sdata = $icon.data('stroke').split(" ");
+            var stroke = canvas.path(lib[tagarr[0]]);
+            stroke.attr({fill:"none", "stroke-width":sdata[0],stroke:sdata[1], "stroke-linecap":"round", "stroke-linejoin":"round"});
+        }
+
         var icon = canvas.path(lib[tagarr[0]]);
         var box = null;
 
@@ -89,10 +97,18 @@ var IconFactory = (function () {
         if (!tags.nocenter) {
             if (box == null) box = icon.getBBox();
             svgKit.position(icon, w / 2 - box.width / 2, h / 2 - box.height / 2);
+            if(stroke){
+                svgKit.position(stroke, w / 2 - box.width / 2, h / 2 - box.height / 2);
+            }
         }
 
         icon.attr(attrs);
         $icon.data('svg', icon);
+
+        if(stroke){
+            stroke.attr({transform:attrs.transform})
+        }
+
     }
     var lib = {};
 
