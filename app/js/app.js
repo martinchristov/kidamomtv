@@ -17,7 +17,7 @@ var kidamom = angular.module('kidamom', [
 		.when('/movies/:playlist',{controller:"Movies", templateUrl:"partials/movies.html"})
 		.when('/playlists/', {controller:"Playlists", templateUrl:"partials/playlists.html"})
 		.when('/users', {controller:"Users", templateUrl:"partials/users.html"})
-		.when('/play/:movieid', {controller:"Play", templateUrl:"partials/play.html"})
+		.when('/play/:movieid/:playlistid?', {controller:"Play", templateUrl:"partials/play.html"})
 
 		.otherwise({redirectTo:'/movies/popular'})
 

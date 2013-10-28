@@ -29,9 +29,13 @@
   <script type="text/javascript" src="bower_components/raphael/raphael-min.js"></script>
   <script type="text/javascript" src="js/IconFactory.js"></script>
   <script type="text/javascript">
+  var iconFactory;
         $(document).ready(function(){
-            var iconFactory = new IconFactory("js/icons.json",{fill:"#5b5b5b"});
+          setTimeout(function(){
+            iconFactory = new IconFactory("js/icons.json",{fill:"#5b5b5b"});
             iconFactory.produce($("body"))
+          },100);
+            
         })
   </script>
 
