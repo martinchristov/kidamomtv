@@ -13,18 +13,7 @@ directive('appVersion', ['version', function(version) {
 	return {
 		restrict:"E",
 		replace:true,
-		template: 
-			'<div>'+
-			'<ul id="menu" ng-class="{inactive:isMenuInactive()}" style="top:{{-menuItem*50}}px">'+
-				'<li ng-repeat="item in menu" ng-class="{current:menuItem==$index}">'+
-					'<a><i icon data-index="{{$index}}" class="{{item.icon}}" data-attrs=\'{"transform":"{{item.tsf}}"}\'></i></a>'+
-				'</li>'+
-			'</ul>'+
-			'<div id="titles">'+
-				'<h1 ng-repeat="item in menu" ng-class="{current:menuItem==$index}" style="margin-top:{{(-menuItem+$index)*scrollH}}px">'+
-				'{{item.title}}</h1>'+
-			'</div>'+
-			'</div>',
+		templateUrl: "partials/menu.html",
 		link:function(scope,el,attrs){
 			if(scope.loggedIn){
 				scope.menu=[
@@ -153,9 +142,45 @@ directive('appVersion', ['version', function(version) {
 .directive('videoplayer', [function () {
 	return {
 		restrict: 'E',
+		replace:true,
 		templateUrl: "partials/videoplayer.html",
 		link: function (scope, iElement, iAttrs) {
 			// videojs('videoplayer', {}, function () {});
+			var player;
+			setTimeout(function(){
+				var vjs = videojs("videoplayer",{controls:false});
+				player = vjs.player_;
+				iconFactory.produce($("#controls"))
+			},300);
+			
+			scope.showControls = true;
+			scope.currentControl = 3;
+			scope.$on("enter",function(){
+				if (scope.showControls==false) {
+					scope.showControls=true;
+				};
+				// player.play();
+				console.log(player);
+			})
+			scope.$on("back",function(){
+				if (scope.showControls) {
+					scope.showControls=false;
+				}
+				else{
+					history.back();
+				}
+			})
+
+			scope.controls = [
+				{ icon:"src",fill:"#fff", tsf:"" },
+				{ icon:"next",fill:"#fff", tsf:"s0.9r180" },
+				{ icon:"forward",fill:"#fff", tsf:"s1.4r180" },
+				{ icon:"pause",fill:"#fff", tsf:"" },
+				{ icon:"forward",fill:"#fff", tsf:"s1.4" },
+				{ icon:"next",fill:"#fff", tsf:"s0.9" },
+				{ icon:"subs",fill:"#fff", tsf:"" }
+			];
+
 		}
 	};
 }])

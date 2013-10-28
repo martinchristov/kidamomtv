@@ -1,3 +1,12 @@
-<video id="videoplayer" class="video-js vjs-default-skin" data-controls="false" autoplay preload="auto"> 
-	<source ng-src="{{movie.url}}" type="video/mp4" />
-</video>
+<div style="width:100%">
+	<video id="videoplayer">
+		<source ng-src="{{movie.url}}" type="video/mp4" />
+	</video>
+	<div id="controls" ng-class="{show:showControls}">
+		<ul style="width:{{controls.length*50+50}}px">
+			<li ng-repeat="control in controls" ng-class="{current:currentControl==$index}">
+				<a><i icon data-index="{{$index}}" class="{{control.icon}}" data-attrs='{"transform":"{{control.tsf}}", "fill":"{{control.fill}}"}'></i></a>
+			</li>
+		</ul>
+	</div>
+</div>
