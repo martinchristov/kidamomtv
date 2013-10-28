@@ -172,8 +172,10 @@ directive('appVersion', ['version', function(version) {
 				{ action:"subs", icon:"subs", fill:"#fff", tsf:"" }
 			];
 
+			//setup playlist
 
-			//bind key listeners
+
+			//KEY LISTENERS
 
 			//navigate controls
 

@@ -2,13 +2,23 @@
 	<video id="videoplayer">
 		<source ng-src="{{movie.url}}" type="video/mp4" />
 	</video>
-	<div id="controls" ng-class="{show:showControls}">
-		<ul style="width:{{controls.length*50+30}}px">
+	<div id="controls" ng-class="{show:showControls, wplaylist:playlist.length>0}">
+		<ul style="width:{{(controls.length-1)*50+30}}px" id="controls-ul">
 			<li ng-repeat="control in controls" 
 				ng-class="{current:menuItem==$index}" 
 				ng-hide="(control.icon=='play'&&playing)||(control.icon=='pause'&&!playing)" >
 				<a><i icon iconfill="#fff" data-index="{{$index}}" data-color-class="current:#de2121" class="{{control.icon}}" data-attrs='{"transform":"{{control.tsf}}", "fill":"{{control.fill}}"}' data-stroke="8 rgba(0,0,0,0.5)"></i></a>
 			</li>
 		</ul>
+		<div class="clearfix"></div>
+		<div id="playlist">
+			<div class="bg"></div>
+			<ul style="width:{{playlist.length*110}}px">
+				<li ng-repeat="movie in playlist" ng-class="{current:currentInPlaylist==$index}">
+					<img ng-src="{{movie.thumb}}">
+				</li>
+			</ul>
+		</div>
+		
 	</div>
 </div>

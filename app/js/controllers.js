@@ -77,10 +77,20 @@ angular.module('kidamom.controllers', [])
     $scope.Menu.visible = false;
     $scope.Menu.disable();
     $scope.loading=true;
+    $scope.playlist=[];
     $http.get(appURI.getmovie+"?id="+$routeParams.movieid).success(function (movie) {
         $scope.loading=false;
         $scope.movie = movie;
     })
+    if($routeParams.playlistid)
+      $http.get(appURI.getplaylist+"?id="+$routeParams.playlistid).success(function (playlist) {
+        $scope.playlist = playlist;
+        for(var i=0;i<$scope.playlist.length;i++){
+            if($scope.playlist[i].id==$scope.movie.id){
+                $scope.currentInPlaylist = i; break;
+            }
+        }
+      })
 
   }])
   .controller('Playlists', ['$scope', function($scope){

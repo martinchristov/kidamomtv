@@ -251,13 +251,16 @@ body{
 #controls{
     width: 100%;
     position: absolute;
-    bottom: 100px;
+    bottom: 60px;
     opacity:0;
     -webkit-transform:translate(0,50px);
     -moz-transform:translate(0,50px);
     -o-transform:translate(0,50px);
     transform:translate(0,50px);    
     .transition(all .2s);
+    &.wplaylist{
+        bottom: 0;
+    }
 
     &.show{
         opacity:1;
@@ -266,7 +269,7 @@ body{
         -o-transform:translate(0,0);
         transform:translate(0,0);    
     }
-    ul{
+    ul#controls-ul{
         margin: 0 auto;
         list-style: none;
         padding: 0;
@@ -287,6 +290,38 @@ body{
                 margin: 0 15px;
                 opacity: 1;
                 .scale(1.5);
+            }
+        }
+    }
+    
+    #playlist{
+        margin-top: 30px;
+        width: 100%;
+        height: 135px;
+        overflow: hidden;
+        .bg{
+            position: absolute;
+            width: 100%;
+            height: 95px;
+            margin-top: 40px;
+            background: fade(black,70%);
+
+        }
+        ul{
+            position: relative;
+            z-index: 2;
+            list-style: none;
+            padding: 0; margin: 0 auto;
+            li{
+                padding: 0;margin: 0;
+                float: left;
+                margin: 40px 0 0;
+                &.current{
+                    margin-top: 0;
+                }
+            }
+            img{
+                width: 100px; float: left; margin: 0 5px;
             }
         }
     }
