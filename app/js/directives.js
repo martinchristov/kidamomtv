@@ -118,7 +118,7 @@ directive('appVersion', ['version', function(version) {
 		}
 	}
 })
-.directive('carousel', ['$rootScope', 'Movies', function ($rootScope, Movies) {
+.directive('carousel', ['$rootScope', 'Movies', '$location', function ($rootScope, Movies, $location) {
 	return {
 		restrict: 'E',
 		template:
@@ -144,7 +144,7 @@ directive('appVersion', ['version', function(version) {
 				})
 			scope.$on("enter", function () {
 				// Movies.select(scope.currentItemIndex);
-				window.location.href = "#/play/"+scope.currentItem.id;
+				$location.path("/play/" + scope.currentItem.id);
 			});
 
 		}
@@ -155,7 +155,6 @@ directive('appVersion', ['version', function(version) {
 		restrict: 'E',
 		templateUrl: "partials/videoplayer.html",
 		link: function (scope, iElement, iAttrs) {
-			// videojs('videoplayer', {}, function () {});
 		}
 	};
 }])

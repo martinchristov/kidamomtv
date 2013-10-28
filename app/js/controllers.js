@@ -73,15 +73,14 @@ angular.module('kidamom.controllers', [])
   	$scope.items = Movies.getAll();
   }])
 
-  .controller('Play', ['$scope', '$routeParams', 'Movies', '$http', function ($scope, $routeParams, Movies, $http) {
+  .controller('Play', ['$scope', '$routeParams', '$http', function ($scope, $routeParams, $http) {
     $scope.Menu.visible = false;
     $scope.Menu.disable();
-    // console.log($routeParams)
-    // $scope.movie = Movies.getSelected();
     $scope.loading=true;
     $http.get(appURI.getmovie+"?id="+$routeParams.movieid).success(function (movie) {
         $scope.loading=false;
         $scope.movie = movie;
+        setTimeout(function () { document.querySelector('video').load(); }, 10);
     })
 
     $scope.$on('back',function(){
