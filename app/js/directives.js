@@ -141,7 +141,7 @@ directive('appVersion', ['version', function(version) {
 		}
 	};
 }])
-.directive('videoplayer', [function () {
+.directive('videoplayer', ['$compile',function (compile) {
 	return {
 		restrict: 'E',
 		replace:true,
@@ -160,6 +160,7 @@ directive('appVersion', ['version', function(version) {
 			scope.showControls = true;
 			scope.menuItem = 4;
 			scope.playing = false;
+			scope.searchOn=false;
 
 			scope.controls = [
 				{ action:"search", icon:"src", fill:"#fff", tsf:"" },
@@ -194,6 +195,7 @@ directive('appVersion', ['version', function(version) {
 
 			scope.$on("enter",function(){
 				if (scope.showControls==false) {
+					if(scope.searchOn==false)
 					scope.showControls=true;
 				}
 				else {
@@ -226,7 +228,11 @@ directive('appVersion', ['version', function(version) {
 						
 					}
 					else if(action=="search"){
-						
+						console.log('here')
+						var el = compile('<search></search>')(scope);
+						$("body").append(el);
+						scope.showControls=false;
+						scope.searchOn=true;
 					}
 				}
 			})
