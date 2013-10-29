@@ -242,7 +242,7 @@ directive('appVersion', ['version', function(version) {
 		}
 	};
 }])
-.directive('search', ['$rootScope', 'depth', function ($rootScope, depth) {
+.directive('search', ['$rootScope', 'depth', '$http', function ($rootScope, depth, $http) {
 	return {
 		restrict: 'E',
 		replace:true,
