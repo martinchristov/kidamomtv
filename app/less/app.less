@@ -398,10 +398,30 @@ body{
             }
         }
     }
-    #cursor{
-        // height:44px; width:21px;
-        // position: absolute;
-        // background: url(img/cursor.png) no-repeat;
-        // top: 40px;
+}
+
+
+#srcdiv{
+    position: absolute;
+    top: 0;left: 0;
+    z-index: 999;
+    width: 100%;
+    overflow: hidden;
+
+    .carousel{
+        margin-top: 117px;
+        .holder .current.item{
+            margin-left: 0;
+        }
+    }
+
+    .unfocused .carousel{
+        .holder{
+            .current.item{
+                width: 170px;
+                height: 250px;
+                margin-left: 0;
+            }
+        }
     }
 }
