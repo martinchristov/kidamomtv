@@ -108,7 +108,7 @@ directive('appVersion', ['version', function(version) {
 			})
 		}
 	}
-})
+}])
 .directive('carousel', ['$rootScope', 'Movies', '$location', function ($rootScope, Movies, $location) {
 	return {
 		restrict: 'E',
@@ -133,10 +133,6 @@ directive('appVersion', ['version', function(version) {
 		  			if(scope.currentItemIndex>=scope.items.length)scope.currentItemIndex=scope.items.length-1;
 		  			scope.currentItem = scope.items[scope.currentItemIndex];
 				})
-			scope.$on("enter", function () {
-				$location.path("/play/" + scope.currentItem.id);
-			});
-
 		}
 	};
 }])
@@ -335,4 +331,16 @@ directive('appVersion', ['version', function(version) {
 			})
 		}
 	};
+}])
+
+
+.directive('playmovie', ['$location', function ($location) {
+	return {
+		restrict: 'A',
+		link: function (scope, iElement, iAttrs) {
+			scope.$on("enter", function () {
+				$location.path("/play/" + iAttrs.playmovie)
+			})
+		}
+	}
 }])
