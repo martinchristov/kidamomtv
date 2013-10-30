@@ -1,0 +1,10 @@
+<div id="src-head">
+	<ul style="width:{{sugWidth}}px; left:{{sugPos}}px" ng-class="{focused:level==1}">
+		<li ng-repeat="sug in suggestions" ng-class="{current:$index==curSug}">{{sug}}</li>
+	</ul>
+	<div class="clearfix"></div>
+	<div id="cursor" ng-hide="level!=2" style="left:{{center-10}}px"></div>
+	<ul style="width:{{keyboard.length*46}}px; left:{{center-curChar*46-23}}px" ng-class="{focused:level==2}">
+		<li ng-repeat="char in keyboard" ng-class="{current:$index==curChar}">{{char}}</li>
+	</ul>
+</div>

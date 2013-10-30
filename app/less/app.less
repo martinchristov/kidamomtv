@@ -247,6 +247,9 @@ body{
   video{
     width:100%; height:100%;
   }
+  .vjs-control-bar{
+    display: none;
+  }
 }
 #controls{
     width: 100%;
@@ -260,6 +263,9 @@ body{
     .transition(all .2s);
     &.wplaylist{
         bottom: 0;
+        #playlist{
+            display: block;
+        }
     }
 
     &.show{
@@ -297,12 +303,13 @@ body{
     #playlist{
         margin-top: 30px;
         width: 100%;
-        height: 135px;
+        height: 115px;
         overflow: hidden;
+        display: none;
         .bg{
             position: absolute;
             width: 100%;
-            height: 95px;
+            height: 65px;
             margin-top: 40px;
             background: fade(black,70%);
 
@@ -324,5 +331,77 @@ body{
                 width: 100px; float: left; margin: 0 5px;
             }
         }
+    }
+}
+
+#src-head{
+    position: absolute;
+    width: 100%;
+    background: fade(black,70%);
+    height: 110px;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    ul{
+        position: absolute;
+        padding: 0;margin: 0;
+        list-style: none;
+        li{
+            float: left;
+            background: fade(white,90%);
+            margin: 3px;
+            font-size: 27px;
+            padding: 0;
+            line-height: 45px;
+            text-align: center;
+        }
+        .transition(all .3s);
+        &.focused li.current{
+            background: #d0333f;
+            color: white;
+        }
+    }
+
+    ul:first-child{
+        margin-top: 3px;
+        height: 50px;
+        overflow: hidden;
+        li{
+            padding: 0 10px 3px;
+            min-width: 14px;
+            font-size: 24px;
+            white-space: nowrap;
+            min-height: 44px;
+        }
+    }
+    ul:last-child{
+        top: 58px;
+        li{
+            width: 40px; height: 40px; line-height: 40px;
+            text-align: center;
+            &.current{
+                
+            }
+        }
+        &.focused{
+            li.current{
+                position: relative;
+                &::before{
+                    content:" ";
+                    height:44px; width:21px;
+                    position: absolute;
+                    background: url(img/cursor.png) no-repeat;
+                    top: -41px;
+                    left:9px;
+                }
+            }
+        }
+    }
+    #cursor{
+        // height:44px; width:21px;
+        // position: absolute;
+        // background: url(img/cursor.png) no-repeat;
+        // top: 40px;
     }
 }

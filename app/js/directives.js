@@ -89,7 +89,7 @@ directive('appVersion', ['version', function(version) {
 	}
 }])
 
-.directive('icon',function(){
+.directive('icon',[function(){
 	return {
 		restrict:"A",
 		link:function link (scope,el,attrs) {
@@ -134,14 +134,13 @@ directive('appVersion', ['version', function(version) {
 		  			scope.currentItem = scope.items[scope.currentItemIndex];
 				})
 			scope.$on("enter", function () {
-				// Movies.select(scope.currentItemIndex);
 				$location.path("/play/" + scope.currentItem.id);
 			});
 
 		}
 	};
 }])
-.directive('videoplayer', [function () {
+.directive('videoplayer', ['$compile',function (compile) {
 	return {
 		restrict: 'E',
 		replace:true,
@@ -159,6 +158,7 @@ directive('appVersion', ['version', function(version) {
 			scope.showControls = true;
 			scope.menuItem = 4;
 			scope.playing = false;
+			scope.searchOn=false;
 
 			scope.controls = [
 				{ action:"search", icon:"src", fill:"#fff", tsf:"" },
@@ -193,6 +193,7 @@ directive('appVersion', ['version', function(version) {
 
 			scope.$on("enter",function(){
 				if (scope.showControls==false) {
+					if(scope.searchOn==false)
 					scope.showControls=true;
 				}
 				else {
@@ -225,7 +226,11 @@ directive('appVersion', ['version', function(version) {
 						
 					}
 					else if(action=="search"){
-						
+						console.log('here')
+						var el = compile('<search></search>')(scope);
+						$("body").append(el);
+						scope.showControls=false;
+						scope.searchOn=true;
 					}
 				}
 			})
@@ -235,6 +240,97 @@ directive('appVersion', ['version', function(version) {
 				}
 				else{
 					history.back();
+				}
+			})
+		}
+	};
+}])
+.directive('search', ['$rootScope', 'depth', '$http', function ($rootScope, depth, $http) {
+	return {
+		restrict: 'E',
+		replace:true,
+		templateUrl:"partials/search-directive.html",
+		link: function (scope, iElement, iAttrs) {
+			scope.level = 2;
+			//levels represent vertical focus.
+			// 1 are suggestions
+			// 2 - keyboard
+			// 3 - carousel
+
+			scope.keyboard="abcdefghijklmnopqrstuvwxyz< 0123456789";
+			scope.curChar = 15;
+			scope.center = $(window).width()/2;
+
+			depth.more();
+
+			scope.suggestions = [
+				""
+			]
+			scope.curSug=0;
+
+			var sugsDom = $("#src-head ul:first");
+			function evalSugWidth () {
+				var w = 0;
+				sugsDom.find('li').each(function(){
+					w+=$(this).width()+26;
+				})
+				scope.sugWidth=w;
+			}
+			function evalSugPos () {
+				var cur = $(sugsDom.find('li')[scope.curSug]);
+				scope.sugPos = scope.center - cur.position().left - cur.width() - 15;
+			}
+			setTimeout(function(){
+				evalSugWidth();
+				evalSugPos();
+				scope.$apply();
+			},100);
+
+
+			//key listeners
+			scope.$on("keyleft",function(){
+				if(scope.level==1){
+					if(scope.curSug>0){
+						scope.curSug--;
+						evalSugPos();
+					}
+				}
+				else if(scope.level==2){
+					if(scope.curChar>0)scope.curChar--;
+				}
+			})
+			scope.$on("keyright",function(){
+				if(scope.level==1){
+					if(scope.curSug<scope.suggestions.length-1){
+						scope.curSug++;
+						evalSugPos();
+					}
+				}
+				else if(scope.level==2){
+					if(scope.curChar<scope.keyboard.length-1)scope.curChar++;
+				}
+			})
+
+			scope.$on("keydown",function(){
+				if(scope.level<3)scope.level++;
+			})
+			scope.$on("keyup",function(){
+				if(scope.level>1)scope.level--;
+			})
+
+			scope.$on("enter",function(){
+				if(scope.level==2){
+					var ch = scope.keyboard[scope.curChar];
+					if(ch!="<")
+						scope.suggestions[scope.curSug]+=scope.keyboard[scope.curChar];
+					else scope.suggestions[scope.curSug] = scope.suggestions[scope.curSug].substr(0,scope.suggestions[scope.curSug].length-1)
+					setTimeout(function(){
+						evalSugWidth();
+						evalSugPos();
+						scope.$apply();
+					},100);
+					
+					// scope.$apply();
 				}
 			})
 		}
