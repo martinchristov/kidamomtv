@@ -109,7 +109,7 @@ directive('appVersion', ['version', function(version) {
 		}
 	}
 }])
-.directive('carousel', ['$rootScope', 'Movies', function ($rootScope, Movies) {
+.directive('carousel', ['$rootScope', 'Movies', '$location', function ($rootScope, Movies, $location) {
 	return {
 		restrict: 'E',
 		template:
@@ -135,6 +135,7 @@ directive('appVersion', ['version', function(version) {
 					scope.currentItemIndex++;
 		  			if(scope.currentItemIndex>=scope.items.length)scope.currentItemIndex=scope.items.length-1;
 		  			scope.currentItem = scope.items[scope.currentItemIndex];
+
 		  		}
 
 			})
@@ -142,7 +143,6 @@ directive('appVersion', ['version', function(version) {
 				if(scope.searchLevel==3||scope.searchLevel==undefined)
 					window.location.href = "#/play/"+scope.currentItem.id;
 			});
-
 		}
 	};
 }])
@@ -152,7 +152,6 @@ directive('appVersion', ['version', function(version) {
 		replace:true,
 		templateUrl: "partials/videoplayer.html",
 		link: function (scope, iElement, iAttrs) {
-			
 			//instantiate player
 			var player;
 			setTimeout(function(){
@@ -261,7 +260,6 @@ directive('appVersion', ['version', function(version) {
 						history.back();
 				}
 			})
-
 		}
 	};
 }])
@@ -363,4 +361,16 @@ directive('appVersion', ['version', function(version) {
 			})
 		}
 	};
+}])
+
+
+.directive('playmovie', ['$location', function ($location) {
+	return {
+		restrict: 'A',
+		link: function (scope, iElement, iAttrs) {
+			scope.$on("enter", function () {
+				$location.path("/play/" + iAttrs.playmovie)
+			})
+		}
+	}
 }])
