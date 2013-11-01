@@ -122,17 +122,27 @@ directive('appVersion', ['version', function(version) {
 			'</div>',
 		link: function (scope, iElement, iAttrs) {
 			scope.currentItemIndex = 0;
-			scope.currentItem = scope.items[0];
+			if(scope.hasOwnProperty("items"))scope.currentItem = scope.items[0];
 			scope.$on("keyleft",function(){
+				if(scope.searchLevel==3||scope.searchLevel==undefined){
 					scope.currentItemIndex--;
 		  			if(scope.currentItemIndex<0)scope.currentItemIndex=0;
 			  		scope.currentItem = scope.items[scope.currentItemIndex];
-				})
+			  	}
+			})
 			scope.$on("keyright",function(){
+				if(scope.searchLevel==3||scope.searchLevel==undefined){
 					scope.currentItemIndex++;
 		  			if(scope.currentItemIndex>=scope.items.length)scope.currentItemIndex=scope.items.length-1;
 		  			scope.currentItem = scope.items[scope.currentItemIndex];
-				})
+
+		  		}
+
+			})
+			scope.$on("enter", function () {
+				if(scope.searchLevel==3||scope.searchLevel==undefined)
+					window.location.href = "#/play/"+scope.currentItem.id;
+			});
 		}
 	};
 }])
@@ -171,22 +181,29 @@ directive('appVersion', ['version', function(version) {
 			//navigate controls
 
 			scope.$on("keyleft",function(){
-				if(scope.menuItem>0)scope.menuItem--;
-				if(!scope.playing&&scope.menuItem==3)scope.menuItem--;
-				else if(scope.playing&&scope.menuItem==4)scope.menuItem--;
+				if(scope.showControls)
+				{
+					if(scope.menuItem>0)scope.menuItem--;
+					if(!scope.playing&&scope.menuItem==3)scope.menuItem--;
+					else if(scope.playing&&scope.menuItem==4)scope.menuItem--;
+				}
 			})
 			scope.$on("keyright",function(){
-				if(scope.menuItem<scope.controls.length-1)scope.menuItem++;
-				if(scope.playing&&scope.menuItem==4)scope.menuItem++;
-				else if(!scope.playing&&scope.menuItem==3)scope.menuItem++;
+				if(scope.showControls)
+				{
+					if(scope.menuItem<scope.controls.length-1)scope.menuItem++;
+					if(scope.playing&&scope.menuItem==4)scope.menuItem++;
+					else if(!scope.playing&&scope.menuItem==3)scope.menuItem++;
+				}
+				
 			})
 
 			//control actions on enter
 
 			scope.$on("enter",function(){
 				if (scope.showControls==false) {
-					if(scope.searchOn==false)
-					scope.showControls=true;
+					if(scope.searchLevel<1)
+						scope.showControls=true;
 				}
 				else {
 					var action = scope.controls[scope.menuItem].action;
@@ -224,11 +241,11 @@ directive('appVersion', ['version', function(version) {
 						
 					}
 					else if(action=="search"){
-						console.log('here')
-						var el = compile('<search></search>')(scope);
-						$("body").append(el);
 						scope.showControls=false;
-						scope.searchOn=true;
+						setTimeout(function(){
+							scope.searchLevel=2;
+							scope.$apply();
+						},20);
 					}
 				}
 			})
@@ -237,7 +254,12 @@ directive('appVersion', ['version', function(version) {
 					scope.showControls=false;
 				}
 				else{
-					history.back();
+					if(scope.searchLevel>0){
+						scope.searchLevel=0;
+						scope.showControls=true;
+					}
+					else
+						history.back();
 				}
 			})
 		}
@@ -249,7 +271,8 @@ directive('appVersion', ['version', function(version) {
 		replace:true,
 		templateUrl:"partials/search-directive.html",
 		link: function (scope, iElement, iAttrs) {
-			scope.level = 2;
+			scope.items=[];
+			scope.searchLevel = 0;
 			//levels represent vertical focus.
 			// 1 are suggestions
 			// 2 - keyboard
@@ -287,37 +310,44 @@ directive('appVersion', ['version', function(version) {
 
 			//key listeners
 			scope.$on("keyleft",function(){
-				if(scope.level==1){
+				if(scope.searchLevel==1){
 					if(scope.curSug>0){
 						scope.curSug--;
 						evalSugPos();
 					}
 				}
-				else if(scope.level==2){
+				else if(scope.searchLevel==2){
 					if(scope.curChar>0)scope.curChar--;
 				}
 			})
 			scope.$on("keyright",function(){
-				if(scope.level==1){
+				if(scope.searchLevel==1){
 					if(scope.curSug<scope.suggestions.length-1){
 						scope.curSug++;
 						evalSugPos();
 					}
 				}
-				else if(scope.level==2){
+				else if(scope.searchLevel==2){
 					if(scope.curChar<scope.keyboard.length-1)scope.curChar++;
 				}
 			})
 
 			scope.$on("keydown",function(){
-				if(scope.level<3)scope.level++;
+				if(scope.searchLevel<3)scope.searchLevel++;
 			})
 			scope.$on("keyup",function(){
-				if(scope.level>1)scope.level--;
+				if(scope.searchLevel>1)scope.searchLevel--;
 			})
 
 			scope.$on("enter",function(){
-				if(scope.level==2){
+				if(scope.searchLevel==1){
+					$http.get(appURI.search+"?s="+scope.suggestions[0]).success(function(data){
+						// console.log('here');
+						scope.items = data;
+						scope.currentItem = scope.items[0];
+					})
+				}
+				if(scope.searchLevel==2){
 					var ch = scope.keyboard[scope.curChar];
 					if(ch!="<")
 						scope.suggestions[scope.curSug]+=scope.keyboard[scope.curChar];
