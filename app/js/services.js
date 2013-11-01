@@ -83,6 +83,7 @@ angular.module('kidamom.services', [])
     }
   }])
   .service('Movies', [function () {
+    
     var movies = [
         {
           id:22,

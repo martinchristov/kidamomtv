@@ -162,18 +162,14 @@ directive('appVersion', ['version', function(version) {
 }])
 .directive('videoplayer', ['$compile',function (compile) {
 	return {
-		restrict: 'E',
-		replace:true,
-		templateUrl: "partials/videoplayer.html",
+		restrict: 'A',
 		link: function (scope, iElement, iAttrs) {
 			//instantiate player
-			var player;
+			//var player;
 			setTimeout(function(){
-				var vjs = videojs("videoplayer",{controls:false});
-				player = vjs.player_;
+				window.player = videojs("videoplayer",{controls:false});
 				iconFactory.produce($("#controls"))
 			},300);
-			
 			//setup video controls
 			scope.showControls = true;
 			scope.menuItem = 4;
@@ -238,10 +234,16 @@ directive('appVersion', ['version', function(version) {
 					}
 
 					else if(action=="backward"){
-
+						player.pause();
+						var at = player.currentTime();
+						console.log(at);
+						player.currentTime(Math.max(at - 5, 0));
+						player.play();
 					}
 					else if(action=="forward"){
-						
+						var at = player.currentTime();
+						console.log(at);
+						player.currentTime(at + 5);	
 					}
 					else if(action=="prev"){
 						
