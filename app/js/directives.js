@@ -222,13 +222,11 @@ directive('appVersion', ['version', function(version) {
 					else if(action=="backward"){
 						player.pause();
 						var at = player.currentTime();
-						console.log(at);
 						player.currentTime(Math.max(at - 5, 0));
 						player.play();
 					}
 					else if(action=="forward"){
 						var at = player.currentTime();
-						console.log(at);
 						player.currentTime(at + 5);	
 					}
 					else if(action=="prev"){
