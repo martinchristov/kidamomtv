@@ -81,7 +81,6 @@ angular.module('kidamom.controllers', [])
     $http.get(appURI.getmovie+"?id="+$routeParams.movieid).success(function (movie) {
         $scope.loading=false;
         $scope.movie = movie;
-        setTimeout(function () { document.querySelector('video').load(); }, 10);
     })
     if($routeParams.playlistid)
       $http.get(appURI.getplaylist+"?id="+$routeParams.playlistid).success(function (playlist) {

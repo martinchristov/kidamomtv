@@ -151,9 +151,9 @@ directive('appVersion', ['version', function(version) {
 		restrict: 'A',
 		link: function (scope, iElement, iAttrs) {
 			//instantiate player
-			//var player;
+			var player;
 			setTimeout(function(){
-				window.player = videojs("videoplayer",{controls:false});
+				player = videojs("videoplayer",{controls:false});
 				iconFactory.produce($("#controls"))
 			},300);
 			//setup video controls
