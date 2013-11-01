@@ -1,4 +1,5 @@
 'use strict';
+var VK_ENTER, VK_BACK_SPACE;
 
 /* Controllers */
 
@@ -11,29 +12,36 @@ angular.module('kidamom.controllers', [])
   
   .controller('Main', ['$scope', 'depth', '$rootScope', 'Menu', function ($scope, depth, rootScope, Menu){
     $scope.Menu = Menu;
-    $scope.loggedIn=true; 
+    $scope.loggedIn=false; 
 
   	$scope.isMenuInactive = function(){
   		if(depth.get()==0)return false;
   		else return true;
   	}
+    if(VK_ENTER==undefined)VK_ENTER=13;
+    if(VK_BACK_SPACE==undefined)VK_BACK_SPACE=8;
 
     //key navigation. to be moved to a directive
     $scope.keyDown = function(e){
       var which = "";
       switch(e.which){
-        case 13:
+        case VK_ENTER:
           which = "enter"; break;
-        case 8:
+        case VK_BACK_SPACE:
           which = 'back';
+          if(depth.get()>0)
           e.preventDefault(); break;
         case 38:
+          e.preventDefault();
           which = 'keyup'; break;
         case 40:
+          e.preventDefault();
           which = 'keydown'; break;
         case 37:
+          e.preventDefault();
           which = 'keyleft'; break;
         case 39:
+          e.preventDefault();
           which = 'keyright'; break;
       }
       if(which!="")
@@ -68,6 +76,7 @@ angular.module('kidamom.controllers', [])
       depth.less();
     })
   }])
+  
   .controller('Movies', ['$scope','$routeParams', 'Movies', function ($scope, $routeParams, Movies){
     $scope.Menu.enable();
   	$scope.items = Movies.getAll();

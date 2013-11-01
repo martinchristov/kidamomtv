@@ -15,6 +15,9 @@ directive('appVersion', ['version', function(version) {
 		replace:true,
 		templateUrl: "partials/menu.html",
 		link:function(scope,el,attrs){
+			setTimeout(function(){
+				// window.location.href="#/play/22"
+			},3000);
 			if(scope.loggedIn){
 				scope.menu=[
 					{
@@ -85,6 +88,14 @@ directive('appVersion', ['version', function(version) {
 			})
 
 
+	        $(document).ready(function(){
+	          setTimeout(function(){
+	            iconFactory = new IconFactory("js/icons.json",{fill:"#5b5b5b"});
+	            iconFactory.produce($("body"))
+	          },100);
+	            
+	        })
+
 		}
 	}
 }])
@@ -140,8 +151,11 @@ directive('appVersion', ['version', function(version) {
 
 			})
 			scope.$on("enter", function () {
-				if(scope.searchLevel==3||scope.searchLevel==undefined)
-					window.location.href = "#/play/"+scope.currentItem.id;
+				if(scope.searchLevel==3||scope.searchLevel==undefined){
+					// window.location.href = "#/play/"+scope.currentItem.id;
+					scope.testvar = 'asdasd';
+				}
+
 			});
 		}
 	};
@@ -369,7 +383,8 @@ directive('appVersion', ['version', function(version) {
 		restrict: 'A',
 		link: function (scope, iElement, iAttrs) {
 			scope.$on("enter", function () {
-				$location.path("/play/" + iAttrs.playmovie)
+				scope.$parent.testvar='asdasd'
+				// $location.path("/play/" + iAttrs.playmovie)
 			})
 		}
 	}
