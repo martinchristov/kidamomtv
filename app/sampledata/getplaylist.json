@@ -6,7 +6,7 @@
 	"desc":"Surly, a curmudgeon, independent squirrel is banished from his park and forced to survive in the city. Lucky for him, he stumbles on the one thing that may be able to save his life, and the rest of park community, as they gear up for winter - Maury's Nut Store.",
 	"duration":95,
 	"age":6,
-	"url": "sampledata/cloudy.mp4"
+	"url": "http://analogo.net/projects/kidamomtv/app/sampledata/cloudy.mp4"
 },
 {
 	"id":23,
@@ -16,7 +16,7 @@
 	"desc":"Surly, a curmudgeon, independent squirrel is banished from his park and forced to survive in the city. Lucky for him, he stumbles on the one thing that may be able to save his life, and the rest of park community, as they gear up for winter - Maury's Nut Store.",
 	"duration":95,
 	"age":6,
-	"url": "sampledata/cloudy.mp4"
+	"url": "http://analogo.net/projects/kidamomtv/app/sampledata/cloudy.mp4"
 },
 {
 	"id":24,
@@ -26,7 +26,7 @@
 	"desc":"Surly, a curmudgeon, independent squirrel is banished from his park and forced to survive in the city. Lucky for him, he stumbles on the one thing that may be able to save his life, and the rest of park community, as they gear up for winter - Maury's Nut Store.",
 	"duration":95,
 	"age":6,
-	"url": "sampledata/cloudy.mp4"
+	"url": "http://analogo.net/projects/kidamomtv/app/sampledata/cloudy.mp4"
 },{
 	"id":25,
 	"photo":"sampledata/1.jpg",
@@ -35,7 +35,5 @@
 	"desc":"Surly, a curmudgeon, independent squirrel is banished from his park and forced to survive in the city. Lucky for him, he stumbles on the one thing that may be able to save his life, and the rest of park community, as they gear up for winter - Maury's Nut Store.",
 	"duration":95,
 	"age":6,
-	"url": "sampledata/cloudy.mp4"
-}
-
-]
+	"url": "http://analogo.net/projects/kidamomtv/app/sampledata/cloudy.mp4"
+}]

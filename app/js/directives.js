@@ -152,8 +152,7 @@ directive('appVersion', ['version', function(version) {
 			})
 			scope.$on("enter", function () {
 				if(scope.searchLevel==3||scope.searchLevel==undefined){
-					// window.location.href = "#/play/"+scope.currentItem.id;
-					scope.testvar = 'asdasd';
+					window.location.href = "#/play/"+scope.currentItem.id;
 				}
 
 			});
@@ -383,8 +382,7 @@ directive('appVersion', ['version', function(version) {
 		restrict: 'A',
 		link: function (scope, iElement, iAttrs) {
 			scope.$on("enter", function () {
-				scope.$parent.testvar='asdasd'
-				// $location.path("/play/" + iAttrs.playmovie)
+				$location.path("/play/" + iAttrs.playmovie)
 			})
 		}
 	}

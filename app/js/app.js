@@ -17,7 +17,26 @@ var kidamom = angular.module('kidamom', [
 		.when('/movies/:playlist',{controller:"Movies", templateUrl:"partials/movies.html"})
 		.when('/playlists/', {controller:"Playlists", templateUrl:"partials/playlists.html"})
 		.when('/users', {controller:"Users", templateUrl:"partials/users.html"})
-		.when('/play/:movieid/:playlistid?', {controller:"Play", templateUrl:"partials/play.html"})
+		.when('/play/:movieid/:playlistid?',  { controller:"Play", templateUrl:"partials/play.html",
+			resolve: {
+				movie: ['$q', '$route', '$http', function ($q, $route, $http) {
+					var params = $route.current.params;
+					if (!params.movieid) { return $q.reject(); }
+
+
+					return $http.get(appURI.getmovie+"?id=" + params.movieid).then(function (response) {
+						return response.data;
+					})
+				}],
+				playlist: ['$q', '$route', '$http', function ($q, $route, $http) {
+					var params = $route.current.params;
+					if (!params.playlistid) { return null; }
+
+					return $http.get(appURI.getplaylist + "?id=" + params.playlistid).then(function (response) {
+						return response.data;
+					})
+				}]
+			}})
 
 		.otherwise({redirectTo:'/movies/popular'})
 

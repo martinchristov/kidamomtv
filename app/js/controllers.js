@@ -12,7 +12,7 @@ angular.module('kidamom.controllers', [])
   
   .controller('Main', ['$scope', 'depth', '$rootScope', 'Menu', function ($scope, depth, rootScope, Menu){
     $scope.Menu = Menu;
-    $scope.loggedIn=false; 
+    $scope.loggedIn = true; 
 
   	$scope.isMenuInactive = function(){
   		if(depth.get()==0)return false;
@@ -82,25 +82,12 @@ angular.module('kidamom.controllers', [])
   	$scope.items = Movies.getAll();
   }])
 
-  .controller('Play', ['$scope', '$routeParams', '$http', function ($scope, $routeParams, $http) {
+  .controller('Play', ['$scope', '$routeParams', '$http', 'movie', 'playlist', function ($scope, $routeParams, $http, movie) {
     $scope.Menu.visible = false;
     $scope.Menu.disable();
-    $scope.loading=true;
-    $scope.playlist=[];
-    $http.get(appURI.getmovie+"?id="+$routeParams.movieid).success(function (movie) {
-        $scope.loading=false;
-        $scope.movie = movie;
-    })
-    if($routeParams.playlistid)
-      $http.get(appURI.getplaylist+"?id="+$routeParams.playlistid).success(function (playlist) {
-        $scope.playlist = playlist;
-        for(var i=0;i<$scope.playlist.length;i++){
-            if($scope.playlist[i].id==$scope.movie.id){
-                $scope.currentInPlaylist = i; break;
-            }
-        }
-      })
-
+    $scope.movie = movie;
+    $scope.playlist = playlist;
+    
   }])
   .controller('Playlists', ['$scope', function($scope){
   	$scope.items = [
