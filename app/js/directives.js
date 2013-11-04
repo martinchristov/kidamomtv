@@ -353,7 +353,6 @@ directive('appVersion', ['version', function(version) {
 			scope.$on("enter",function(){
 				if(scope.searchLevel==1){
 					$http.get(appURI.search+"?s="+scope.suggestions[0]).success(function(data){
-						// console.log('here');
 						scope.items = data;
 						scope.currentItem = scope.items[0];
 					})

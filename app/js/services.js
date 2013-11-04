@@ -86,51 +86,43 @@ angular.module('kidamom.services', [])
     
     var movies = [
         {
-          id:22,
-          photo:"sampledata/1.jpg",
-          title:"The nut job",
-          desc:"Surly, a curmudgeon, independent squirrel is banished from his park and forced to survive in the city. Lucky for him, he stumbles on the one thing that may be able to save his life, and the rest of park community, as they gear up for winter - Maury's Nut Store.",
+          id:1,
+          photo:"sampledata/Donkey_Xote_movie_poster.jpg",
+          title:"Donkey Xote",
+          desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquam turpis at leo blandit, ac commodo lorem fermentum.",
           duration:95,
           age:6,
-          url: 'http://www.auby.no/files/video_tests/h264_1080p_hp_4.1_40mbps_birds.mkv'
+          url: 'http://79.124.63.33/vod/_definst_/Donkey/bg/smil:desktop.smil/playlist.m3u8'
         },
         {
-          id:22,
-          photo:"sampledata/2.jpg",
-          title:"Epic",
-          desc:"lorem ipsum some more text here",
-          duration:95,
-          age:6,
-        },
-        {
-          id:22,
-          photo:"sampledata/3.jpg",
-          title:"The croods",
-          desc:"lorem ipsum some more text here",
+          id:2,
+          photo:"sampledata/Umnikyt-Jack.jpg",
+          title:"Умникът Джак",
+          desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquam turpis at leo blandit, ac commodo lorem fermentum.",
           duration:95,
           age:6
         },
         {
-          id:22,
-          photo:"sampledata/4.jpg",
-          title:"Cloudy with a chance of meatballs",
-          desc:"lorem ipsum some more text here",
+          id:3,
+          photo:"sampledata/happy-elf.jpg",
+          title:"Щастливият Елф",
+          desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquam turpis at leo blandit, ac commodo lorem fermentum.",
           duration:95,
           age:6
         },
         {
-          id:22,
-          photo:"sampledata/3.jpg",
-          title:"The croods",
-          desc:"lorem ipsum some more text here",
+          id:4,
+          photo:"sampledata/Kaspyr-Koleda.jpg",
+          title:"Каспър Призрачна Коледа",
+          desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquam turpis at leo blandit, ac commodo lorem fermentum.",
           duration:95,
           age:6
         },
         {
-          id:22,
-          photo:"sampledata/4.jpg",
-          title:"Cloudy with a chance of meatballs",
-          desc:"lorem ipsum some more text here",
+          id:5,
+          photo:"sampledata/masha.jpg",
+          title:"Маша н Медведь",
+          desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquam turpis at leo blandit, ac commodo lorem fermentum.",
           duration:95,
           age:6
         }]

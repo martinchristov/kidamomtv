@@ -1,9 +1,9 @@
 {
-	"id":22,
-	"photo":"sampledata/1.jpg",
-	"title":"The nut job",
-	"desc":"Surly, a curmudgeon, independent squirrel is banished from his park and forced to survive in the city. Lucky for him, he stumbles on the one thing that may be able to save his life, and the rest of park community, as they gear up for winter - Maury's Nut Store.",
-	"duration":95,
-	"age":6,
-	"url": "http://analogo.net/projects/kidamomtv/app/sampledata/cloudy.mp4"
+	"id" : 1,
+	"photo" : "sampledata/Donkey_Xote_movie_poster.jpg",
+	"title" :"Donkey Xote",
+	"desc" :"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquam turpis at leo blandit, ac commodo lorem fermentum.",
+	"duration" :95,
+	"age" : 6,
+	"url" : "http://79.124.63.33/vod/_definst_/Donkey/bg/smil:desktop.smil/playlist.m3u8"
 }
