@@ -383,8 +383,8 @@ directive('appVersion', ['version', function(version) {
 		restrict: 'A',
 		link: function (scope, iElement, iAttrs) {
 			scope.$on("enter", function () {
-				scope.$parent.testvar='asdasd'
-				// $location.path("/play/" + iAttrs.playmovie)
+				// scope.$parent.testvar='asdasd'
+				$location.path("/play/" + iAttrs.playmovie)
 			})
 		}
 	}
