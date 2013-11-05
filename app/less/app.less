@@ -119,6 +119,9 @@ body{
     &.current{
       width:330px; height:488px; margin-left:125px;
     }
+    &.faded{
+      opacity: 0.6;
+    }
   }
 }
 
@@ -425,4 +428,22 @@ body{
             }
         }
     }
+}
+
+#search-view #srcdiv{
+  .carousel{
+    margin-top: 137px;
+    margin-left: 200px;
+    .current.item{
+      margin-left: 125px;
+    }
+  }
+}
+
+#leftfader{
+  position: absolute;
+  z-index: 99;
+  background: fade(white,50%);
+  width:80px; height: 100%;
+  left: 0;top: 0;
 }
