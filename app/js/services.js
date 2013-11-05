@@ -32,7 +32,7 @@ angular.module('kidamom.services', [])
           desc:"Surly, a curmudgeon, independent squirrel is banished from his park and forced to survive in the city. Lucky for him, he stumbles on the one thing that may be able to save his life, and the rest of park community, as they gear up for winter - Maury's Nut Store.",
           duration:95,
           age:6,
-          url: 'http://www.auby.no/files/video_tests/h264_1080p_hp_4.1_40mbps_birds.mkv'
+          url: 'sampledata/cloudy.mp4'
         },
         {
           id:23,
@@ -88,8 +88,8 @@ angular.module('kidamom.services', [])
         {
           id:1,
           photo:"sampledata/Donkey_Xote_movie_poster.jpg",
-          title:"Donkey Xote",
-          desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquam turpis at leo blandit, ac commodo lorem fermentum.",
+          title:"Донке Хоте",
+          desc:"Ще стигнат ли Руси, Дон Кихот и Росинант до края на тяхното приключение? И ако стигнат, ще успеят ли да победят Рицаря на Полумесеца?",
           duration:95,
           age:6,
           url: 'http://79.124.63.33/vod/_definst_/Donkey/bg/smil:desktop.smil/playlist.m3u8'
@@ -97,8 +97,8 @@ angular.module('kidamom.services', [])
         {
           id:2,
           photo:"sampledata/Umnikyt-Jack.jpg",
-          title:"Умникът Джак",
-          desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquam turpis at leo blandit, ac commodo lorem fermentum.",
+          title:"Умникът Джаk",
+          desc:"Умникът Джак е смело, весело и необикновено зверче.",
           duration:95,
           age:6
         },
@@ -106,23 +106,23 @@ angular.module('kidamom.services', [])
           id:3,
           photo:"sampledata/happy-elf.jpg",
           title:"Щастливият Елф",
-          desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquam turpis at leo blandit, ac commodo lorem fermentum.",
+          desc:"Това удивително анимационно филмче ще зазвъни празнично с много смях и веселие.",
           duration:95,
           age:6
         },
         {
           id:4,
           photo:"sampledata/Kaspyr-Koleda.jpg",
-          title:"Каспър Призрачна Коледа",
-          desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquam turpis at leo blandit, ac commodo lorem fermentum.",
+          title:"Каспър",
+          desc:"В навечерието на Коледа, Каспър е в отлично настроение!",
           duration:95,
           age:6
         },
         {
           id:5,
           photo:"sampledata/masha.jpg",
-          title:"Маша н Медведь",
-          desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquam turpis at leo blandit, ac commodo lorem fermentum.",
+          title:"Маша и Мечо",
+          desc:"Най-популярният анимационен сериал, любим на малки и големи!",
           duration:95,
           age:6
         }]

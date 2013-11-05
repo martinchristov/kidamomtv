@@ -15,34 +15,31 @@ directive('appVersion', ['version', function(version) {
 		replace:true,
 		templateUrl: "partials/menu.html",
 		link:function(scope,el,attrs){
-			setTimeout(function(){
-				// window.location.href="#/play/22"
-			},3000);
 			if(scope.loggedIn){
 				scope.menu=[
 					{
-						title:"Search",
+						title:"Търсене",
 						icon:"src", tsf:"s1", href:"#/search"
 					},{
-						title:"Recommended",
+						title:"Препоръчани",
 						icon:"v-5", tsf:"s1", href:"#/movies/recommended"
 					},{
-						title:"Popular",
+						title:"Най-гледани",
 						icon:"people", tsf:"s1.35", href:"#/movies/popular"
 					},{
-						title:"New",
+						title:"Нови",
 						icon:"sticker", tsf:"s1.3", href:"#/movies/new"
 					},{
-						title:"Last watched",
+						title:"Последно гледани",
 						icon:"eye", tsf:"s1.2", href:"#/movies/lastwatch"
 					},{
-						title:"Favorites",
+						title:"Любими",
 						icon:"heart", tsf:"s1", href:"#/movies/favorites"
 					},{
-						title:"Playlists",
+						title:"Плейлисти",
 						icon:"folder", tsf:"s1", href:"#/playlists"
 					},{
-						title:"Users",
+						title:"Профили",
 						icon:"logout", tsf:"s1", href:"#/users"
 					}
 				]
@@ -151,9 +148,10 @@ directive('appVersion', ['version', function(version) {
 
 			})
 			scope.$on("enter", function () {
-				if(scope.searchLevel==3||scope.searchLevel==undefined){
+				window.location.href = "#/play/1";
+				/*if(scope.searchLevel==3||scope.searchLevel==undefined){
 					window.location.href = "#/play/"+scope.currentItem.id;
-				}
+				}*/
 
 			});
 		}
@@ -164,9 +162,10 @@ directive('appVersion', ['version', function(version) {
 		restrict: 'A',
 		link: function (scope, iElement, iAttrs) {
 			//instantiate player
-			var player;
+			var player = document.querySelector('video');
+			window.player = player;
 			setTimeout(function(){
-				player = videojs("videoplayer",{controls:false});
+				//player = videojs("videoplayer",{controls:false});
 				iconFactory.produce($("#controls"))
 			},300);
 			//setup video controls
@@ -234,13 +233,13 @@ directive('appVersion', ['version', function(version) {
 
 					else if(action=="backward"){
 						player.pause();
-						var at = player.currentTime();
-						player.currentTime(Math.max(at - 5, 0));
+						var at = player.currentTime;
+						player.currentTime = Math.max(at - 5, 0);
 						player.play();
 					}
 					else if(action=="forward"){
-						var at = player.currentTime();
-						player.currentTime(at + 5);	
+						var at = player.currentTime;
+						player.currentTime = at + 5;	
 					}
 					else if(action=="prev"){
 						
@@ -380,9 +379,9 @@ directive('appVersion', ['version', function(version) {
 	return {
 		restrict: 'A',
 		link: function (scope, iElement, iAttrs) {
-			scope.$on("enter", function () {
-				$location.path("/play/" + iAttrs.playmovie)
-			})
+			/*scope.$on("enter", function () {
+				$location.path("/play/1")
+			})*/
 		}
 	}
 }])

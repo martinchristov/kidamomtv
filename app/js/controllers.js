@@ -18,8 +18,8 @@ angular.module('kidamom.controllers', [])
   		if(depth.get()==0)return false;
   		else return true;
   	}
-    if(VK_ENTER==undefined)VK_ENTER=13;
-    if(VK_BACK_SPACE==undefined)VK_BACK_SPACE=8;
+    if(VK_ENTER == undefined) VK_ENTER=13;
+    if(VK_BACK_SPACE == undefined) VK_BACK_SPACE=8;
 
     //key navigation. to be moved to a directive
     $scope.keyDown = function(e){
@@ -29,7 +29,7 @@ angular.module('kidamom.controllers', [])
           which = "enter"; break;
         case VK_BACK_SPACE:
           which = 'back';
-          if(depth.get()>0)
+          if(depth.get() > 0)
           e.preventDefault(); break;
         case 38:
           e.preventDefault();
@@ -82,43 +82,29 @@ angular.module('kidamom.controllers', [])
   	$scope.items = Movies.getAll();
   }])
 
-  .controller('Play', ['$scope', '$routeParams', '$http', 'movie', 'playlist', function ($scope, $routeParams, $http, movie) {
+  .controller('Play', ['$scope', '$routeParams', '$http', 'movie', function ($scope, $routeParams, $http, movie) {
     $scope.Menu.visible = false;
     $scope.Menu.disable();
     $scope.movie = movie;
-    $scope.playlist = playlist;
-    
+
   }])
   .controller('Playlists', ['$scope', function($scope){
+    $scope.Menu.enable();
   	$scope.items = [
       {
-        photo:"sampledata/4.jpg",
-        title:"Playlist 1",
+        photo:"sampledata/Donkey_Xote_movie_poster.jpg",
+        title:"Мойте любими филми",
         movies:[
-          "sampledata/3.jpg", "sampledata/2.jpg", "sampledata/4.jpg"
+          "sampledata/Donkey_Xote_movie_poster.jpg", "sampledata/Umnikyt-Jack.jpg", "sampledata/happy-elf.jpg"
         ]
       },
       {
-        photo:"sampledata/4.jpg",
-        title:"Playlist 2",
+        photo:"sampledata/Kaspyr-Koleda.jpg",
+        title:"Каспър и Маша",
         movies:[
-          "sampledata/3.jpg", "sampledata/2.jpg", "sampledata/4.jpg"
+          "sampledata/Kaspyr-Koleda.jpg", "sampledata/masha.jpg"
         ]
       },
-      {
-        photo:"sampledata/2.jpg",
-        title:"Playlist 3",
-        movies:[
-          "sampledata/3.jpg", "sampledata/2.jpg", "sampledata/4.jpg"
-        ]
-      },
-      {
-        photo:"sampledata/3.jpg",
-        title:"Playlist 4",
-        movies:[
-          "sampledata/3.jpg", "sampledata/2.jpg", "sampledata/4.jpg"
-        ]
-      }
     ]
 
   }])
@@ -136,11 +122,6 @@ angular.module('kidamom.controllers', [])
         id:0
       },
       {
-        photo:"sampledata/user3.jpg",
-        name:"",
-        id:0
-      },
-      {
         photo:"sampledata/logout.jpg",
         name:"",
         id:0
@@ -153,12 +134,12 @@ angular.module('kidamom.controllers', [])
     }
 
     $scope.$on("enter",function(){
-      if($scope.$$childTail.currentItem===$scope.items[$scope.items.length-1]){
+      if($scope.$$childTail.currentItem === $scope.items[$scope.items.length-1]){
         $scope.$parent.loggedIn = $scope.loggedIn = false;
         window.location.reload();
       }
       else {
-        window.location.href=appURI.root+"index.html#/movies/recommended"; 
+        window.location.href = appURI.root + "index.html#/movies/recommended"; 
         window.location.reload();
       }
     })
