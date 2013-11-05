@@ -126,7 +126,7 @@ directive('appVersion', ['version', function(version) {
 		template:
 			'<div class="carousel">'+
 				'<div class="holder" style="width:{{items.length*180+160+125}}px; margin-left:{{-currentItemIndex*180-135}}px">'+
-					'<div class="item" ng-repeat="item in items" ng-class="{current:(item==currentItem)}">'+
+					'<div class="item" ng-repeat="item in items" ng-class="{current:(item==currentItem), faded:($index<currentItemIndex)}">'+
 						'<img ng-src="{{item.photo}}">'+
 					'</div>'+
 				'</div>'+
@@ -293,7 +293,7 @@ directive('appVersion', ['version', function(version) {
 			scope.curChar = 15;
 			scope.center = $(window).width()/2;
 
-			depth.more();
+			// depth.more();
 
 			scope.suggestions = [
 				""

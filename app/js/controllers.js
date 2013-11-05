@@ -51,28 +51,30 @@ angular.module('kidamom.controllers', [])
 
   .controller('Search', ['$scope','depth','$http', '$rootScope', function ($scope, depth, $http, $rootScope) {
   	
-  	$scope.items=[];
-  	var tmt = 0;
-    $scope.s="";
-  	$scope.$watch('s',function () {
-  		clearInterval(tmt);
-  		if($scope.s.length>0)
-  		tmt = setTimeout(function(){
-  			$http.get(appURI.search+"?s="+$scope.s).success(function(data) {
-				$scope.items = data;
-				$scope.currentItemIndex=0;
-				$scope.currentItem = data[0];
-		  	});
-  		},200);
-  	})
+  	// $scope.items=[];
+  	// var tmt = 0;
+   //  $scope.s="";
+  	// $scope.$watch('s',function () {
+  	// 	clearInterval(tmt);
+  	// 	if($scope.s.length>0)
+  	// 	tmt = setTimeout(function(){
+  	// 		$http.get(appURI.search+"?s="+$scope.s).success(function(data) {
+			// 	$scope.items = data;
+			// 	$scope.currentItemIndex=0;
+			// 	$scope.currentItem = data[0];
+		 //  	});
+  	// 	},200);
+  	// })
 
     $scope.$on("enter",function(){
       depth.more();
+      if($scope.searchLevel==0)$scope.searchLevel=2;
       if(depth.get()==1){
-        document.getElementById('searchInput').focus();
+        // document.getElementById('searchInput').focus();
       }
     })
     $scope.$on("back",function(){
+      if(depth.get()==1)$scope.searchLevel=0;
       depth.less();
     })
   }])
