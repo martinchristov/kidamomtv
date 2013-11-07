@@ -147,13 +147,13 @@ directive('appVersion', ['version', function(version) {
 		  		}
 
 			})
-			scope.$on("enter", function () {
-				window.location.href = "#/play/1";
+			/*scope.$on("enter", function () {
+				//window.location.href = "#/play/1";
 				/*if(scope.searchLevel==3||scope.searchLevel==undefined){
 					window.location.href = "#/play/"+scope.currentItem.id;
-				}*/
+				}
 
-			});
+			});*/
 		}
 	};
 }])
@@ -232,14 +232,10 @@ directive('appVersion', ['version', function(version) {
 					}
 
 					else if(action=="backward"){
-						player.pause();
-						var at = player.currentTime;
-						player.currentTime = Math.max(at - 5, 0);
-						player.play();
+						player.currentTime -= 10;
 					}
 					else if(action=="forward"){
-						var at = player.currentTime;
-						player.currentTime = at + 5;	
+						player.currentTime += 10;
 					}
 					else if(action=="prev"){
 						
@@ -379,9 +375,9 @@ directive('appVersion', ['version', function(version) {
 	return {
 		restrict: 'A',
 		link: function (scope, iElement, iAttrs) {
-			/*scope.$on("enter", function () {
+			scope.$on("enter", function () {
 				$location.path("/play/1")
-			})*/
+			})
 		}
 	}
 }])
