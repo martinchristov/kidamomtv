@@ -171,6 +171,16 @@ angular.module('kidamom.services', [])
       var $promise = $http.get(appURI.api + "/account", config_auth).then(function success(response) { 
         return response.data.profiles;  
       });
+    }
+
+    service.login = function (email, password) {
+      if (service.identifier) return service.identifier;
+
+      var $promise = $http.post(appURI.api + "/token", { email: email, password: password}, config_base);
+      $promise.then(function success(identifier) {
+        service.identifier = identifier;
+        localStorage.setItem('identifier', identifier);
+      });
       return $promise;
     }
     return service;
