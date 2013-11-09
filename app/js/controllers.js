@@ -85,7 +85,6 @@ angular.module('kidamom.controllers', [])
     Backend.getHomeMovies().then(function success(result) {
       $scope.items = result[playlist];
       $scope.currentItem = $scope.items[0];
-      console.log($scope.items);
     })
   }])
 
@@ -99,7 +98,6 @@ angular.module('kidamom.controllers', [])
   .controller('Playlists', ['$scope', 'Backend', function ($scope, Backend){
     $scope.Menu.enable();
     Backend.getPlaylists().then(function success(result) {
-      console.log(result);
     });
   	$scope.items = [
       {
@@ -123,8 +121,8 @@ angular.module('kidamom.controllers', [])
   .controller('Users', ['$scope', 'depth', 'Backend', '$route', function ($scope, depth, Backend, $route) {
     $scope.data = {};
 
-    $scope.loggedIn = Backend.identifier !== null;
-    if (!Backend.identifier) {
+    $scope.loggedIn = Backend.token !== undefined;
+    if (!Backend.token) {
       $scope.$on("enter", function () {
         Backend.login($scope.data.email, $scope.data.password).then(function success(){
           window.location.reload();

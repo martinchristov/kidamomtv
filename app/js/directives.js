@@ -15,7 +15,6 @@ directive('appVersion', ['version', function(version) {
 		replace:true,
 		templateUrl: "partials/menu.html",
 		link:function(scope,el,attrs){
-			console.log(Backend);
 			if(Backend.identifier){
 				scope.menu=[
 					{
@@ -32,10 +31,10 @@ directive('appVersion', ['version', function(version) {
 						icon:"sticker", tsf:"s1.3", href:"#/movies/new"
 					},{
 						title:"Последно гледани",
-						icon:"eye", tsf:"s1.2", href:"#/movies/lastwatch"
+						icon:"eye", tsf:"s1.2", href:"#/movies/lastwatched"
 					},{
 						title:"Любими",
-						icon:"heart", tsf:"s1", href:"#/movies/favorites"
+						icon:"heart", tsf:"s1", href:"#/movies/favourites"
 					},{
 						title:"Плейлисти",
 						icon:"folder", tsf:"s1", href:"#/playlists"
