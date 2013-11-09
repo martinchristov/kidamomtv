@@ -146,3 +146,21 @@ angular.module('kidamom.services', [])
       enable: function () { while (depth.get() != 0) depth.less(); this.visible = true; }
     }
   }])
+  .service('Backend', ['$http', function BackendService($http) {
+    var config_base = { headers: { 'X_API_KEY': 'kidamomsonytv', 'Accept': 'application/vnd.kidamom.com;version=1' }};
+    var config_auth = angular.copy(config_base);
+    var service = {};
+
+    service.identifier = localStorage.getItem('identifier');
+    service.login = function (email, password) {
+      if (service.identifier) return service.identifier;
+
+      var $promise = $http.post(appURI.api + "/token", { email: email, password: password}, config_base);
+      $promise.then(function success(identifier) {
+        service.identifier = identifier;
+        localStorage.setItem('identifier', identifier);
+      });
+      return $promise;
+    }
+    return service;
+  }])
