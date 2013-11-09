@@ -346,7 +346,7 @@ directive('appVersion', ['version', function(version) {
 		restrict: 'A',
 		link: function (scope, iElement, iAttrs) {
 			scope.$on("enter", function () {
-				$location.path("/play/1")
+				$location.path("/play/" + scope.currentItem.id);
 			})
 		}
 	}

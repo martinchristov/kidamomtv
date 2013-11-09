@@ -259,7 +259,9 @@ angular.module('kidamom.services', [])
             return result.profiles;
         })
     }
-
+    service.search = function (query) {
+        return service.req('/search', GET, { query: query }, true);
+    }
     service.getHomeMovies = function  () {
         return service.req('/home_movies', 'GET', null, service.token !== undefined);
     }
