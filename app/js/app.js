@@ -12,7 +12,6 @@ var kidamom = angular.module('kidamom', [
 
 .config(["$routeProvider",function($routeProvider){
 	$routeProvider
-		// .when('/',{controller:"Movies", templateUrl:"partials/movies.html"})
 		.when('/search',{controller:"Search", templateUrl:"partials/search.html"})
 		.when('/movies/:playlist',{controller:"Movies", templateUrl:"partials/movies.html"})
 		.when('/playlists/', {controller:"Playlists", templateUrl:"partials/playlists.html"})
@@ -22,8 +21,6 @@ var kidamom = angular.module('kidamom', [
 				movie: ['$q', '$route', '$http', function ($q, $route, $http) {
 					var params = $route.current.params;
 					if (!params.movieid) { return $q.reject(); }
-
-
 					return $http.get(appURI.getmovie+"?id=" + params.movieid).then(function (response) {
 						return response.data;
 					})
@@ -48,5 +45,6 @@ var appURI = {
 	search:"sampledata/search.json",
 	getmovie:"sampledata/getmovie.json",
 	getplaylist:"sampledata/getplaylist.json",
-	root:"/"
+	root:"/",
+	api: "http://kidamom.com/api"
 }

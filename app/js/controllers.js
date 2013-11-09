@@ -12,7 +12,6 @@ angular.module('kidamom.controllers', [])
   
   .controller('Main', ['$scope', 'depth', '$rootScope', 'Menu', function ($scope, depth, rootScope, Menu){
     $scope.Menu = Menu;
-    $scope.loggedIn = true; 
 
   	$scope.isMenuInactive = function(){
   		if(depth.get()==0)return false;
@@ -111,39 +110,25 @@ angular.module('kidamom.controllers', [])
 
   }])
 
-  .controller('Users', ['$scope', 'depth', function($scope, depth){
-    $scope.items = [
-      {
-        photo:"sampledata/user1.jpg",
-        name:"",
-        id:0
-      },
-      {
-        photo:"sampledata/user2.jpg",
-        name:"",
-        id:0
-      },
-      {
-        photo:"sampledata/logout.jpg",
-        name:"",
-        id:0
-      }
-    ]
-    $scope.loggedIn = $scope.$parent.loggedIn;
-  	$scope.logIn = function(){
-      $scope.$parent.loggedIn = $scope.loggedIn = true;
-      window.location.reload();
+  .controller('Users', ['$scope', 'depth', 'Backend', '$route', function ($scope, depth, Backend, $route) {
+    $scope.data = {};
+
+    $scope.loggedIn = Backend.identifier !== null;
+    if (!Backend.identifier) {
+      $scope.$on("enter", function () {
+        Backend.login($scope.data.email, $scope.data.password).then(function success(){
+          window.location.reload();
+        });
+      });
     }
+    else {
+      $scope.items = [];
+      Backend.getProfiles().then(function success(profiles){
+        $scope.items = profiles;
+      });
+      console.log($scope);
 
-    $scope.$on("enter",function(){
-      if($scope.$$childTail.currentItem === $scope.items[$scope.items.length-1]){
-        $scope.$parent.loggedIn = $scope.loggedIn = false;
-        window.location.reload();
-      }
-      else {
-        window.location.href = appURI.root + "index.html#/movies/recommended"; 
-        window.location.reload();
-      }
-    })
-
+      $scope.$on("enter", function () {
+      })
+    }
   }])

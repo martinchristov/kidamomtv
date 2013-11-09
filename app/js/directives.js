@@ -9,13 +9,14 @@ directive('appVersion', ['version', function(version) {
 		elm.text(version);
 	};
 }])
-.directive('mainmenu',['depth','$rootScope',function(depth,rootScope){
+.directive('mainmenu',['depth','$rootScope', 'Backend', function (depth, rootScope, Backend){
 	return {
 		restrict:"E",
 		replace:true,
 		templateUrl: "partials/menu.html",
 		link:function(scope,el,attrs){
-			if(scope.loggedIn){
+			console.log(Backend);
+			if(Backend.identifier){
 				scope.menu=[
 					{
 						title:"Търсене",
@@ -147,13 +148,6 @@ directive('appVersion', ['version', function(version) {
 		  		}
 
 			})
-			/*scope.$on("enter", function () {
-				//window.location.href = "#/play/1";
-				/*if(scope.searchLevel==3||scope.searchLevel==undefined){
-					window.location.href = "#/play/"+scope.currentItem.id;
-				}
-
-			});*/
 		}
 	};
 }])
