@@ -89,10 +89,11 @@ angular.module('kidamom.controllers', [])
     })
   }])
 
-  .controller('Play', ['$scope', '$routeParams', '$http', 'movie', function ($scope, $routeParams, $http, movie) {
+  .controller('Play', ['$scope', '$routeParams', '$http', 'movie', 'playlist', function ($scope, $routeParams, $http, movie, playlist) {
     $scope.Menu.visible = false;
     $scope.Menu.disable();
     $scope.movie = movie;
+    $scope.playlist = playlist;
 
   }])
   .controller('Playlists', ['$scope', 'Backend', function ($scope, Backend){
