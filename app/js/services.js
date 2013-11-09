@@ -148,74 +148,71 @@ angular.module('kidamom.services', [])
     }
 }])
 .service('Backend', ['$http', '$q', function BackendService($http, $q) {
-    var config_base = { headers: { 'X_API_KEY': 'kidamomsonytv', 'Accept': 'application/vnd.kidamom.com;version=1' }};
-    var config_auth = angular.copy(config_base);
-    var service = {};
+    var headers = {
+        'X_API_KEY' : 'kidamomsonytv',
+        'Accept'    : 'application/vnd.kidamom.com;version=1'
+    }
+    var configBase = { headers: headers };
+    var configAuth = angular.copy(configBase);
+    var service = { };
 
-    service.identifier = localStorage.getItem('identifier');
-    config_auth.headers['AUTHORIZATION'] = service.identifier;
+
+    service.switchToken = function (token) {
+        service.token = token;
+        localStorage.setItem('token', token);
+        configAuth.headers['AUTHORIZATION'] = token;
+    }
+
+    service.req = function (uri, method, data, auth) {
+        if (auth && !service.token) {
+            return $q.reject('NO_AUTH');
+        }
+        var config = auth ? angular.copy(configAuth) : angular.copy(configBase);
+        config.method = method;
+        config.url = appURI.api + uri;
+        config.data = data;
+        return $http(config).then(
+            function success(response) { return response.data },
+            function error(response) { return response.data }
+        );
+    }
+
+    /* POST /token email,password -> identifier */
     service.login = function (email, password) {
-        if (service.identifier) return $q.when(service.identifier);
+        if (service.token) return $q.when(service.token);
 
-        var $promise = $http.post(appURI.api + "/token", { email: email, password: password}, config_base);
-        $promise.then(function success(response) {
-            var id = response.data.identifier;
-            service.identifier = id;
-            localStorage.setItem('identifier', id);
-            config_auth.headers['AUTHORIZATION'] = id;
-        });
+        var $promise = service.req('/token', 'POST', { email: email, password: password });
+        $promise.then(function success(result) {
+            service.switchToken(result.identifier);
+        })
         return $promise;
     }
+    /* GET AUTH /token -> token isValid */
+    service.checkToken = function () {
+    }
+    /* DELETE AUTH /token -> delete token */
+    service.deleteToken = function () {
+
+    }
+
     service.getProfiles = function () {
-        if (!service.identifier) return [];
-
-        var $promise = $http.get(appURI.api + "/account", config_auth).then(function success(response) { 
-          return response.data.profiles;  
-        });
-        return $promise;
-    }
-
-    service.login = function (email, password) {
-        if (service.identifier) return service.identifier;
-
-        var $promise = $http.post(appURI.api + "/token", { email: email, password: password}, config_base);
-        $promise.then(function success(response) {
-            var id = response.data.identifier;
-            service.identifier = id;
-            localStorage.setItem('identifier', id);
-            config_auth.headers['AUTHORIZATION'] = id;
-      });
-        return $promise;
+        return service.req('/account', 'GET', null, true);
     }
 
     service.getPlaylists = function () {
-        if (!service.identifier) return [];
-
-        var $promise = $http.get(appURI.api + "/playlists", config_auth).then(function success(response) {
-            return response.data;
-        })
-        return $promise;
+        return service.req('/playlists', 'GET', null, true);
     };
 
     service.getHomeMovies = function  () {
-        if (!service.identifier) return [];
-        var $promise = $http.get(appURI.api + "/home_movies", config_auth).then(function success(response) {
-            return response.data;
-        })
-        return $promise;
+        return service.req('/home_movies', 'GET', null, service.token !== undefined);
+    }
+
+
+    // Load token from previous login
+    if (localStorage.token) {
+        service.token = localStorage.token;
+        configAuth.headers['AUTHORIZATION'] = localStorage.token;
     }
 
     return service;
 }])
-/*.service('Login', ['$http', function LoginService($http) {
-    var 
-}])*/
-/*.service('Backend', ['$http', function BackendService($http) {
-    var config_base = { headers: { 'X_API_KEY': 'kidamomsonytv', 'Accept': 'application/vnd.kidamom.com;version=1' } };
-
-    var service = {};
-
-    service.get = function (uri, data, auth) {
-        return $http.
-    }
-}])*/
