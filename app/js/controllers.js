@@ -79,10 +79,12 @@ angular.module('kidamom.controllers', [])
   }])
   
   .controller('Movies', ['$scope','$routeParams', 'Backend', function ($scope, $routeParams, Backend){
+    var playlist = $routeParams.playlist;
     $scope.Menu.enable();
   	$scope.items = [];
     Backend.getHomeMovies().then(function success(result) {
-      $scope.items = result.popular;
+      $scope.items = result[playlist];
+      $scope.currentItem = $scope.items[0];
       console.log($scope.items);
     })
   }])

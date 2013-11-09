@@ -167,7 +167,7 @@ angular.module('kidamom.services', [])
         return $promise;
     }
     service.getProfiles = function () {
-        if (!service.identifier) return [];
+        if (!service.identifier) return $q.when([]);
 
         var $promise = $http.get(appURI.api + "/account", config_auth).then(function success(response) { 
           return response.data.profiles;  
@@ -176,7 +176,7 @@ angular.module('kidamom.services', [])
     }
 
     service.login = function (email, password) {
-        if (service.identifier) return service.identifier;
+        if (service.identifier) return $q.when(service.identifier);
 
         var $promise = $http.post(appURI.api + "/token", { email: email, password: password}, config_base);
         $promise.then(function success(response) {
@@ -189,7 +189,7 @@ angular.module('kidamom.services', [])
     }
 
     service.getPlaylists = function () {
-        if (!service.identifier) return [];
+        if (!service.identifier) return $q.when([]);
 
         var $promise = $http.get(appURI.api + "/playlists", config_auth).then(function success(response) {
             return response.data;
@@ -198,7 +198,7 @@ angular.module('kidamom.services', [])
     };
 
     service.getHomeMovies = function  () {
-        if (!service.identifier) return [];
+        if (!service.identifier) return $q.when([]);
         var $promise = $http.get(appURI.api + "/home_movies", config_auth).then(function success(response) {
             return response.data;
         })
