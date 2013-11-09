@@ -272,7 +272,14 @@ body{
             display: block;
         }
         .progress{
-            top:95px;
+            
+
+            top: 103px;
+            height: 2px;
+            &.thick{
+                top:95px;
+                height:10px;
+            }
         }
     }
 
@@ -313,9 +320,11 @@ body{
       background:fade(white,70%);
       width: 100%;
       top:80px;
+      .transition(all .3s);
+      
       .made{
         background:@brandcolor;
-        height:10px;
+        height:100%;
         position: relative;
         z-index: 2;
       }
@@ -344,6 +353,7 @@ body{
                 padding: 0;margin: 0;
                 float: left;
                 margin: 35px 0 0;
+                .transition(margin .3s);
                 &.current{
                     margin-top: 0;
                 }

@@ -92,6 +92,12 @@ angular.module('kidamom.controllers', [])
     $scope.Menu.disable();
     $scope.movie = movie;
     $scope.playlist = playlist;
+    for(var i in playlist){
+      if(playlist[i].id==movie.id){
+        $scope.currentInList = i;
+        break;
+      }
+    }
 
   }])
   .controller('Playlists', ['$scope', 'Backend', function ($scope, Backend){
