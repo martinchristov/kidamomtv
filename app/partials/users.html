@@ -5,9 +5,9 @@
 		</div>
 		<div ng-switch-default>
 			<form ng-submit="logIn()">
-				<input type="text" placeholder="Username">
+				<input type="text" placeholder="Username" ng-model="data.email">
 				<div class="clearfix"></div>
-				<input type="password" placeholder="Password">
+				<input type="password" placeholder="Password" ng-model="data.password">
 				<div class="clearfix"></div>
 				<button name="submit" class="small">Login</button>
 			</form>
