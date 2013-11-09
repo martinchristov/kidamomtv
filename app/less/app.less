@@ -259,7 +259,7 @@ body{
 #controls{
     width: 100%;
     position: absolute;
-    bottom: 60px;
+    bottom: 40px;
     opacity:0;
     -webkit-transform:translate(0,50px);
     -moz-transform:translate(0,50px);
@@ -270,6 +270,9 @@ body{
         bottom: 0;
         #playlist{
             display: block;
+        }
+        .progress{
+            top:95px;
         }
     }
 
@@ -304,24 +307,26 @@ body{
             }
         }
     }
-    
+    .progress{
+      height:10px;
+      position: absolute;
+      background:fade(white,70%);
+      width: 100%;
+      top:80px;
+      .made{
+        background:@brandcolor;
+        height:10px;
+        position: relative;
+        z-index: 2;
+      }
+    }
     #playlist{
         margin-top: 30px;
         width: 100%;
         height: 105px;
         overflow: hidden;
         display: none;
-        .progress{
-          height:10px;
-          position: absolute;
-          background:fade(white,70%);
-          width: 100%;
-          top:105px;
-          .made{
-            background:@brandcolor;
-            height:10px;
-          }
-        }
+        
         .bg{
             position: absolute;
             width: 100%;
@@ -332,7 +337,7 @@ body{
         }
         ul{
             position: relative;
-            z-index: 2;
+            z-index: 3;
             list-style: none;
             padding: 0; margin: 0 auto;
             li{

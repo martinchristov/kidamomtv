@@ -167,6 +167,7 @@ directive('appVersion', ['version', function(version) {
 			scope.menuItem = 4;
 			scope.playing = false;
 			scope.searchOn=false;
+			scope.center = $(window).width()/2;
 
 			scope.controls = [
 				{ action:"search", icon:"src", fill:"#fff", tsf:"" },
@@ -178,6 +179,17 @@ directive('appVersion', ['version', function(version) {
 				{ action:"next", icon:"next", fill:"#fff", tsf:"s0.9" },
 				{ action:"subs", icon:"subs", fill:"#fff", tsf:"" }
 			];
+
+			//update progress bar
+			var timeupd=0;
+			scope.progress=0;
+			player.addEventListener("timeupdate",function(){
+				timeupd++;
+				if(timeupd%3==0){
+					scope.progress=player.currentTime/player.duration;
+					scope.$apply();
+				}
+			})
 
 			//setup playlist
 
@@ -227,9 +239,12 @@ directive('appVersion', ['version', function(version) {
 
 					else if(action=="backward"){
 						player.currentTime -= 10;
+						scope.progress=player.currentTime/player.duration;
 					}
 					else if(action=="forward"){
 						player.currentTime += 10;
+						scope.progress=player.currentTime/player.duration;
+						// scope.$apply();
 					}
 					else if(action=="prev"){
 						

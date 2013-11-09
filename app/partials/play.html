@@ -11,12 +11,13 @@
 			</li>
 		</ul>
 		<div class="clearfix"></div>
+		<div class="progress">
+			<div class="made" style="width:{{progress*100}}%"></div>
+			<!-- <div class="loaded" style="width:{{loaded*100}}%"></div> -->
+		</div>
 		<div id="playlist">
-			<div class="progress">
-				<div class="made" style="width:40%"></div>
-			</div>
 			<div class="bg"></div>
-			<ul style="width:{{playlist.length*110}}px">
+			<ul style="width:{{playlist.length*110}}px; margin-left:{{center-(playlist.length*110)/2}}px">
 				<li ng-repeat="item in playlist" ng-class="{current:item.id==movie.id}">
 					<img ng-src="{{item.thumb}}">
 				</li>
