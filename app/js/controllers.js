@@ -78,9 +78,13 @@ angular.module('kidamom.controllers', [])
     })
   }])
   
-  .controller('Movies', ['$scope','$routeParams', 'Movies', function ($scope, $routeParams, Movies){
+  .controller('Movies', ['$scope','$routeParams', 'Backend', function ($scope, $routeParams, Backend){
     $scope.Menu.enable();
-  	$scope.items = Movies.getAll();
+  	$scope.items = [];
+    Backend.getHomeMovies().then(function success(result) {
+      $scope.items = result.popular;
+      console.log($scope.items);
+    })
   }])
 
   .controller('Play', ['$scope', '$routeParams', '$http', 'movie', 'playlist', function ($scope, $routeParams, $http, movie, playlist) {
@@ -90,8 +94,11 @@ angular.module('kidamom.controllers', [])
     $scope.playlist = playlist;
 
   }])
-  .controller('Playlists', ['$scope', function($scope){
+  .controller('Playlists', ['$scope', 'Backend', function ($scope, Backend){
     $scope.Menu.enable();
+    Backend.getPlaylists().then(function success(result) {
+      console.log(result);
+    });
   	$scope.items = [
       {
         photo:"sampledata/Donkey_Xote_movie_poster.jpg",
@@ -115,28 +122,20 @@ angular.module('kidamom.controllers', [])
     $scope.data = {};
 
     $scope.loggedIn = Backend.identifier !== null;
-    $scope.$on("enter", function () {
-      if(Backend.identifier) return;
-      Backend.login($scope.data.email, $scope.data.password).then(function success(){
-        window.location.reload();
+    if (!Backend.identifier) {
+      $scope.$on("enter", function () {
+        Backend.login($scope.data.email, $scope.data.password).then(function success(){
+          window.location.reload();
+        });
       });
-    });
+    }
+    else {
+      $scope.items = [];
+      Backend.getProfiles().then(function success(profiles){
+        $scope.items = profiles;
+      });
 
-    $scope.items = [
-      {
-        photo:"sampledata/user1.jpg",
-        name:"",
-        id:0
-      },
-      {
-        photo:"sampledata/user2.jpg",
-        name:"",
-        id:0
-      },
-      {
-        photo:"sampledata/logout.jpg",
-        name:"",
-        id:0
-      }
-    ]
+      $scope.$on("enter", function () {
+      })
+    }
   }])

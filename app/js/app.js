@@ -46,5 +46,6 @@ var appURI = {
 	getmovie:"sampledata/getmovie.json",
 	getplaylist:"sampledata/getplaylist.json",
 	root:"/",
-	api: "http://kidamom.com/api"
+	api: "http://kidamom.com/api",
+	base: "http://kidamom.com/"
 }
