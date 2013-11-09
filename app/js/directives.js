@@ -9,15 +9,21 @@ directive('appVersion', ['version', function(version) {
 		elm.text(version);
 	};
 }])
-.directive('mainmenu',['depth', 'Menu', function (depth, Menu){
+.directive('mainmenu',['depth', 'Menu', '$location', function (depth, Menu, $location){
 	return {
 		restrict: "E",
 		replace: true,
 		templateUrl: "partials/menu.html",
-		link: function (scope,el,attrs) {
+		link: function (scope, el, attrs) {
 			scope.menu = Menu.getItems();
 			scope.scrollH=50;
 			scope.menuItem=1;
+			scope.menu.some(function (item, index) {
+				if (item.href.indexOf($location.$$path) !== -1) {
+					scope.menuItem = index;
+					return true;
+				}
+			})
 			scope.$on('keyup',function(){
 				if(depth.get()==0)
 				if(scope.menuItem>0){
