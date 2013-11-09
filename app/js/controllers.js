@@ -121,8 +121,8 @@ angular.module('kidamom.controllers', [])
   .controller('Users', ['$scope', 'depth', 'Backend', '$route', function ($scope, depth, Backend, $route) {
     $scope.data = {};
 
-    $scope.loggedIn = Backend.token !== undefined;
-    if (!Backend.token) {
+    $scope.loggedIn = Backend.isAuth();
+    if (!Backend.isAuth()) {
       $scope.$on("enter", function () {
         Backend.login($scope.data.email, $scope.data.password).then(function success(){
           window.location.reload();

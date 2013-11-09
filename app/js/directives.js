@@ -9,58 +9,13 @@ directive('appVersion', ['version', function(version) {
 		elm.text(version);
 	};
 }])
-.directive('mainmenu',['depth','$rootScope', 'Backend', function (depth, rootScope, Backend){
+.directive('mainmenu',['depth', 'Menu', function (depth, Menu){
 	return {
-		restrict:"E",
-		replace:true,
+		restrict: "E",
+		replace: true,
 		templateUrl: "partials/menu.html",
-		link:function(scope,el,attrs){
-			if(Backend.identifier){
-				scope.menu=[
-					{
-						title:"Търсене",
-						icon:"src", tsf:"s1", href:"#/search"
-					},{
-						title:"Препоръчани",
-						icon:"v-5", tsf:"s1", href:"#/movies/recommended"
-					},{
-						title:"Най-гледани",
-						icon:"people", tsf:"s1.35", href:"#/movies/popular"
-					},{
-						title:"Нови",
-						icon:"sticker", tsf:"s1.3", href:"#/movies/new"
-					},{
-						title:"Последно гледани",
-						icon:"eye", tsf:"s1.2", href:"#/movies/lastwatched"
-					},{
-						title:"Любими",
-						icon:"heart", tsf:"s1", href:"#/movies/favourites"
-					},{
-						title:"Плейлисти",
-						icon:"folder", tsf:"s1", href:"#/playlists"
-					},{
-						title:"Профили",
-						icon:"logout", tsf:"s1", href:"#/users"
-					}
-				]
-			}
-			else {
-				scope.menu=[
-					{
-						title:"Search",
-						icon:"src", tsf:"s1", href:"#/search"
-					},{
-						title:"Popular",
-						icon:"people", tsf:"s1.35", href:"#/movies/popular"
-					},{
-						title:"New",
-						icon:"sticker", tsf:"s1.3", href:"#/movies/new"
-					},{
-						title:"Users",
-						icon:"logout", tsf:"s1", href:"#/users"
-					}
-				]
-			}
+		link: function (scope,el,attrs) {
+			scope.menu = Menu.getItems();
 			scope.scrollH=50;
 			scope.menuItem=1;
 			scope.$on('keyup',function(){

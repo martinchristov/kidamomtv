@@ -140,11 +140,59 @@ angular.module('kidamom.services', [])
         }
     }
 }])
-.service('Menu', ['depth', function (depth) {
+.service('Menu', ['depth', 'Backend', function (depth, Backend) {
     return {
         visible: true,
         disable: function () { depth.more(); },
-        enable: function () { while (depth.get() != 0) depth.less(); this.visible = true; }
+        enable: function () { while (depth.get() != 0) depth.less(); this.visible = true; },
+        getItems: function () { 
+            if(Backend.isAuth()){
+                return [
+                    {
+                        title:"Търсене",
+                        icon:"src", tsf:"s1", href:"#/search"
+                    },{
+                        title:"Препоръчани",
+                        icon:"v-5", tsf:"s1", href:"#/movies/recommended"
+                    },{
+                        title:"Най-гледани",
+                        icon:"people", tsf:"s1.35", href:"#/movies/popular"
+                    },{
+                        title:"Нови",
+                        icon:"sticker", tsf:"s1.3", href:"#/movies/new"
+                    },{
+                        title:"Последно гледани",
+                        icon:"eye", tsf:"s1.2", href:"#/movies/lastwatched"
+                    },{
+                        title:"Любими",
+                        icon:"heart", tsf:"s1", href:"#/movies/favourites"
+                    },{
+                        title:"Плейлисти",
+                        icon:"folder", tsf:"s1", href:"#/playlists"
+                    },{
+                        title:"Профили",
+                        icon:"logout", tsf:"s1", href:"#/users"
+                    }
+                ];
+            }
+            else {
+                return [
+                    {
+                        title:"Search",
+                        icon:"src", tsf:"s1", href:"#/search"
+                    },{
+                        title:"Popular",
+                        icon:"people", tsf:"s1.35", href:"#/movies/popular"
+                    },{
+                        title:"New",
+                        icon:"sticker", tsf:"s1.3", href:"#/movies/new"
+                    },{
+                        title:"Users",
+                        icon:"logout", tsf:"s1", href:"#/users"
+                    }
+                ];
+            }
+        },
     }
 }])
 .service('Backend', ['$http', '$q', function BackendService($http, $q) {
@@ -157,7 +205,7 @@ angular.module('kidamom.services', [])
     var service = { };
 
 
-    service.switchToken = function (token) {
+    service.setToken = function (token) {
         service.token = token;
         localStorage.setItem('token', token);
         configAuth.headers['AUTHORIZATION'] = token;
@@ -177,31 +225,40 @@ angular.module('kidamom.services', [])
         );
     }
 
-    /* POST /token email,password -> identifier */
+    service.isAuth = function () {
+        return service.token !== undefined;
+    }
+
+    /* POST /token (AUTH) email,password -> identifier */
     service.login = function (email, password) {
         if (service.token) return $q.when(service.token);
 
         var $promise = service.req('/token', 'POST', { email: email, password: password });
         $promise.then(function success(result) {
-            service.switchToken(result.identifier);
+            service.setToken(result.identifier);
         })
         return $promise;
     }
-    /* GET AUTH /token -> token isValid */
+    /* GET /token (AUTH) -> isValid */
     service.checkToken = function () {
     }
-    /* DELETE AUTH /token -> delete token */
+    /* DELETE /token (AUTH) ->  */
     service.deleteToken = function () {
 
     }
-
-    service.getProfiles = function () {
-        return service.req('/account', 'GET', null, true);
+    /* POST /token/switch (AUTH) profileId -> profile */
+    service.switchProfile = function (profileId) {
+        return service.req('/token/switch', 'POST', { profile_id : profileId }, true);
     }
-
+    /* GET /playlists (AUTH) -> array of playlists */
     service.getPlaylists = function () {
         return service.req('/playlists', 'GET', null, true);
     };
+    service.getProfiles = function () {
+        return service.req('/account', 'GET', null, true).then(function success(result) {
+            return result.profiles;
+        })
+    }
 
     service.getHomeMovies = function  () {
         return service.req('/home_movies', 'GET', null, service.token !== undefined);
