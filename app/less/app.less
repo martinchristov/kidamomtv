@@ -1,5 +1,6 @@
 /* app css stylesheet */
 
+@brandcolor:#de2121;
 .scale(@what){
   -moz-transform:scale(@what);
   -o-transform:scale(@what);
@@ -307,14 +308,25 @@ body{
     #playlist{
         margin-top: 30px;
         width: 100%;
-        height: 115px;
+        height: 105px;
         overflow: hidden;
         display: none;
+        .progress{
+          height:10px;
+          position: absolute;
+          background:fade(white,70%);
+          width: 100%;
+          top:105px;
+          .made{
+            background:@brandcolor;
+            height:10px;
+          }
+        }
         .bg{
             position: absolute;
             width: 100%;
-            height: 65px;
-            margin-top: 40px;
+            height: 70px;
+            margin-top: 35px;
             background: fade(black,70%);
 
         }
@@ -326,7 +338,7 @@ body{
             li{
                 padding: 0;margin: 0;
                 float: left;
-                margin: 40px 0 0;
+                margin: 35px 0 0;
                 &.current{
                     margin-top: 0;
                 }
