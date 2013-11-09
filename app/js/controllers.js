@@ -78,9 +78,13 @@ angular.module('kidamom.controllers', [])
     })
   }])
   
-  .controller('Movies', ['$scope','$routeParams', 'Movies', function ($scope, $routeParams, Movies){
+  .controller('Movies', ['$scope','$routeParams', 'Backend', function ($scope, $routeParams, Backend){
     $scope.Menu.enable();
-  	$scope.items = Movies.getAll();
+  	$scope.items = [];
+    Backend.getHomeMovies().then(function success(result) {
+      $scope.items = result.popular;
+      console.log($scope.items);
+    })
   }])
 
   .controller('Play', ['$scope', '$routeParams', '$http', 'movie', function ($scope, $routeParams, $http, movie) {
@@ -89,8 +93,11 @@ angular.module('kidamom.controllers', [])
     $scope.movie = movie;
 
   }])
-  .controller('Playlists', ['$scope', function($scope){
+  .controller('Playlists', ['$scope', 'Backend', function ($scope, Backend){
     $scope.Menu.enable();
+    Backend.getPlaylists().then(function success(result) {
+      console.log(result);
+    });
   	$scope.items = [
       {
         photo:"sampledata/Donkey_Xote_movie_poster.jpg",
@@ -126,7 +133,6 @@ angular.module('kidamom.controllers', [])
       Backend.getProfiles().then(function success(profiles){
         $scope.items = profiles;
       });
-      console.log($scope);
 
       $scope.$on("enter", function () {
       })
