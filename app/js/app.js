@@ -27,7 +27,7 @@ var kidamom = angular.module('kidamom', [
 				}],
 				playlist: ['$q', '$route', '$http', function ($q, $route, $http) {
 					var params = $route.current.params;
-					if (!params.playlistid) { return null; }
+					if (!params.playlistid) { return []; }
 
 					return $http.get(appURI.getplaylist + "?id=" + params.playlistid).then(function (response) {
 						return response.data;

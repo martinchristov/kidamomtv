@@ -11,14 +11,14 @@
 			</li>
 		</ul>
 		<div class="clearfix"></div>
-		<div class="progress">
+		<div class="progress" ng-class="{thick:menuItem==2||menuItem==5}">
 			<div class="made" style="width:{{progress*100}}%"></div>
 			<!-- <div class="loaded" style="width:{{loaded*100}}%"></div> -->
 		</div>
 		<div id="playlist">
 			<div class="bg"></div>
-			<ul style="width:{{playlist.length*110}}px; margin-left:{{center-(playlist.length*110)/2}}px">
-				<li ng-repeat="item in playlist" ng-class="{current:item.id==movie.id}">
+			<ul style="width:{{playlist.length*110}}px; margin-left:{{center-(currentInList*110)-55}}px">
+				<li ng-repeat="item in playlist" ng-class="{current:(currentInList==$index&&(menuItem==3||menuItem==4))||(currentInList==$index-1&&menuItem==6)||(currentInList==$index+1&&menuItem==1)}">
 					<img ng-src="{{item.thumb}}">
 				</li>
 			</ul>
