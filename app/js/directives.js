@@ -241,7 +241,7 @@ directive('appVersion', ['version', function(version) {
 		}
 	};
 }])
-.directive('search', ['$rootScope', 'depth', '$http', function ($rootScope, depth, $http) {
+.directive('search', ['$rootScope', 'depth', '$http', 'Backend', function ($rootScope, depth, $http, Backend) {
 	return {
 		restrict: 'E',
 		replace:true,
@@ -255,6 +255,7 @@ directive('appVersion', ['version', function(version) {
 			// 3 - carousel
 
 			scope.keyboard="abcdefghijklmnopqrstuvwxyz< 0123456789";
+			scope.keyboard="абвгдежзийклмнопрстуфхцчшщъьюя< 0123456789";
 			scope.curChar = 15;
 			scope.center = $(window).width()/2;
 
@@ -327,6 +328,7 @@ directive('appVersion', ['version', function(version) {
 					if(ch!="<")
 						scope.suggestions[scope.curSug]+=scope.keyboard[scope.curChar];
 					else scope.suggestions[scope.curSug] = scope.suggestions[scope.curSug].substr(0,scope.suggestions[scope.curSug].length-1)
+					Backend.search(scope.suggestions[scope.curSug])
 					setTimeout(function(){
 						evalSugWidth();
 						evalSugPos();

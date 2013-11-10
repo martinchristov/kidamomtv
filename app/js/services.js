@@ -260,7 +260,7 @@ angular.module('kidamom.services', [])
         })
     }
     service.search = function (query) {
-        return service.req('/search', GET, { query: query }, true);
+        return service.req('/search/'+query, 'GET', null, true);
     }
     service.getHomeMovies = function  () {
         return service.req('/home_movies', 'GET', null, service.token !== undefined);
