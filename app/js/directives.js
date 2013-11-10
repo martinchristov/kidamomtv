@@ -207,7 +207,7 @@ directive('appVersion', ['version', function(version) {
 						player.currentTime += 10;
 						scope.progress=player.currentTime/player.duration;
 					}
-					else if(action=="prev"){
+					else if(action=="prev" && scope.playlist){
 						if (scope.currentInList > 0) {
 							var movieid = scope.playlist[scope.currentInList - 1].id;
 							var playlistid = scope.playlistId;
@@ -215,7 +215,7 @@ directive('appVersion', ['version', function(version) {
 							$location.replace();
 						}
 					}
-					else if(action=="next"){
+					else if(action=="next" && scope.playlist){
 						if (scope.currentInList < scope.playlist.length - 1) {
 							var movieid = scope.playlist[scope.currentInList + 1].id;
 							var playlistid = scope.playlistId;
