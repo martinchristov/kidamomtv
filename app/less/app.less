@@ -148,7 +148,7 @@ body{
 }
 
 .info{
-  width: 45%;
+  width: 735px;
   color: #737070;
   position: absolute;
   top: 380px;
@@ -185,8 +185,8 @@ body{
   }
 }
 .button, button{
-    background: #8ccd00; 
-    border: 2px solid #669500; 
+    background: @brandcolor; 
+    border: 2px solid darken(@brandcolor,10%); 
     border-radius: 6px; 
     color: #fff;
     text-transform: uppercase;
@@ -384,8 +384,9 @@ body{
             margin: 3px;
             font-size: 27px;
             padding: 0;
-            line-height: 45px;
+            line-height: 44px;
             text-align: center;
+            border-radius: 4px;
         }
         .transition(all .3s);
         &.focused li.current{
@@ -445,6 +446,13 @@ body{
             margin-left: 0;
         }
     }
+    .info{
+      padding: 0 20px 20px;
+      background: fade(black,75%);
+      width: 860px;
+      left: 405px;
+      color:white;
+    }
 
     .unfocused .carousel{
         .holder{
@@ -465,6 +473,28 @@ body{
       margin-left: 125px;
     }
   }
+  .info{
+      padding: 0;
+      background: none;
+      width: 735px;
+      left: 570px;color: #737070;
+    }
+    #src-head{
+      background: rgba(255, 255, 255, 0.7);
+      height: 130px;
+      ul{
+        li{
+          background: rgba(65, 65, 65, 0.9);
+          color:white;
+          &.current{
+            
+          }
+        }
+        &.focused .current{
+          background: #d0333f;
+        }
+      }
+    }
 }
 
 #leftfader{
