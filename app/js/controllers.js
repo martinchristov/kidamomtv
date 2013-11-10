@@ -138,9 +138,12 @@ angular.module('kidamom.controllers', [])
       $scope.items = [];
       Backend.getProfiles().then(function success(profiles){
         $scope.items = profiles;
+        $scope.items.forEach(function (item) {
+          item.photo = item.avatar;
+        });
       });
-
-      $scope.$on("enter", function () {
+      $scope.$on('enter', function () {
+        
       })
     }
   }])

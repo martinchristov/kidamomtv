@@ -42,5 +42,5 @@ var appURI = {
 	getplaylist:"sampledata/getplaylist.json",
 	root:"/",
 	api: "http://kidamom.com/api",
-	base: "http://kidamom.com/"
+	base: "http://kidamom.com/123"
 }
