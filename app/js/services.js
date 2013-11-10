@@ -207,7 +207,7 @@ angular.module('kidamom.services', [])
 
     service.setToken = function (token) {
         service.token = token;
-        localStorage.setItem('token', token);
+        localStorage.token = token;
         configAuth.headers['AUTHORIZATION'] = token;
     }
 
@@ -218,7 +218,8 @@ angular.module('kidamom.services', [])
         var config = auth ? angular.copy(configAuth) : angular.copy(configBase);
         config.method = method;
         config.url = appURI.api + uri;
-        config.data = data;
+        if (config.method === 'GET') config.params = data;
+        else config.data = data;
         return $http(config).then(
             function success(response) { return response.data },
             function error(response) { return response.data }
