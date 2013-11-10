@@ -211,6 +211,10 @@ angular.module('kidamom.services', [])
         configAuth.headers['AUTHORIZATION'] = token;
     }
 
+    service.isAuth = function () {
+        return service.token !== undefined;
+    }
+
     service.req = function (uri, method, data, auth) {
         if (auth && !service.token) {
             return $q.reject('NO_AUTH');
@@ -218,16 +222,16 @@ angular.module('kidamom.services', [])
         var config = auth ? angular.copy(configAuth) : angular.copy(configBase);
         config.method = method;
         config.url = appURI.api + uri;
-        if (config.method === 'GET') config.params = data;
-        else config.data = data;
+        if (config.method === 'GET' && data !== null) {
+            config.url += "/" + data.join('/');
+        }
+        else {
+            config.data = data;
+        }
         return $http(config).then(
             function success(response) { return response.data },
             function error(response) { return response.data }
         );
-    }
-
-    service.isAuth = function () {
-        return service.token !== undefined;
     }
 
     /* POST /token (AUTH) email,password -> identifier */
@@ -261,10 +265,28 @@ angular.module('kidamom.services', [])
         })
     }
     service.search = function (query) {
-        return service.req('/search', GET, { query: query }, true);
+        return service.req('/search', 'GET', [ query ], true);
     }
     service.getHomeMovies = function  () {
         return service.req('/home_movies', 'GET', null, service.token !== undefined);
+    }
+
+    var DEBUG = false;
+    service.getMovie = function (id) {
+        if (DEBUG) {
+            return $http.get(appURI.getmovie + "?id=" + id).then(function success(response) { return response.data; });
+        }
+        else {
+            return service.req('/movies', 'GET', [ id ], true);
+        }
+    }
+    service.getPlaylist = function (id) {
+        if (DEBUG) {
+            return $http.get(appURI.getplaylist + "?id=" + id).then(function success(response) { return response.data.movies; });
+        }
+        else {
+            return service.req('/playlists', 'GET', [ id ], true);
+        }
     }
 
 

@@ -1,6 +1,5 @@
 <div style="width:100%; height:100%;">
-	<video id="videoplayer" videoplayer>
-		<source ng-src="{{movie.url}}">
+	<video id="videoplayer" videoplayer ng-src="{{movieUrl}}">
 	</video>
 	<div id="controls" ng-class="{show:showControls, wplaylist:playlist.length>0}">
 		<ul style="width:{{(controls.length-1)*50+30}}px" id="controls-ul">

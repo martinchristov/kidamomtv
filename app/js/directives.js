@@ -112,7 +112,7 @@ directive('appVersion', ['version', function(version) {
 		}
 	};
 }])
-.directive('videoplayer', ['$compile',function (compile) {
+.directive('videoplayer', ['$route', '$location', function ($route, $location) {
 	return {
 		restrict: 'A',
 		link: function (scope, iElement, iAttrs) {
@@ -162,6 +162,7 @@ directive('appVersion', ['version', function(version) {
 			scope.$on("keyleft",function(){
 				if(scope.showControls)
 				{
+					// skip over hidden pause/play controls
 					if(scope.menuItem>0)scope.menuItem--;
 					if(!scope.playing&&scope.menuItem==3)scope.menuItem--;
 					else if(scope.playing&&scope.menuItem==4)scope.menuItem--;
@@ -170,6 +171,7 @@ directive('appVersion', ['version', function(version) {
 			scope.$on("keyright",function(){
 				if(scope.showControls)
 				{
+					// skip over hidden pause/play controls
 					if(scope.menuItem<scope.controls.length-1)scope.menuItem++;
 					if(scope.playing&&scope.menuItem==4)scope.menuItem++;
 					else if(!scope.playing&&scope.menuItem==3)scope.menuItem++;
@@ -178,7 +180,7 @@ directive('appVersion', ['version', function(version) {
 			})
 
 			//control actions on enter
-
+			window.$location = $location;
 			scope.$on("enter",function(){
 				if (scope.showControls==false) {
 					if(scope.searchLevel<1)
@@ -205,13 +207,22 @@ directive('appVersion', ['version', function(version) {
 					else if(action=="forward"){
 						player.currentTime += 10;
 						scope.progress=player.currentTime/player.duration;
-						// scope.$apply();
 					}
 					else if(action=="prev"){
-						
+						if (scope.currentInList > 0) {
+							var movieid = scope.playlist[scope.currentInList - 1].id;
+							var playlistid = scope.playlistId;
+							$location.path('/play/' + movieid + "/" + playlistid);
+							$location.replace();
+						}
 					}
 					else if(action=="next"){
-						
+						if (scope.currentInList < scope.playlist.length - 1) {
+							var movieid = scope.playlist[scope.currentInList + 1].id;
+							var playlistid = scope.playlistId;
+							$location.path('/play/' + movieid + "/" + playlistid);
+							$location.replace();
+						}
 					}
 					else if(action=="subs"){
 						

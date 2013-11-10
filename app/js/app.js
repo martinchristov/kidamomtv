@@ -14,24 +14,19 @@ var kidamom = angular.module('kidamom', [
 	$routeProvider
 		.when('/search',{controller:"Search", templateUrl:"partials/search.html"})
 		.when('/movies/:playlist',{controller:"Movies", templateUrl:"partials/movies.html"})
-		.when('/playlists/', {controller:"Playlists", templateUrl:"partials/playlists.html"})
+		.when('/playlists', {controller:"Playlists", templateUrl:"partials/playlists.html"})
 		.when('/users', {controller:"Users", templateUrl:"partials/users.html"})
 		.when('/play/:movieid/:playlistid?',  { controller:"Play", templateUrl:"partials/play.html",
 			resolve: {
-				movie: ['$q', '$route', '$http', function ($q, $route, $http) {
+				movie: ['$q', '$route', 'Backend', function ($q, $route, Backend) {
 					var params = $route.current.params;
 					if (!params.movieid) { return $q.reject(); }
-					return $http.get(appURI.getmovie+"?id=" + params.movieid).then(function (response) {
-						return response.data;
-					})
+					return Backend.getMovie(params.movieid);
 				}],
-				playlist: ['$q', '$route', '$http', function ($q, $route, $http) {
+				playlist: ['$q', '$route', 'Backend', function ($q, $route, Backend) {
 					var params = $route.current.params;
 					if (!params.playlistid) { return []; }
-
-					return $http.get(appURI.getplaylist + "?id=" + params.playlistid).then(function (response) {
-						return response.data;
-					})
+					return Backend.getPlaylist(params.playlistid);
 				}]
 			}})
 

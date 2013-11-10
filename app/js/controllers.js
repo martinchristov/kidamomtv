@@ -84,7 +84,7 @@ angular.module('kidamom.controllers', [])
   	$scope.items = [];
     Backend.getHomeMovies().then(function success(result) {
       $scope.items = result[playlist];
-      $scope.currentItem = $scope.items[0];
+      if ($scope.items.length) $scope.currentItem = $scope.items[0];
     })
   }])
 
@@ -92,35 +92,26 @@ angular.module('kidamom.controllers', [])
     $scope.Menu.visible = false;
     $scope.Menu.disable();
     $scope.movie = movie;
-    $scope.playlist = playlist;
-    for(var i in playlist){
-      if(playlist[i].id==movie.id){
-        $scope.currentInList = i;
-        break;
-      }
-    }
+    $scope.playlist = playlist.movies;
+    $scope.playlistId = playlist.id;
 
+    movie.videos.forEach(function (item) {
+      if (item.languageLocale === 'bg') $scope.movieUrl = item.sources.tv;
+    });
+    if ($scope.playlist && $scope.playlist.length) {
+      $scope.playlist.forEach(function (item, index) {
+        if (item.id === movie.id)
+          $scope.currentInList = index;
+      });
+    }
   }])
   .controller('Playlists', ['$scope', 'Backend', function ($scope, Backend){
     $scope.Menu.enable();
-    Backend.getPlaylists().then(function success(result) {
+    $scope.items = [];
+    Backend.getPlaylists().then(function success(playlists) {
+      $scope.items = playlists;
+      console.log(playlists);
     });
-  	$scope.items = [
-      {
-        photo:"sampledata/Donkey_Xote_movie_poster.jpg",
-        title:"Мойте любими филми",
-        movies:[
-          "sampledata/Donkey_Xote_movie_poster.jpg", "sampledata/Umnikyt-Jack.jpg", "sampledata/happy-elf.jpg"
-        ]
-      },
-      {
-        photo:"sampledata/Kaspyr-Koleda.jpg",
-        title:"Каспър и Маша",
-        movies:[
-          "sampledata/Kaspyr-Koleda.jpg", "sampledata/masha.jpg"
-        ]
-      },
-    ]
 
   }])
 
