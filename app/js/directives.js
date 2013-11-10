@@ -137,7 +137,7 @@ directive('appVersion', ['version', function(version) {
 				{ action:"play", icon:"play", fill:"#fff", tsf:"" },
 				{ action:"forward", icon:"forward", fill:"#fff", tsf:"s1.4" },
 				{ action:"next", icon:"next", fill:"#fff", tsf:"s0.9" },
-				{ action:"speech", icon:"speech", fill:"#fff", tsf:"" }
+				{ action:"speech", icon:"speech", fill:"#fff", tsf:"s0.85" }
 			];
 
 			//update progress bar
@@ -223,11 +223,12 @@ directive('appVersion', ['version', function(version) {
 							$location.replace();
 						}
 					}
-					else if(action=="subs"){
+					else if(action=="speech"){
 						
 					}
 					else if(action=="search"){
 						scope.showControls=false;
+						scope.searchOn=true;
 						depth.more();
 						setTimeout(function(){
 							scope.searchLevel=2;
@@ -245,6 +246,7 @@ directive('appVersion', ['version', function(version) {
 						depth.less();
 						scope.searchLevel=0;
 						scope.showControls=true;
+						scope.searchOn=false;
 					}
 					else
 						history.back();
@@ -329,13 +331,13 @@ directive('appVersion', ['version', function(version) {
 			})
 
 			scope.$on("keydown",function(){
-				if(scope.searchLevel<3&&depth.get()>0){
+				if(scope.searchLevel<3&&depth.get()>0&&scope.searchOn!=false){
 					if(scope.items.length==0&&scope.searchLevel==2)return;
 					scope.searchLevel++;
 				}
 			})
 			scope.$on("keyup",function(){
-				if(scope.searchLevel>1)scope.searchLevel--;
+				if(scope.searchLevel>1&&scope.searchOn!=false)scope.searchLevel--;
 			})
 
 			scope.$on("enter",function(){
