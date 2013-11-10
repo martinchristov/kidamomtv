@@ -85,12 +85,11 @@ directive('appVersion', ['version', function(version) {
 			'<div class="carousel">'+
 				'<div class="holder" style="width:{{items.length*180+160+125}}px; margin-left:{{-currentItemIndex*180-135}}px">'+
 					'<div class="item" ng-repeat="item in items" ng-class="{current:(item==currentItem), faded:($index<currentItemIndex)}">'+
-						'<img ng-src="{{base + item.photo}}">'+
+						'<img ng-src="{{item.photo}}">'+
 					'</div>'+
 				'</div>'+
 			'</div>',
 		link: function (scope, iElement, iAttrs) {
-			scope.base = appURI.base;
 			scope.currentItemIndex = 0;
 			if(scope.hasOwnProperty("items"))scope.currentItem = scope.items[0];
 			scope.$on("keyleft",function(){
@@ -138,7 +137,7 @@ directive('appVersion', ['version', function(version) {
 				{ action:"play", icon:"play", fill:"#fff", tsf:"" },
 				{ action:"forward", icon:"forward", fill:"#fff", tsf:"s1.4" },
 				{ action:"next", icon:"next", fill:"#fff", tsf:"s0.9" },
-				{ action:"subs", icon:"subs", fill:"#fff", tsf:"" }
+				{ action:"speech", icon:"speech", fill:"#fff", tsf:"" }
 			];
 
 			//update progress bar
@@ -269,7 +268,7 @@ directive('appVersion', ['version', function(version) {
 
 			scope.keyboard="abcdefghijklmnopqrstuvwxyz< 0123456789";
 			scope.keyboard="абвгдежзийклмнопрстуфхцчшщъьюя< 0123456789";
-			scope.keyboard="джу";
+			// scope.keyboard="джу";
 			scope.curChar = 0;
 			scope.center = $(window).width()/2;
 
