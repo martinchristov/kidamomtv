@@ -85,12 +85,11 @@ directive('appVersion', ['version', function(version) {
 			'<div class="carousel">'+
 				'<div class="holder" style="width:{{items.length*180+160+125}}px; margin-left:{{-currentItemIndex*180-135}}px">'+
 					'<div class="item" ng-repeat="item in items" ng-class="{current:(item==currentItem), faded:($index<currentItemIndex)}">'+
-						'<img ng-src="{{base + item.photo}}">'+
+						'<img ng-src="{{item.photo}}">'+
 					'</div>'+
 				'</div>'+
 			'</div>',
 		link: function (scope, iElement, iAttrs) {
-			scope.base = appURI.base;
 			scope.currentItemIndex = 0;
 			if(scope.hasOwnProperty("items"))scope.currentItem = scope.items[0];
 			scope.$on("keyleft",function(){

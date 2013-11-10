@@ -105,13 +105,21 @@ angular.module('kidamom.controllers', [])
       });
     }
   }])
-  .controller('Playlists', ['$scope', 'Backend', function ($scope, Backend){
+  .controller('Playlists', ['$scope', 'Backend', '$location', function ($scope, Backend, $location){
     $scope.Menu.enable();
     $scope.items = [];
     Backend.getPlaylists().then(function success(playlists) {
       $scope.items = playlists;
-      console.log(playlists);
+      $scope.items.forEach(function (item) {
+        if (item.movies.length) item.photo = item.movies[0].photo;
+      })
+      $scope.currentItem = $scope.items && $scope.items[0];
     });
+
+    $scope.$on('enter', function () {
+      if (!$scope.currentItem.movies.length) returnl
+      $location.path('/play/' + $scope.currentItem.movies[0].id + "/" + $scope.currentItem.id);
+    })
 
   }])
 

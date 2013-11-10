@@ -178,16 +178,16 @@ angular.module('kidamom.services', [])
             else {
                 return [
                     {
-                        title:"Search",
+                        title:"Търсене",
                         icon:"src", tsf:"s1", href:"#/search"
                     },{
-                        title:"Popular",
+                        title:"Най-гледани",
                         icon:"people", tsf:"s1.35", href:"#/movies/popular"
                     },{
-                        title:"New",
+                        title:"Нови",
                         icon:"sticker", tsf:"s1.3", href:"#/movies/new"
                     },{
-                        title:"Users",
+                        title:"Профили",
                         icon:"logout", tsf:"s1", href:"#/users"
                     }
                 ];
