@@ -137,7 +137,7 @@ directive('appVersion', ['version', function(version) {
 				{ action:"play", icon:"play", fill:"#fff", tsf:"" },
 				{ action:"forward", icon:"forward", fill:"#fff", tsf:"s1.4" },
 				{ action:"next", icon:"next", fill:"#fff", tsf:"s0.9" },
-				{ action:"subs", icon:"subs", fill:"#fff", tsf:"" }
+				{ action:"speech", icon:"speech", fill:"#fff", tsf:"" }
 			];
 
 			//update progress bar
@@ -268,7 +268,7 @@ directive('appVersion', ['version', function(version) {
 
 			scope.keyboard="abcdefghijklmnopqrstuvwxyz< 0123456789";
 			scope.keyboard="абвгдежзийклмнопрстуфхцчшщъьюя< 0123456789";
-			scope.keyboard="джу";
+			// scope.keyboard="джу";
 			scope.curChar = 0;
 			scope.center = $(window).width()/2;
 
