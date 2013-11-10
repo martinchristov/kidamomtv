@@ -67,7 +67,12 @@ angular.module('kidamom.controllers', [])
 
     $scope.$on("enter",function(){
       depth.more();
-      if($scope.searchLevel==0)$scope.searchLevel=2;
+      if($scope.searchLevel==0){
+        setTimeout(function(){
+              $scope.searchLevel=2;
+              $scope.$apply();
+            },20);
+      }
       if(depth.get()==1){
         // document.getElementById('searchInput').focus();
       }

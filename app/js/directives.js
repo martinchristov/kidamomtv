@@ -112,7 +112,7 @@ directive('appVersion', ['version', function(version) {
 		}
 	};
 }])
-.directive('videoplayer', ['$compile',function (compile) {
+.directive('videoplayer', ['$compile', 'depth',function (compile, depth) {
 	return {
 		restrict: 'A',
 		link: function (scope, iElement, iAttrs) {
@@ -218,6 +218,7 @@ directive('appVersion', ['version', function(version) {
 					}
 					else if(action=="search"){
 						scope.showControls=false;
+						depth.more();
 						setTimeout(function(){
 							scope.searchLevel=2;
 							scope.$apply();
@@ -231,6 +232,7 @@ directive('appVersion', ['version', function(version) {
 				}
 				else{
 					if(scope.searchLevel>0){
+						depth.less();
 						scope.searchLevel=0;
 						scope.showControls=true;
 					}
@@ -256,7 +258,8 @@ directive('appVersion', ['version', function(version) {
 
 			scope.keyboard="abcdefghijklmnopqrstuvwxyz< 0123456789";
 			scope.keyboard="абвгдежзийклмнопрстуфхцчшщъьюя< 0123456789";
-			scope.curChar = 15;
+			scope.keyboard="джу";
+			scope.curChar = 0;
 			scope.center = $(window).width()/2;
 
 			// depth.more();
@@ -276,7 +279,13 @@ directive('appVersion', ['version', function(version) {
 			}
 			function evalSugPos () {
 				var cur = $(sugsDom.find('li')[scope.curSug]);
-				scope.sugPos = scope.center - cur.position().left - cur.width() - 15;
+				try{
+					scope.sugPos = scope.center - cur.position().left - cur.width() - 15;
+				}
+				catch(e){
+					console.log(scope.curSug, sugsDom.find('li'))
+				}
+				
 			}
 			setTimeout(function(){
 				evalSugWidth();
@@ -310,7 +319,10 @@ directive('appVersion', ['version', function(version) {
 			})
 
 			scope.$on("keydown",function(){
-				if(scope.searchLevel<3)scope.searchLevel++;
+				if(scope.searchLevel<3&&depth.get()>0){
+					if(scope.items.length==0&&scope.searchLevel==2)return;
+					scope.searchLevel++;
+				}
 			})
 			scope.$on("keyup",function(){
 				if(scope.searchLevel>1)scope.searchLevel--;
@@ -318,17 +330,38 @@ directive('appVersion', ['version', function(version) {
 
 			scope.$on("enter",function(){
 				if(scope.searchLevel==1){
-					$http.get(appURI.search+"?s="+scope.suggestions[0]).success(function(data){
-						scope.items = data;
+					// $http.get(appURI.search+"?s="+scope.suggestions[0]).success(function(data){
+					// 	scope.items = data;
+					// 	scope.currentItem = scope.items[0];
+					// })
+					var promise = Backend.search(scope.suggestions[scope.curSug])
+					promise.then(function(res){
+						// scope.items = res;
+						scope.items=res;
+
 						scope.currentItem = scope.items[0];
+						scope.searchLevel=3;
 					})
 				}
 				if(scope.searchLevel==2){
 					var ch = scope.keyboard[scope.curChar];
+					if(scope.curSug>0){
+						scope.suggestions = [scope.suggestions[scope.curSug]];
+						scope.curSug=0;
+					}
 					if(ch!="<")
 						scope.suggestions[scope.curSug]+=scope.keyboard[scope.curChar];
 					else scope.suggestions[scope.curSug] = scope.suggestions[scope.curSug].substr(0,scope.suggestions[scope.curSug].length-1)
-					Backend.search(scope.suggestions[scope.curSug])
+					
+
+					var prom = Backend.searchahead(scope.suggestions[scope.curSug])
+					prom.then(function(res){
+						//success
+						scope.suggestions = [scope.suggestions[0]];
+						for(var i in res){
+							scope.suggestions.push(res[i].title)
+						}
+					})
 					setTimeout(function(){
 						evalSugWidth();
 						evalSugPos();
@@ -343,12 +376,13 @@ directive('appVersion', ['version', function(version) {
 }])
 
 
-.directive('playmovie', ['$location', function ($location) {
+.directive('playmovie', ['$location','depth', function ($location,depth) {
 	return {
 		restrict: 'A',
 		link: function (scope, iElement, iAttrs) {
 			scope.$on("enter", function () {
-				$location.path("/play/" + scope.currentItem.id);
+				if(depth.get()==0||scope.searchLevel==3)
+					$location.path("/play/" + scope.currentItem.id);
 			})
 		}
 	}

@@ -8,7 +8,7 @@
 angular.module('kidamom.services', [])
 .value('version', '0.1')
 .service('depth', [function () {
-    var state = 0, maxState = 3;
+    var state = 0, maxState = 1;
     return {
         more:function() {
           state++;
@@ -262,6 +262,9 @@ angular.module('kidamom.services', [])
     }
     service.search = function (query) {
         return service.req('/search/'+query, 'GET', null, true);
+    }
+    service.searchahead = function (query) {
+        return service.req('/search_ahead/'+query, 'GET', null, true);
     }
     service.getHomeMovies = function  () {
         return service.req('/home_movies', 'GET', null, service.token !== undefined);
