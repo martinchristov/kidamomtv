@@ -129,6 +129,7 @@ directive('appVersion', ['version', function(version) {
 			scope.searchOn=false;
 			scope.center = $(window).width()/2;
 			scope.controlTimeout = null;
+			scope.$parent.movieloading=true;
 
 			scope.controls = [
 				{ action:"search", icon:"src", fill:"#fff", tsf:"" },
@@ -141,6 +142,12 @@ directive('appVersion', ['version', function(version) {
 				{ action:"speech", icon:"speech", fill:"#fff", tsf:"s0.85" }
 			];
 
+			// player.addEventListener("loadstart",function(){
+			// 	scope.$parent.movieloading=false;
+			// })
+			// setTimeout(function(){
+			// 	scope.$parent.movieLoaded();
+			// },2000);
 			//update progress bar
 			var timeupd=0;
 			scope.progress=0;
@@ -150,6 +157,17 @@ directive('appVersion', ['version', function(version) {
 					scope.progress=player.currentTime/player.duration;
 					scope.$apply();
 				}
+			})
+			//remove loading
+			player.addEventListener("canplaythrough",function(){
+				$("#videoplayer").css({height:$(window).height()})
+				setTimeout(function(){
+					// scope.$parent.movieLoaded();
+					scope.$parent.movieloading=false;
+					scope.playing=true;
+					scope.menuItem=3;
+					player.play();
+				},5000);
 			})
 
 			//setup playlist

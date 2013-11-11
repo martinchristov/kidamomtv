@@ -242,7 +242,6 @@ angular.module('kidamom.services', [])
     /* POST /token (AUTH) email,password -> identifier */
     service.login = function (email, password) {
         if (service.token) return $q.when(service.token);
-
         var $promise = service.req('/token', 'POST', { email: email, password: password })
         $promise.then(function success (res) {
             if(res.hasOwnProperty("identifier")){

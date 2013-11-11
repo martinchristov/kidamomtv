@@ -5,9 +5,10 @@
 		</div>
 		<div ng-switch-default>
 			<form ng-submit="logIn()">
-				<input type="text" placeholder="Username" ng-model="data.email">
+				<div class="error" ng-class="{on:error.length>0}">{{error}}</div>
+				<input type="text" placeholder="Потребител" ng-model="data.email">
 				<div class="clearfix"></div>
-				<input type="password" placeholder="Password" ng-model="data.password">
+				<input type="password" placeholder="Парола" ng-model="data.password">
 				<div class="clearfix"></div>
 				<button type="submit" class="small">Вход</button>
 			</form>

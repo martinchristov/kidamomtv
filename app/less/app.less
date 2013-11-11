@@ -129,10 +129,24 @@ body{
 
 #loading{
   background: url(img/logo.png) no-repeat center #fff;
+  background-size: 400px;
   width: 100%;height: 100%;
   position: absolute;
   z-index: 100;
   top: 0;
+}
+#movieloader{
+  background: url(img/logo.png) no-repeat center #000;
+  background-size: 400px;
+  width: 100%;height: 100%;
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  opacity: 0;
+  .transition(all .5s);
+  &.on{
+    opacity: 1;
+  }
 }
 
 #search-view{
@@ -212,16 +226,29 @@ body{
   float:left;
   margin-left: 200px;
   margin-top: 50px;
+  .error{
+    background: #FC6666;
+    padding: 10px;
+    color: white;
+    display:none;
+    &.on{
+      display:block;
+    }
+  }
   input{
     width: 300px;
     padding: 6px 10px;
     font-size: 20px;
     background: #eee;
     border: 2px solid #ccc;
-    outline: none;
+    // outline: none;
     &:focus{
       border:2px solid #F88484;
     }
+    &:active{
+      border:2px solid #F88484;
+    }
+
   }
   button{
     float:left;

@@ -14,6 +14,11 @@ angular.module('kidamom.controllers', [])
     $scope.Menu = Menu;
     $scope.loading=false;
 
+    $scope.movieloading=true;
+    // $scope.movieLoaded=function(){
+    //     $scope.movieloading=false;
+    //     $scope.$apply();
+    // }
   	$scope.isMenuInactive = function(){
   		if(depth.get()==0)return false;
   		else return true;
@@ -106,6 +111,8 @@ angular.module('kidamom.controllers', [])
     $scope.playlist = playlist.movies;
     $scope.playlistId = playlist.id;
 
+
+
     movie.videos.forEach(function (item) {
       if (item.languageLocale === 'bg') $scope.movieUrl = item.sources.tv;
     });
@@ -140,11 +147,12 @@ angular.module('kidamom.controllers', [])
     $scope.loggedIn = Backend.isAuth();
 
     if (!Backend.isAuth()) {
-        depth.more();
-        LoginContext=true;
         setTimeout(function(){
+            depth.more();
+            LoginContext=true;
             $("#users input:first").focus();
-        },1000);
+            $scope.$apply();
+        },3000);
         $scope.$on("back",function(){
             if(depth.get()==1){
                 depth.less();
@@ -155,8 +163,8 @@ angular.module('kidamom.controllers', [])
         $scope.$on("enter",function(){
             if(depth.get()==0){
                 depth.more();
-                $("#users input:first").focus();
                 LoginContext=true;
+                $("#users input:first").focus();
             }
         })
       // $scope.$on("enter", function () {
@@ -164,12 +172,14 @@ angular.module('kidamom.controllers', [])
       //     window.location.reload();
       //   });
       // });
-
+  $scope.error=""
         $scope.logIn = function(){
-            $scope.data.email="martin.christov@gmail.com";
-            $scope.data.password="772323";
+            // $scope.data.email="martin.christov@gmail.com";
+            // $scope.data.password="772323";
             Backend.login($scope.data.email, $scope.data.password).then(function success(d){
-
+                if(d.hasOwnProperty("identifier")==false){
+                    $scope.error="Грешен email или парола.";
+                }
             });
         }
     }
