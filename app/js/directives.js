@@ -128,6 +128,7 @@ directive('appVersion', ['version', function(version) {
 			scope.playing = false;
 			scope.searchOn=false;
 			scope.center = $(window).width()/2;
+			scope.controlTimeout = null;
 
 			scope.controls = [
 				{ action:"search", icon:"src", fill:"#fff", tsf:"" },
@@ -159,6 +160,7 @@ directive('appVersion', ['version', function(version) {
 			//navigate controls
 
 			scope.$on("keyleft",function(){
+
 				if(scope.showControls)
 				{
 					// skip over hidden pause/play controls
