@@ -12,6 +12,7 @@ angular.module('kidamom.controllers', [])
   
   .controller('Main', ['$scope', 'depth', '$rootScope', 'Menu', function ($scope, depth, rootScope, Menu){
     $scope.Menu = Menu;
+    $scope.loading=false;
 
   	$scope.isMenuInactive = function(){
   		if(depth.get()==0)return false;

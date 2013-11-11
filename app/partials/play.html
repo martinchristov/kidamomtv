@@ -2,7 +2,7 @@
 	<video id="videoplayer" videoplayer ng-src="{{movieUrl}}">
 	</video>
 	<div id="controls" ng-class="{show:showControls, wplaylist:playlist.length>0}">
-		<ul style="width:{{(controls.length-1)*50+30}}px" id="controls-ul">
+		<ul style="width:{{(controls.length-1)*50+50}}px" id="controls-ul">
 			<li ng-repeat="control in controls" 
 				ng-class="{current:menuItem==$index, disabled:($index==1&&currentInList==0)||($index==6&&currentInList+1==playlist.length)||$index==7}" 
 				ng-hide="(control.icon=='play' && playing)||(control.icon=='pause' && !playing)" >
