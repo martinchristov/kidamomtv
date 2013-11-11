@@ -89,7 +89,12 @@ angular.module('kidamom.controllers', [])
   	$scope.items = [];
     Backend.getHomeMovies().then(function success(result) {
       $scope.items = result[playlist];
-      if ($scope.items.length) $scope.currentItem = $scope.items[0];
+      if ($scope.items.length) {
+        $scope.currentItem = $scope.items[0];
+        $scope.items.forEach(function (item) {
+          item.duration = (item.duration/60).toFixed();
+        })
+      }
     })
   }])
 
@@ -122,7 +127,7 @@ angular.module('kidamom.controllers', [])
     });
 
     $scope.$on('enter', function () {
-      if (!$scope.currentItem.movies.length) returnl
+      if (!$scope.currentItem.movies.length) return;
       $location.path('/play/' + $scope.currentItem.movies[0].id + "/" + $scope.currentItem.id);
     })
 
