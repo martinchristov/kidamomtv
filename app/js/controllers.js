@@ -153,7 +153,8 @@ angular.module('kidamom.controllers', [])
         });
       });
       $scope.$on('enter', function () {
-        
+        Backend.logout();
+        window.location.reload();
       })
     }
   }])

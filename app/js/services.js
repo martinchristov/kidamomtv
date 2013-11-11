@@ -210,6 +210,11 @@ angular.module('kidamom.services', [])
         localStorage.token = token;
         configAuth.headers['AUTHORIZATION'] = token;
     }
+    service.logout = function () {
+        service.token = null;
+        delete localStorage.token;
+        delete configAuth.headers.AUTHORIZATION;
+    }
 
     service.isAuth = function () {
         return service.token !== undefined;
@@ -244,6 +249,7 @@ angular.module('kidamom.services', [])
         })
         return $promise;
     }
+    
     /* GET /token (AUTH) -> isValid */
     service.checkToken = function () {
     }
@@ -297,6 +303,9 @@ angular.module('kidamom.services', [])
     if (localStorage.token) {
         service.token = localStorage.token;
         configAuth.headers['AUTHORIZATION'] = localStorage.token;
+    }
+    if (localStorage.profile) {
+        service.profile = localStorage.profile;
     }
 
     return service;
