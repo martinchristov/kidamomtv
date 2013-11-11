@@ -167,6 +167,7 @@ directive('appVersion', ['version', function(version) {
 					scope.playing=true;
 					scope.menuItem=3;
 					player.play();
+					hideint = setTimeout(hideControls,5000)
 				},5000);
 			})
 
@@ -200,10 +201,24 @@ directive('appVersion', ['version', function(version) {
 
 			//control actions on enter
 			window.$location = $location;
+			scope.$on("keypress",function(){
+				if(scope.showControls){
+					clearInterval(hideint);
+					hideint = setTimeout(hideControls,5000)
+				}
+				else {
+					if(scope.searchLevel<1)scope.showControls=true;
+				}
+			})
+			var hideint= 0;
+			function hideControls(){
+				scope.showControls=false;
+				scope.$apply();
+			}
 			scope.$on("enter",function(){
 				if (scope.showControls==false) {
-					if(scope.searchLevel<1)
-						scope.showControls=true;
+					// if(scope.searchLevel<1)
+					// 	scope.showControls=true;
 				}
 				else {
 					var action = scope.controls[scope.menuItem].action;
@@ -288,7 +303,7 @@ directive('appVersion', ['version', function(version) {
 			// 2 - keyboard
 			// 3 - carousel
 
-			scope.keyboard="abcdefghijklmnopqrstuvwxyz< 0123456789";
+			// scope.keyboard="abcdefghijklmnopqrstuvwxyz< 0123456789";
 			scope.keyboard="абвгдежзийклмнопрстуфхцчшщъьюя< 0123456789";
 			// scope.keyboard="джу";
 			scope.curChar = 0;

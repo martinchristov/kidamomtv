@@ -51,6 +51,8 @@ angular.module('kidamom.controllers', [])
       }
       if(which!="")
         rootScope.$broadcast(which);
+
+        rootScope.$broadcast("keypress")
     }
   }])
 
