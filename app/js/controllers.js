@@ -32,16 +32,16 @@ angular.module('kidamom.controllers', [])
           if(depth.get() > 0)
           e.preventDefault(); break;
         case 38:
-          e.preventDefault();
+          if(!LoginContext)e.preventDefault();
           which = 'keyup'; break;
         case 40:
-          e.preventDefault();
+          if(!LoginContext)e.preventDefault();
           which = 'keydown'; break;
         case 37:
-          e.preventDefault();
+          if(!LoginContext)e.preventDefault();
           which = 'keyleft'; break;
         case 39:
-          e.preventDefault();
+          if(!LoginContext)e.preventDefault();
           which = 'keyright'; break;
       }
       if(which!="")
@@ -138,12 +138,40 @@ angular.module('kidamom.controllers', [])
     $scope.data = {};
 
     $scope.loggedIn = Backend.isAuth();
+
     if (!Backend.isAuth()) {
-      $scope.$on("enter", function () {
-        Backend.login($scope.data.email, $scope.data.password).then(function success(){
-          window.location.reload();
-        });
-      });
+        depth.more();
+        LoginContext=true;
+        setTimeout(function(){
+            $("#users input:first").focus();
+        },1000);
+        $scope.$on("back",function(){
+            if(depth.get()==1){
+                depth.less();
+                $("#users input:first").blur();
+                LoginContext=false;
+            }
+        })
+        $scope.$on("enter",function(){
+            if(depth.get()==0){
+                depth.more();
+                $("#users input:first").focus();
+                LoginContext=true;
+            }
+        })
+      // $scope.$on("enter", function () {
+      //   Backend.login($scope.data.email, $scope.data.password).then(function success(){
+      //     window.location.reload();
+      //   });
+      // });
+
+        $scope.logIn = function(){
+            $scope.data.email="martin.christov@gmail.com";
+            $scope.data.password="772323";
+            Backend.login($scope.data.email, $scope.data.password).then(function success(d){
+
+            });
+        }
     }
     else {
       $scope.items = [];
@@ -159,3 +187,5 @@ angular.module('kidamom.controllers', [])
       })
     }
   }])
+
+  var LoginContext = false;
