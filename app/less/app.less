@@ -69,7 +69,7 @@ body{
 
 #titles{
   position: absolute;
-  top:80px; left:200px;
+  top:84px; left:200px;
   h1{
     position: absolute; font-weight: 300; font-size: 50px; color:#737070; line-height: 30px;
     width:500px;
@@ -94,8 +94,8 @@ body{
   background: url(img/logo.png) no-repeat;
   background-size: 100%;
   position: absolute;
-  top: 24px;
-  right: 25px;
+  top: 34px;
+  right: 55px;
 }
 
 
@@ -108,6 +108,16 @@ body{
 .carousel{
   float:left; margin-left:200px;
   margin-top: 10px;
+  .loading{
+    font-size: 18px;
+    color: #747474;
+    margin-top: -11px;
+    margin-left: 4px;
+    display: none;
+    &.on{
+      display: block;
+    }
+  }
   .holder{
     .transition(margin .3s)
   }
@@ -116,8 +126,16 @@ body{
     .transition(all .3s);
     margin-right:10px;
     width:170px; height:250px;
+    position: absolute;
     img{
       width:100%; height:100%;
+    }
+    .playlbl{
+      position: absolute;
+      width: 100%;
+      height: 60px;
+      display: none;
+      background: @brandcolor;
     }
     &.current{
       width:330px; height:488px; margin-left:125px;

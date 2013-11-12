@@ -83,6 +83,7 @@ directive('appVersion', ['version', function(version) {
 		restrict: 'E',
 		template:
 			'<div class="carousel">'+
+				'<div class="loading" ng-class="{on:itemsloading}">зареждане...</div>'+
 				'<div class="holder" style="width:{{items.length*180+160+125}}px; margin-left:{{-currentItemIndex*180-135}}px">'+
 					'<div class="item" ng-repeat="item in items" ng-class="{current:(item==currentItem), faded:($index<currentItemIndex)}">'+
 						'<img ng-src="{{item.photo}}">'+
@@ -91,6 +92,7 @@ directive('appVersion', ['version', function(version) {
 			'</div>',
 		link: function (scope, iElement, iAttrs) {
 			scope.currentItemIndex = 0;
+			scope.itemsloading=true;
 			if(scope.hasOwnProperty("items"))scope.currentItem = scope.items[0];
 			scope.$on("keyleft",function(){
 				if(scope.searchLevel==3||scope.searchLevel==undefined){
