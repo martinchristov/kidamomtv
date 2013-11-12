@@ -341,7 +341,7 @@ directive('appVersion', ['version', function(version) {
 				
 			}
 			setTimeout(function(){
-				scope.itemsloading=false;
+      			scope.carousel.loading = false;
 				evalSugWidth();
 				evalSugPos();
 				scope.$apply();
@@ -384,15 +384,17 @@ directive('appVersion', ['version', function(version) {
 
 			scope.$on("enter",function(){
 				if(scope.searchLevel==1){
-					scope.itemsloading=true;
+					scope.carousel.loading = true;
 					var promise = Backend.search(scope.suggestions[scope.curSug])
 					promise.then(function(res){
 						// scope.items = res;
 						scope.items=res;
-
+						scope.items.forEach(function (item) {
+				          item.duration = (item.duration/60).toFixed();
+				        })
 						scope.carousel.item = scope.items[0];
 						scope.searchLevel=3;
-						scope.itemsloading=false;
+						scope.carousel.loading = false;
 					})
 				}
 				if(scope.searchLevel==2){
