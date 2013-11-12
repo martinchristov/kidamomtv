@@ -84,8 +84,8 @@ directive('appVersion', ['version', function(version) {
 		templateUrl: 'partials/carousel.html',
 		link: function (scope, iElement, iAttrs) {
 			scope.carousel.index = 0;
-			if(scope.hasOwnProperty("items"))scope.carousel.item = scope.items[0];
-			scope.itemsloading=true;
+			if(scope.hasOwnProperty("items")) scope.carousel.item = scope.items[0];
+			scope.carousel.loading = true;
 			scope.$on("keyleft",function(){
 				if(scope.searchLevel==3||scope.searchLevel==undefined){
 					scope.carousel.index--;
