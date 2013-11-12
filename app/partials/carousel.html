@@ -3,7 +3,7 @@
 	<div class="holder" style="width:{{items.length*180+160+125}}px; margin-left:{{-currentItemIndex*180-135}}px">
 		<div class="item" ng-repeat="item in items" ng-class="{current:(item==currentItem), faded:($index<currentItemIndex)}">
 			<img ng-src="{{item.photo}}">
-			<div class="playlbl on">
+			<div class="playlbl">
 				пусни филмчето
 			</div>
 		</div>

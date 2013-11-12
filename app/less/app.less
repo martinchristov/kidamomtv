@@ -126,19 +126,30 @@ body{
     .transition(all .3s);
     margin-right:10px;
     width:170px; height:250px;
-    position: absolute;
+    position: relative;
+    overflow: hidden;
     img{
       width:100%; height:100%;
     }
     .playlbl{
       position: absolute;
       width: 100%;
+      padding-left:63px;
       height: 60px;
-      display: none;
-      background: @brandcolor;
+      display: block;
+      background: url(img/play.png) no-repeat 9px 8px fade(@brandcolor,90%);
+      font-size: 25px; color:white;
+      line-height: 60px;
+      bottom: -260px;
+      text-transform: uppercase;
+      .transition(bottom 1.5s ease-out);
     }
     &.current{
       width:330px; height:488px; margin-left:125px;
+      .playlbl{
+        bottom: 0;
+        // display:block;
+      }
     }
     &.faded{
       opacity: 0.6;
