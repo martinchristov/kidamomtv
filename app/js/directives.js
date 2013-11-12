@@ -123,7 +123,7 @@ directive('appVersion', ['version', function(version) {
 			scope.searchOn=false;
 			scope.center = $(window).width()/2;
 			scope.controlTimeout = null;
-			scope.$parent.movieloading=true;
+			scope.$parent.movieloading=false;
 
 			scope.controls = [
 				{ action:"search", icon:"src", fill:"#fff", tsf:"" },
@@ -133,8 +133,8 @@ directive('appVersion', ['version', function(version) {
 				{ action:"play", icon:"play", fill:"#fff", tsf:"" },
 				{ action:"forward", icon:"forward", fill:"#fff", tsf:"s1.4" },
 				{ action:"next", icon:"next", fill:"#fff", tsf:"s0.9" },
-				{ action:"speech", icon:"speech", fill:"#fff", tsf:"s0.85" },
-				{ action:"back", icon:"back", fill:"#fff", tsf:"" }
+				{ action:"speech", icon:"globe", fill:"#fff", tsf:"s1.1" },
+				{ action:"back", icon:"back", fill:"#fff", tsf:"s0.9" }
 			];
 
 			// player.addEventListener("loadstart",function(){
@@ -209,7 +209,7 @@ directive('appVersion', ['version', function(version) {
 					hideint = setTimeout(hideControls,5000)
 				}
 				else {
-					if(scope.searchLevel<1)scope.showControls=true;
+					if(scope.searchLevel<1&&scope.showLanguage==false)scope.showControls=true;
 				}
 			})
 			var hideint= 0;
@@ -262,7 +262,12 @@ directive('appVersion', ['version', function(version) {
 						}
 					}
 					else if(action=="speech"){
-						
+						depth.more();
+						setTimeout(function(){
+							scope.showControls=false;
+							scope.showLanguage=true;
+							scope.$apply();
+						},20);
 					}
 					else if(action=="search"){
 						depth.more();
@@ -296,6 +301,35 @@ directive('appVersion', ['version', function(version) {
 		}
 	};
 }])
+
+.directive('language', ['depth', function (depth) {
+	return {
+		restrict: 'E',
+		replace:'true',
+		templateUrl:"partials/language.html",
+		link: function (scope, iElement, iAttrs) {
+			// scope.showLanguage=true;
+			scope.curLang=2;
+			scope.$on("keydown",function(){
+				if(scope.showLanguage){
+					if(scope.curLang<scope.languages.length-1)scope.curLang++;
+				}
+				console.log(scope.curLang);
+			})
+			scope.$on("keyup",function(){
+				if(scope.showLanguage){
+					if(scope.curLang>0)scope.curLang--;
+				}
+			})
+			scope.$on("enter",function(){
+				if(scope.showLanguage){
+					scope.showLanguage=false;
+				}
+			})
+		}
+	};
+}])
+
 .directive('search', ['$rootScope', 'depth', '$http', 'Backend', function ($rootScope, depth, $http, Backend) {
 	return {
 		restrict: 'E',

@@ -1,0 +1,10 @@
+<div id="lang" ng-class="{on:showLanguage}">
+	<div class="holder">
+		<ul>
+			<li ng-repeat="lang in languages" ng-bind="lang.locale"></li>
+			<div class="clearfix"></div>
+		</ul>
+		<div class="current" style="top:{{curLang*59}}px"></div>
+	</div>
+	
+</div>
