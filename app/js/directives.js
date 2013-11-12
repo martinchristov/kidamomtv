@@ -264,10 +264,10 @@ directive('appVersion', ['version', function(version) {
 						
 					}
 					else if(action=="search"){
-						scope.showControls=false;
-						scope.searchOn=true;
 						depth.more();
 						setTimeout(function(){
+							scope.showControls=false;
+							scope.searchOn=true;
 							scope.searchLevel=2;
 							scope.$apply();
 						},20);
@@ -340,6 +340,7 @@ directive('appVersion', ['version', function(version) {
 				
 			}
 			setTimeout(function(){
+				scope.itemsloading=false;
 				evalSugWidth();
 				evalSugPos();
 				scope.$apply();
@@ -382,10 +383,7 @@ directive('appVersion', ['version', function(version) {
 
 			scope.$on("enter",function(){
 				if(scope.searchLevel==1){
-					// $http.get(appURI.search+"?s="+scope.suggestions[0]).success(function(data){
-					// 	scope.items = data;
-					// 	scope.carousel.item = scope.items[0];
-					// })
+					scope.itemsloading=true;
 					var promise = Backend.search(scope.suggestions[scope.curSug])
 					promise.then(function(res){
 						// scope.items = res;
@@ -393,6 +391,7 @@ directive('appVersion', ['version', function(version) {
 
 						scope.carousel.item = scope.items[0];
 						scope.searchLevel=3;
+						scope.itemsloading=false;
 					})
 				}
 				if(scope.searchLevel==2){
@@ -418,7 +417,7 @@ directive('appVersion', ['version', function(version) {
 						evalSugWidth();
 						evalSugPos();
 						scope.$apply();
-					},100);
+					},300);
 					
 					// scope.$apply();
 				}
