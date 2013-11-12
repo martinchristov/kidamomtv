@@ -83,6 +83,7 @@ directive('appVersion', ['version', function(version) {
 		restrict: 'E',
 		templateUrl: 'partials/carousel.html',
 		link: function (scope, iElement, iAttrs) {
+			var max = 31;
 			scope.carousel.index = 0;
 			if(scope.hasOwnProperty("items")) scope.carousel.item = scope.items[0];
 			scope.carousel.loading = true;
@@ -96,7 +97,8 @@ directive('appVersion', ['version', function(version) {
 			scope.$on("keyright",function(){
 				if(scope.searchLevel==3||scope.searchLevel==undefined){
 					scope.carousel.index++;
-		  			if(scope.carousel.index>=scope.items.length)scope.carousel.index=scope.items.length-1;
+		  			if(scope.carousel.index>= Math.max(scope.items.length, max)) 
+		  				scope.carousel.index= Math.max(scope.items.length,max)-1;
 		  			scope.carousel.item = scope.items[scope.carousel.index];
 
 		  		}
@@ -309,7 +311,14 @@ directive('appVersion', ['version', function(version) {
 		templateUrl:"partials/language.html",
 		link: function (scope, iElement, iAttrs) {
 			// scope.showLanguage=true;
-			scope.curLang=2;
+			scope.curLang = 0;
+			if (localStorage.lang) {
+				scope.languages.forEach(function (lang, index) {
+					if (lang.key == localStorage.lang) {
+						scope.curLang = index;
+					}
+				});
+			}
 			scope.$on("keydown",function(){
 				if(scope.showLanguage){
 					if(scope.curLang<scope.languages.length-1)scope.curLang++;
@@ -322,6 +331,7 @@ directive('appVersion', ['version', function(version) {
 			})
 			scope.$on("enter",function(){
 				if(scope.showLanguage){
+					localStorage.lang = scope.languages[scope.curLang].key;
 					scope.showLanguage=false;
 				}
 			})
@@ -469,6 +479,7 @@ directive('appVersion', ['version', function(version) {
 		link: function (scope, iElement, iAttrs) {
 			scope.$on("enter", function () {
 				if(depth.get()==0||scope.searchLevel==3){
+					delete localStorage.lang;
 					// if(scope.loggedIn)
 						$location.path("/play/" + scope.carousel.item.id);
 					// else $location.path("/users")
