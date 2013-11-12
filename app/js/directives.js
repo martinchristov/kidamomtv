@@ -318,6 +318,7 @@ directive('appVersion', ['version', function(version) {
 					}
 				});
 			}
+			}
 			scope.$on("keydown",function(){
 				if(scope.showLanguage){
 					if(scope.curLang<scope.languages.length-1)scope.curLang++;
