@@ -81,15 +81,7 @@ directive('appVersion', ['version', function(version) {
 .directive('carousel', ['$rootScope', 'Movies', '$location', function ($rootScope, Movies, $location) {
 	return {
 		restrict: 'E',
-		template:
-			'<div class="carousel">'+
-				'<div class="loading" ng-class="{on:itemsloading}">зареждане...</div>'+
-				'<div class="holder" style="width:{{items.length*180+160+125}}px; margin-left:{{-currentItemIndex*180-135}}px">'+
-					'<div class="item" ng-repeat="item in items" ng-class="{current:(item==currentItem), faded:($index<currentItemIndex)}">'+
-						'<img ng-src="{{item.photo}}">'+
-					'</div>'+
-				'</div>'+
-			'</div>',
+		templateUrl: 'partials/carousel.html',
 		link: function (scope, iElement, iAttrs) {
 			scope.carousel.index = 0;
 			if(scope.hasOwnProperty("items"))scope.carousel.item = scope.items[0];

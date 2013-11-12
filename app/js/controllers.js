@@ -182,8 +182,6 @@ angular.module('kidamom.controllers', [])
         $scope.items.push({ id: null, photo: 'sampledata/logout.jpg'})
       });
       $scope.$on('enter', function () {
-        console.log($scope);
-        return;
         if ($scope.carousel.item.id !== null) {
           Backend.switchProfile($scope.carousel.item.id).then(function success(result) {
             window.location.reload();
