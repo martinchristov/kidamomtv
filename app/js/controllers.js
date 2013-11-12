@@ -78,7 +78,7 @@ angular.module('kidamom.controllers', [])
   	$scope.items = [];
     Backend.getHomeMovies().then(function success(result) {
       $scope.items = result[playlist];
-      $scope.itemsloading=false;
+      $scope.carousel.loading = false;
       if ($scope.items.length) {
         $scope.carousel.item = $scope.items[0];
         $scope.items.forEach(function (item) {
@@ -114,7 +114,7 @@ angular.module('kidamom.controllers', [])
     $scope.items = [];
     Backend.getPlaylists().then(function success(playlists) {
       $scope.items = playlists;
-      $scope.itemsloading=false;
+      $scope.carousel.loading = false;
       $scope.items.forEach(function (item) {
         if (item.movies.length) item.photo = item.movies[0].photo;
       })
@@ -180,6 +180,7 @@ angular.module('kidamom.controllers', [])
           if (item.id == Backend.profile) $scope.carousel.item = item;
         });
         $scope.items.push({ id: null, photo: 'sampledata/logout.jpg'})
+        $scope.carousel.loading = false;
       });
       $scope.$on('enter', function () {
         if ($scope.carousel.item.id !== null) {

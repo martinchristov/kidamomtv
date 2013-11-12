@@ -2,10 +2,10 @@
 	<carousel></carousel>
 
 	<div class="info">
-		<h1 ng-bind="currentItem.name"></h1>
+		<h1 ng-bind="carousel.item.name"></h1>
 		<div class="clearfix"></div>
 		<div class="thumbs">
-			<div ng-repeat="movie in currentItem.movies">
+			<div ng-repeat="movie in carousel.item.movies">
 				<img ng-src="{{movie.thumb}}">
 			</div>
 		</div>
