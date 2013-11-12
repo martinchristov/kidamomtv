@@ -129,7 +129,7 @@ directive('appVersion', ['version', function(version) {
 			scope.searchOn=false;
 			scope.center = $(window).width()/2;
 			scope.controlTimeout = null;
-			scope.$parent.movieloading=true;
+			scope.$parent.movieloading=false;
 
 			scope.controls = [
 				{ action:"search", icon:"src", fill:"#fff", tsf:"" },
@@ -139,7 +139,8 @@ directive('appVersion', ['version', function(version) {
 				{ action:"play", icon:"play", fill:"#fff", tsf:"" },
 				{ action:"forward", icon:"forward", fill:"#fff", tsf:"s1.4" },
 				{ action:"next", icon:"next", fill:"#fff", tsf:"s0.9" },
-				{ action:"speech", icon:"speech", fill:"#fff", tsf:"s0.85" }
+				{ action:"speech", icon:"speech", fill:"#fff", tsf:"s0.85" },
+				{ action:"back", icon:"back", fill:"#fff", tsf:"" }
 			];
 
 			// player.addEventListener("loadstart",function(){
@@ -177,6 +178,7 @@ directive('appVersion', ['version', function(version) {
 			//KEY LISTENERS
 
 			//navigate controls
+			scope.controlsx = 3*50+60;
 
 			scope.$on("keyleft",function(){
 
@@ -186,6 +188,9 @@ directive('appVersion', ['version', function(version) {
 					if(scope.menuItem>0)scope.menuItem--;
 					if(!scope.playing&&scope.menuItem==3)scope.menuItem--;
 					else if(scope.playing&&scope.menuItem==4)scope.menuItem--;
+
+					scope.controlsx = scope.menuItem*50+60;
+					if(scope.menuItem>3)scope.controlsx-=50;
 				}
 			})
 			scope.$on("keyright",function(){
@@ -195,6 +200,9 @@ directive('appVersion', ['version', function(version) {
 					if(scope.menuItem<scope.controls.length-1)scope.menuItem++;
 					if(scope.playing&&scope.menuItem==4)scope.menuItem++;
 					else if(!scope.playing&&scope.menuItem==3)scope.menuItem++;
+
+					scope.controlsx = scope.menuItem*50+60;
+					if(scope.menuItem>3)scope.controlsx-=50;
 				}
 				
 			})
@@ -269,6 +277,9 @@ directive('appVersion', ['version', function(version) {
 							scope.searchLevel=2;
 							scope.$apply();
 						},20);
+					}
+					else if(action=="back"){
+						$location.path("/")
 					}
 				}
 			})
@@ -428,8 +439,11 @@ directive('appVersion', ['version', function(version) {
 		restrict: 'A',
 		link: function (scope, iElement, iAttrs) {
 			scope.$on("enter", function () {
-				if(depth.get()==0||scope.searchLevel==3)
-					$location.path("/play/" + scope.currentItem.id);
+				if(depth.get()==0||scope.searchLevel==3){
+					// if(scope.loggedIn)
+						$location.path("/play/" + scope.currentItem.id);
+					// else $location.path("/users")
+				}
 			})
 		}
 	}
