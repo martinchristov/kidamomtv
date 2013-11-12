@@ -1,7 +1,7 @@
 <div class="carousel">
 	<div class="loading" ng-class="{on:carousel.loading}">зареждане...</div>
 	<div class="holder" style="width:{{items.length*180+160+125}}px; margin-left:{{-carousel.index*180-135}}px">
-		<div class="item" ng-repeat="item in items" ng-class="{current:(item==carousel.item), faded:($index<carousel.index)}">
+		<div class="item" ng-repeat="item in items | limitTo: 30" ng-class="{current:(item==carousel.item), faded:($index<carousel.index)}">
 			<img ng-src="{{item.photo}}">
 			<div class="playlbl">
 				пусни филмчето
