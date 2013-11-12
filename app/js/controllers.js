@@ -112,6 +112,15 @@ angular.module('kidamom.controllers', [])
     $scope.playlist = playlist.movies;
     $scope.playlistId = playlist.id;
 
+    $scope.languages=[];
+    for(var i in $scope.movie.videos){
+        $scope.languages.push({
+            key:$scope.movie.videos[i].languageLocale,
+            locale:langLocale[$scope.movie.videos[i].languageLocale],
+            sources:$scope.movie.videos[i].sources
+        })
+    }
+
 
 
     movie.videos.forEach(function (item) {

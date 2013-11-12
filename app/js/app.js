@@ -44,3 +44,11 @@ var appURI = {
 	api: "http://kidamom.com/api",
 	base: "http://kidamom.com/"
 }
+
+
+var langLocale = {
+	bg: "Български",
+	en: "English",
+	es: "Espagnol",
+	fr: "Francais"
+}
