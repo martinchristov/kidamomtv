@@ -90,20 +90,20 @@ directive('appVersion', ['version', function(version) {
 				'</div>'+
 			'</div>',
 		link: function (scope, iElement, iAttrs) {
-			scope.currentItemIndex = 0;
-			if(scope.hasOwnProperty("items"))scope.currentItem = scope.items[0];
+			scope.carousel.index = 0;
+			if(scope.hasOwnProperty("items"))scope.carousel.item = scope.items[0];
 			scope.$on("keyleft",function(){
 				if(scope.searchLevel==3||scope.searchLevel==undefined){
-					scope.currentItemIndex--;
-		  			if(scope.currentItemIndex<0)scope.currentItemIndex=0;
-			  		scope.currentItem = scope.items[scope.currentItemIndex];
+					scope.carousel.index--;
+		  			if(scope.carousel.index<0)scope.carousel.index=0;
+			  		scope.carousel.item = scope.items[scope.carousel.index];
 			  	}
 			})
 			scope.$on("keyright",function(){
 				if(scope.searchLevel==3||scope.searchLevel==undefined){
-					scope.currentItemIndex++;
-		  			if(scope.currentItemIndex>=scope.items.length)scope.currentItemIndex=scope.items.length-1;
-		  			scope.currentItem = scope.items[scope.currentItemIndex];
+					scope.carousel.index++;
+		  			if(scope.carousel.index>=scope.items.length)scope.carousel.index=scope.items.length-1;
+		  			scope.carousel.item = scope.items[scope.carousel.index];
 
 		  		}
 
@@ -379,14 +379,14 @@ directive('appVersion', ['version', function(version) {
 				if(scope.searchLevel==1){
 					// $http.get(appURI.search+"?s="+scope.suggestions[0]).success(function(data){
 					// 	scope.items = data;
-					// 	scope.currentItem = scope.items[0];
+					// 	scope.carousel.item = scope.items[0];
 					// })
 					var promise = Backend.search(scope.suggestions[scope.curSug])
 					promise.then(function(res){
 						// scope.items = res;
 						scope.items=res;
 
-						scope.currentItem = scope.items[0];
+						scope.carousel.item = scope.items[0];
 						scope.searchLevel=3;
 					})
 				}
@@ -429,7 +429,7 @@ directive('appVersion', ['version', function(version) {
 		link: function (scope, iElement, iAttrs) {
 			scope.$on("enter", function () {
 				if(depth.get()==0||scope.searchLevel==3)
-					$location.path("/play/" + scope.currentItem.id);
+					$location.path("/play/" + scope.carousel.item.id);
 			})
 		}
 	}

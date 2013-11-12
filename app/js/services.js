@@ -210,9 +210,15 @@ angular.module('kidamom.services', [])
         localStorage.token = token;
         configAuth.headers['AUTHORIZATION'] = token;
     }
+    service.setProfile = function (profile) {
+        service.profile = profile.id;
+        localStorage.profile = profile.id;
+    }
     service.logout = function () {
         service.token = null;
+        service.profile = null;
         delete localStorage.token;
+        delete localStorage.profile;
         delete configAuth.headers.AUTHORIZATION;
     }
 
@@ -246,9 +252,12 @@ angular.module('kidamom.services', [])
         $promise.then(function success (res) {
             if(res.hasOwnProperty("identifier")){
                 service.setToken(res.identifier);
-                window.location.reload();
             }
-        })
+            return service.req('/profile', 'GET', null, true)
+        }).then(function success (res) {
+            service.setProfile(res);
+            window.location.reload();
+        });
         return $promise;
     }
     
@@ -261,7 +270,11 @@ angular.module('kidamom.services', [])
     }
     /* POST /token/switch (AUTH) profileId -> profile */
     service.switchProfile = function (profileId) {
-        return service.req('/token/switch', 'POST', { profile_id : profileId }, true);
+        return service.req('/token/switch', 'POST', { profile_id : profileId }, true)
+            .then(function success(result) {
+                service.setToken(result.identifier);
+                service.setProfile({ id: profileId});
+            });
     }
     /* GET /playlists (AUTH) -> array of playlists */
     service.getPlaylists = function () {
@@ -285,7 +298,7 @@ angular.module('kidamom.services', [])
     var DEBUG = false;
     service.getMovie = function (id) {
         if (DEBUG) {
-            return $http.get(appURI.getmovie + "?id=" + id).then(function success(response) { return response.data; });
+            return $http.get(appURI.getmovie + "?id=" + id).then(function success(result) { return result.data; });
         }
         else {
             return service.req('/movies', 'GET', [ id ], true);
@@ -293,7 +306,7 @@ angular.module('kidamom.services', [])
     }
     service.getPlaylist = function (id) {
         if (DEBUG) {
-            return $http.get(appURI.getplaylist + "?id=" + id).then(function success(response) { return response.data.movies; });
+            return $http.get(appURI.getplaylist + "?id=" + id).then(function success(result) { return result.data.movies; });
         }
         else {
             return service.req('/playlists', 'GET', [ id ], true);
@@ -301,13 +314,11 @@ angular.module('kidamom.services', [])
     }
 
 
-    // Load token from previous login
+    // Remember me
     if (localStorage.token) {
         service.token = localStorage.token;
-        configAuth.headers['AUTHORIZATION'] = localStorage.token;
-    }
-    if (localStorage.profile) {
         service.profile = localStorage.profile;
+        configAuth.headers['AUTHORIZATION'] = localStorage.token;
     }
 
     return service;
