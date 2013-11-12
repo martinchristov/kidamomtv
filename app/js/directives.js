@@ -113,7 +113,7 @@ directive('appVersion', ['version', function(version) {
 		link: function (scope, iElement, iAttrs) {
 			//instantiate player
 			var player = document.querySelector('video');
-			window.player = player;
+			scope.player = player;
 			setTimeout(function(){
 				//player = videojs("videoplayer",{controls:false});
 				iconFactory.produce($("#controls"))
@@ -313,7 +313,6 @@ directive('appVersion', ['version', function(version) {
 		replace:'true',
 		templateUrl:"partials/language.html",
 		link: function (scope, iElement, iAttrs) {
-			// scope.showLanguage=true;
 			scope.curLang = 0;
 			if (localStorage.lang) {
 				scope.languages.forEach(function (lang, index) {
@@ -321,6 +320,7 @@ directive('appVersion', ['version', function(version) {
 						scope.curLang = index;
 					}
 				});
+			}
 			}
 			scope.$on("keydown",function(){
 				if(scope.showLanguage){
@@ -334,6 +334,8 @@ directive('appVersion', ['version', function(version) {
 			})
 			scope.$on("enter",function(){
 				if(scope.showLanguage){
+					scope.movieUrl = scope.movie.videos[scope.curLang].sources.tv;
+					scope.player.load();
 					localStorage.lang = scope.languages[scope.curLang].key;
 					scope.showLanguage=false;
 				}
