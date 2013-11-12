@@ -314,7 +314,6 @@ directive('appVersion', ['version', function(version) {
 				if(scope.showLanguage){
 					if(scope.curLang<scope.languages.length-1)scope.curLang++;
 				}
-				console.log(scope.curLang);
 			})
 			scope.$on("keyup",function(){
 				if(scope.showLanguage){
