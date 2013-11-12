@@ -15,10 +15,6 @@ angular.module('kidamom.controllers', [])
     $scope.loading=false;
 
     $scope.movieloading=true;
-    // $scope.movieLoaded=function(){
-    //     $scope.movieloading=false;
-    //     $scope.$apply();
-    // }
   	$scope.isMenuInactive = function(){
   		if(depth.get()==0)return false;
   		else return true;
@@ -58,31 +54,15 @@ angular.module('kidamom.controllers', [])
 
   .controller('Search', ['$scope','depth','$http', '$rootScope', function ($scope, depth, $http, $rootScope) {
   	$scope.carousel = {};
-  	// $scope.items=[];
-  	// var tmt = 0;
-   //  $scope.s="";
-  	// $scope.$watch('s',function () {
-  	// 	clearInterval(tmt);
-  	// 	if($scope.s.length>0)
-  	// 	tmt = setTimeout(function(){
-  	// 		$http.get(appURI.search+"?s="+$scope.s).success(function(data) {
-			// 	$scope.items = data;
 			// 	$scope.carousel.index=0;
 			// 	$scope.carousel.item = data[0];
-		 //  	});
-  	// 	},200);
-  	// })
-
     $scope.$on("enter",function(){
       depth.more();
       if($scope.searchLevel==0){
         setTimeout(function(){
-              $scope.searchLevel=2;
-              $scope.$apply();
-            },20);
-      }
-      if(depth.get()==1){
-        // document.getElementById('searchInput').focus();
+            $scope.searchLevel=2;
+            $scope.$apply();
+        },20);
       }
     })
     $scope.$on("back",function(){
@@ -98,6 +78,7 @@ angular.module('kidamom.controllers', [])
   	$scope.items = [];
     Backend.getHomeMovies().then(function success(result) {
       $scope.items = result[playlist];
+      $scope.itemsloading=false;
       if ($scope.items.length) {
         $scope.carousel.item = $scope.items[0];
         $scope.items.forEach(function (item) {
@@ -133,6 +114,7 @@ angular.module('kidamom.controllers', [])
     $scope.items = [];
     Backend.getPlaylists().then(function success(playlists) {
       $scope.items = playlists;
+      $scope.itemsloading=false;
       $scope.items.forEach(function (item) {
         if (item.movies.length) item.photo = item.movies[0].photo;
       })

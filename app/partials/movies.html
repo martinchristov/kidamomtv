@@ -1,11 +1,10 @@
 
 <carousel></carousel>
 
-<div class="info" ng-show="currentItem">
+<div class="info" ng-show="currentItem" playmovie="{{currentItem.id}}">
 	<h1 ng-bind="currentItem.title"></h1>
 	<p ng-bind="currentItem.description"></p>
 	<!-- <span ng-bind="currentItem.age + '+'" class="age"></span>  -->
 	<span ng-bind="currentItem.duration" class="duration"><i icon></i></span>
 	<div class="clearfix"></div>
-	<a class="button" playmovie="{{currentItem.id}}">Гледай</a>
 </div>
