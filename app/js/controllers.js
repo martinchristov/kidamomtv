@@ -53,6 +53,9 @@ angular.module('kidamom.controllers', [])
   }])
 
   .controller('Search', ['$scope','depth','$http', '$rootScope', function ($scope, depth, $http, $rootScope) {
+  	$scope.carousel = {};
+			// 	$scope.carousel.index=0;
+			// 	$scope.carousel.item = data[0];
     $scope.$on("enter",function(){
       depth.more();
       if($scope.searchLevel==0){
@@ -69,6 +72,7 @@ angular.module('kidamom.controllers', [])
   }])
   
   .controller('Movies', ['$scope','$routeParams', 'Backend', function ($scope, $routeParams, Backend){
+    $scope.carousel = {};
     var playlist = $routeParams.playlist;
     $scope.Menu.enable();
   	$scope.items = [];
@@ -76,7 +80,7 @@ angular.module('kidamom.controllers', [])
       $scope.items = result[playlist];
       $scope.itemsloading=false;
       if ($scope.items.length) {
-        $scope.currentItem = $scope.items[0];
+        $scope.carousel.item = $scope.items[0];
         $scope.items.forEach(function (item) {
           item.duration = (item.duration/60).toFixed();
         })
@@ -85,6 +89,7 @@ angular.module('kidamom.controllers', [])
   }])
 
   .controller('Play', ['$scope', '$routeParams', '$http', 'movie', 'playlist', function ($scope, $routeParams, $http, movie, playlist) {
+    $scope.carousel = {};
     $scope.Menu.visible = false;
     $scope.Menu.disable();
     $scope.movie = movie;
@@ -104,6 +109,7 @@ angular.module('kidamom.controllers', [])
     }
   }])
   .controller('Playlists', ['$scope', 'Backend', '$location', function ($scope, Backend, $location){
+    $scope.carousel = {};
     $scope.Menu.enable();
     $scope.items = [];
     Backend.getPlaylists().then(function success(playlists) {
@@ -112,17 +118,18 @@ angular.module('kidamom.controllers', [])
       $scope.items.forEach(function (item) {
         if (item.movies.length) item.photo = item.movies[0].photo;
       })
-      $scope.currentItem = $scope.items && $scope.items[0];
+      $scope.carousel.item = $scope.items && $scope.items[0];
     });
 
     $scope.$on('enter', function () {
-      if (!$scope.currentItem.movies.length) return;
-      $location.path('/play/' + $scope.currentItem.movies[0].id + "/" + $scope.currentItem.id);
+      if (!$scope.carousel.item.movies.length) return;
+      $location.path('/play/' + $scope.carousel.item.movies[0].id + "/" + $scope.carousel.item.id);
     })
 
   }])
 
   .controller('Users', ['$scope', 'depth', 'Backend', '$route', function ($scope, depth, Backend, $route) {
+    $scope.carousel = {};
     $scope.data = {};
 
     $scope.loggedIn = Backend.isAuth();
@@ -170,11 +177,20 @@ angular.module('kidamom.controllers', [])
         $scope.items = profiles;
         $scope.items.forEach(function (item) {
           item.photo = item.avatar;
+          if (item.id == Backend.profile) $scope.carousel.item = item;
         });
+        $scope.items.push({ id: null, photo: 'sampledata/logout.jpg'})
       });
       $scope.$on('enter', function () {
-        Backend.logout();
-        window.location.reload();
+        if ($scope.carousel.item.id !== null) {
+          Backend.switchProfile($scope.carousel.item.id).then(function success(result) {
+            window.location.reload();
+          })
+        }
+        else {
+          Backend.logout();
+          window.location.reload();
+        }
       })
     }
   }])
