@@ -123,7 +123,7 @@ directive('appVersion', ['version', function(version) {
 			scope.searchOn=false;
 			scope.center = $(window).width()/2;
 			scope.controlTimeout = null;
-			scope.$parent.movieloading=false;
+			scope.$parent.movieloading=true;
 
 			scope.controls = [
 				{ action:"search", icon:"src", fill:"#fff", tsf:"" },
@@ -218,6 +218,7 @@ directive('appVersion', ['version', function(version) {
 				scope.$apply();
 			}
 			scope.$on("enter",function(){
+				clearInterval(hideint)
 				if (scope.showControls==false) {
 					// if(scope.searchLevel<1)
 					// 	scope.showControls=true;
@@ -237,11 +238,11 @@ directive('appVersion', ['version', function(version) {
 					}
 
 					else if(action=="backward"){
-						player.currentTime -= 10;
+						player.currentTime -= 30;
 						scope.progress=player.currentTime/player.duration;
 					}
 					else if(action=="forward"){
-						player.currentTime += 10;
+						player.currentTime += 30;
 						scope.progress=player.currentTime/player.duration;
 					}
 					else if(action=="prev" && scope.playlist){

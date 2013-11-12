@@ -27,6 +27,10 @@ angular.module('kidamom.controllers', [])
       var which = "";
       switch(e.which){
         case VK_ENTER:
+          holdint = setTimeout(function(){
+            console.log('setting interval');
+              holdint = setInterval(hold,300);
+          },2000);
           which = "enter"; break;
         case VK_BACK_SPACE:
           which = 'back';
@@ -49,6 +53,18 @@ angular.module('kidamom.controllers', [])
         rootScope.$broadcast(which);
 
         rootScope.$broadcast("keypress")
+
+        //
+    }
+    function hold(){
+        rootScope.$broadcast("enter");
+    }
+    var holdint=0;
+    $scope.keyUp = function(e){
+        if(e.which==VK_ENTER){
+            clearInterval(holdint);
+        }
+
     }
   }])
 

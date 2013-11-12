@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="app.css"/>
     <link href="lib/video-js/video-js.css" rel="stylesheet">
 </head>
-<body ng-controller="Main" ng-keydown="keyDown($event)">
+<body ng-controller="Main" ng-keydown="keyDown($event)" ng-keyup="keyUp($event)">
     <div id="loading" ng-show="{{loading}}"></div>
     <div ng-show="Menu.visible">
         <!-- NAVIGATION -->
