@@ -97,8 +97,8 @@ directive('appVersion', ['version', function(version) {
 			scope.$on("keyright",function(){
 				if(scope.searchLevel==3||scope.searchLevel==undefined){
 					scope.carousel.index++;
-		  			if(scope.carousel.index>= Math.max(scope.items.length, max)) 
-		  				scope.carousel.index= Math.max(scope.items.length,max)-1;
+		  			if(scope.carousel.index>= Math.min(scope.items.length, max)) 
+		  				scope.carousel.index= Math.min(scope.items.length,max)-1;
 		  			scope.carousel.item = scope.items[scope.carousel.index];
 
 		  		}
