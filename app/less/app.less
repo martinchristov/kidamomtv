@@ -119,9 +119,10 @@ body{
   float:left; margin-left:200px;
   margin-top: 10px;
   .loading{
-    font-size: 18px;
-    color: #747474;
-    margin-top: -11px;
+    font-size: 26px;
+    font-weight: 300;
+    color: #999;
+    margin-top: -5px;
     margin-left: 4px;
     display: none;
     &.on{
@@ -216,25 +217,23 @@ body{
   left: 570px;
 
   h1{ margin-bottom:0;margin-top: 30px; padding: 0; font-size: 35px; }
-  p{ margin-top: 13px;  font-size: 15px; margin-bottom: 13px; height: 42px; overflow: hidden;}
+  p{ margin-top: 13px;  font-size: 15px; margin-bottom: 13px; height: 110px; overflow: hidden;}
 
-  .age, .duration{ border-radius: 10px; padding: 5px 10px; text-align: center; font-size: 23px; }
+  .meta{
+    border-radius: 10px; padding: 5px 10px; font-size: 22px;
+    float:left;
+    background: #d0d0d0;
+    color:#707070;
+  }
+  .age, .duration{   }
 
   .age {
-    float: left; 
-    display: block; 
-    background: #11bdbf; color: #fff; 
-    width: 30px; 
-    margin-right: 25px;
-    font-weight: bold;
+    background: url(img/icon-age.png) no-repeat 7px 2px; 
+    padding-left: 35px;
   }
 
   .duration {
-    float: left;
-    display: block; 
-    background: url(img/time-icon.png) no-repeat 9px 10px #d0d0d0; 
-    color: #707070;
-    width: 60px;
+    background: url(img/time-icon.png) no-repeat 2px 6px; 
     padding-left: 30px;
 
    }
