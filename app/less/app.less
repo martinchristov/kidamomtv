@@ -101,11 +101,15 @@ body{
   width: 264px;
   height: 78px;
   background: url(img/watermark.png) no-repeat;
-  background-size: 100%;
+  background-size: 264px;
   position: absolute;
   top: 34px;
   right: 55px;
   z-index: 998;
+  .transition(width .8s ease-in-out);
+  &.compact{
+    width: 54px;
+  }
 }
 
 

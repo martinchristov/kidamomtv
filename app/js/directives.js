@@ -125,7 +125,7 @@ directive('appVersion', ['version', function(version) {
 			scope.searchOn=false;
 			scope.center = $(window).width()/2;
 			scope.controlTimeout = null;
-			scope.$parent.movieloading=false;
+			scope.$parent.movieloading=true;
 
 			scope.controls = [
 				{ action:"search", icon:"src", fill:"#fff", tsf:"" },
@@ -164,7 +164,10 @@ directive('appVersion', ['version', function(version) {
 					scope.playing=true;
 					scope.menuItem=3;
 					player.play();
-					hideint = setTimeout(hideControls,5000)
+					hideint = setTimeout(hideControls,5000);
+					setTimeout(function(){
+						$("#watermark").addClass("compact")
+					},10000);
 				},5000);
 			})
 
