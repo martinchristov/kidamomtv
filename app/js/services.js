@@ -241,7 +241,13 @@ angular.module('kidamom.services', [])
         }
         return $http(config).then(
             function success(response) { return response.data },
-            function error(response) { return response.data }
+            function error(response) {
+                if (response.code == 501) {
+                    service.logout;
+                    window.location.reload();
+                }
+                return response.data 
+            }
         );
     }
 
