@@ -16,8 +16,8 @@
 			<p ng-bind="carousel.item.description"></p>
 			<!-- <span ng-bind="currentItem.age + '+'" class="age"></span>  -->
 			<div class="meta">
-				<span ng-bind="carousel.item.duration" class="duration"></span>
-			&nbsp;&nbsp;| <span class="age">без ограничение</span>
+				<span ng-bind="carousel.item.duration" class="duration"></span>мин
+			&nbsp;&nbsp;| <span class="age" ng-bind="carousel.item.ageTags[0]">без ограничение</span>
 			</div>
 			<div class="clearfix"></div>
 		</div>

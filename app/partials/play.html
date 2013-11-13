@@ -1,12 +1,14 @@
 <div style="width:100%; height:100%; background:black">
 	<div id="watermark"></div>
-	<div id="movieloader" ng-class="{off:movieloading==false}"></div>
+	<div id="movieloader" ng-class="{off:movieloading==false}">
+		<div class="label">зареждане...</div>
+	</div>
 	<video id="videoplayer" videoplayer ng-src="{{movieUrl}}">
 	</video>
 	<div id="controls" ng-class="{show:showControls, wplaylist:playlist.length>0}">
 		<ul style="width:{{(controls.length-1)*50+50}}px; margin-left:{{center-controlsx}}px" id="controls-ul">
 			<li ng-repeat="control in controls" 
-				ng-class="{current:menuItem==$index, disabled:($index==1&&currentInList==0)||($index==6&&currentInList+1==playlist.length)}" 
+				ng-class="{current:menuItem==$index, disabled:($index==1&&currentInList==0)||($index==6&&(currentInList+1==playlist.length||playlist.length==0))}" 
 				ng-hide="(control.icon=='play' && playing)||(control.icon=='pause' && !playing)" >
 				<a><i icon iconfill="#fff" data-index="{{$index}}" data-color-class="current:#de2121" class="{{control.icon}}" data-attrs='{"transform":"{{control.tsf}}", "fill":"{{control.fill}}"}' data-stroke="8 rgba(0,0,0,0.5)"></i></a>
 			</li>

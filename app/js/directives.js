@@ -188,6 +188,11 @@ directive('appVersion', ['version', function(version) {
 					if(!scope.playing&&scope.menuItem==3)scope.menuItem--;
 					else if(scope.playing&&scope.menuItem==4)scope.menuItem--;
 
+					//skip over disabled next/prev
+					if(scope.menuItem==1&&scope.currentInList==0)scope.menuItem--;
+					else if(scope.menuItem==6&&(scope.playlist.length==0||scope.currentInList+1==scope.playlist.length))scope.menuItem--;
+
+
 					scope.controlsx = scope.menuItem*50+60;
 					if(scope.menuItem>3)scope.controlsx-=50;
 				}
@@ -199,6 +204,11 @@ directive('appVersion', ['version', function(version) {
 					if(scope.menuItem<scope.controls.length-1)scope.menuItem++;
 					if(scope.playing&&scope.menuItem==4)scope.menuItem++;
 					else if(!scope.playing&&scope.menuItem==3)scope.menuItem++;
+
+					//skip over disabled next/prev
+					if(scope.menuItem==1&&scope.currentInList==0)scope.menuItem++;
+					else if(scope.menuItem==6&&(scope.playlist.length==0||scope.currentInList+1==scope.playlist.length))scope.menuItem++;
+
 
 					scope.controlsx = scope.menuItem*50+60;
 					if(scope.menuItem>3)scope.controlsx-=50;
@@ -214,7 +224,7 @@ directive('appVersion', ['version', function(version) {
 					hideint = setTimeout(hideControls,5000)
 				}
 				else {
-					if(scope.searchLevel<1&&scope.showLanguage==false)scope.showControls=true;
+					if(scope.searchLevel<1&&scope.showLanguage!=true)scope.showControls=true;
 				}
 			})
 			var hideint= 0;
@@ -292,6 +302,10 @@ directive('appVersion', ['version', function(version) {
 				if (scope.showControls) {
 					scope.showControls=false;
 				}
+				else if(scope.showLanguage){
+					scope.showLanguage=false;
+					scope.showControls=true;
+				}
 				else{
 					if(scope.searchLevel>0){
 						depth.less();
@@ -323,7 +337,14 @@ directive('appVersion', ['version', function(version) {
 			}
 			scope.$on("keydown",function(){
 				if(scope.showLanguage){
-					if(scope.curLang<scope.languages.length-1)scope.curLang++;
+
+					if(scope.curLang<scope.languages.length-1){
+						scope.curLang++;
+					}
+					else if(scope.curLang==scope.languages.length-1){
+						scope.showLanguage=false;
+						scope.showControls=true;
+					}
 				}
 			})
 			scope.$on("keyup",function(){
@@ -335,6 +356,8 @@ directive('appVersion', ['version', function(version) {
 				if(scope.showLanguage){
 					scope.movieUrl = scope.movie.videos[scope.curLang].sources.tv;
 					scope.player.load();
+					scope.movieloading=true;
+					$("#watermark").removeClass("compact")
 					localStorage.lang = scope.languages[scope.curLang].key;
 					scope.showLanguage=false;
 				}

@@ -126,12 +126,14 @@ angular.module('kidamom.controllers', [])
     movie.videos.forEach(function (item) {
       if (item.languageLocale === 'bg') $scope.movieUrl = item.sources.tv;
     });
+    $scope.currentInList=0;
     if ($scope.playlist && $scope.playlist.length) {
       $scope.playlist.forEach(function (item, index) {
         if (item.id === movie.id)
           $scope.currentInList = index;
       });
     }
+    else $scope.playlist = []
   }])
   .controller('Playlists', ['$scope', 'Backend', '$location', function ($scope, Backend, $location){
     $scope.carousel = {};
