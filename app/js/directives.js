@@ -85,7 +85,7 @@ directive('appVersion', ['version', function(version) {
 		restrict: 'E',
 		templateUrl: 'partials/carousel.html',
 		link: function (scope, iElement, iAttrs) {
-			var max = 31;
+			var max = 30;
 			scope.carousel.index = 0;
 			if(scope.hasOwnProperty("items")) scope.carousel.item = scope.items[0];
 			scope.carousel.loading = true;
@@ -100,7 +100,7 @@ directive('appVersion', ['version', function(version) {
 				if(scope.searchLevel==3||scope.searchLevel==undefined){
 					scope.carousel.index++;
 		  			if(scope.carousel.index>= Math.min(scope.items.length, max)) 
-		  				scope.carousel.index= Math.min(scope.items.length,max)-1;
+		  				scope.carousel.index= Math.min(scope.items.length, max) - 1;
 		  			scope.carousel.item = scope.items[scope.carousel.index];
 
 		  		}
