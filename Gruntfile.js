@@ -20,6 +20,11 @@ module.exports = function(grunt) {
     concat:{
       compilejs:{
         src:[
+          "app/lib/jquery/min.js",
+          "app/lib/angular/angular.js",
+          "app/lib/angular/angular-route.js",
+          "app/bower_components/raphael/raphael.js",
+          "app/js/IconFactory.js",
           "app/js/app.js",
           "app/js/controllers.js",
           "app/js/filters.js",
