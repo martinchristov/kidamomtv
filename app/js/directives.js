@@ -18,11 +18,13 @@ directive('appVersion', ['version', function(version) {
 			scope.menu = Menu.getItems();
 			scope.scrollH=50;
 			scope.menuItem=1;
-			scope.menu.some(function (item, index) {
-				if (item.href.indexOf($location.$$path) !== -1) {
-					scope.menuItem = index;
-					return true;
-				}
+			scope.$on('$locationChangeSuccess', function (event, newUrl, oldUrl) {
+				scope.menu.some(function (item, index) {
+					if (newUrl.indexOf(item.href) !== -1) {
+						scope.menuItem = index;
+						return true;
+					}
+				})
 			})
 			scope.$on('keyup',function(){
 				if(depth.get()==0)
@@ -158,12 +160,13 @@ directive('appVersion', ['version', function(version) {
 
 			player.addEventListener('ended', function () {
 				if (scope.playlist && scope.playlist.length > scope.currentInList) {
-					setTimeout(function () {
-						var movieid = scope.playlist[scope.currentInList + 1].id;
-						var playlistid = scope.playlistId;
-						$location.path('/play/' + movieid + "/" + playlistid);
-						$location.replace();
-					},1000);
+					var movieid = scope.playlist[scope.currentInList + 1].id;
+					var playlistid = scope.playlistId;
+					$location.path('/play/' + movieid + "/" + playlistid);
+					$location.replace();
+				}
+				else {
+					$location.path('/');
 				}
 			});
 			//remove loading
