@@ -161,13 +161,13 @@ angular.module('kidamom.controllers', [])
 
     $scope.loggedIn = Backend.isAuth();
 
+    $scope.back = function(){
+      depth.less();
+      LoginContext=false;
+      $("#users input:first").blur();
+    }
+
     if (!Backend.isAuth()) {
-        // setTimeout(function(){
-        //     depth.more();
-        //     LoginContext=true;
-        //     $("#users input:first").focus();
-        //     $scope.$apply();
-        // },3000);
         $scope.$on("back",function(){
             if(depth.get()==1){
                 depth.less();
@@ -182,15 +182,11 @@ angular.module('kidamom.controllers', [])
                 $("#users input:first").focus();
             }
         })
-      // $scope.$on("enter", function () {
-      //   Backend.login($scope.data.email, $scope.data.password).then(function success(){
-      //     window.location.reload();
-      //   });
-      // });
-  $scope.error=""
+        $scope.error=""
+        $scope.data.email="";$scope.data.password="";
         $scope.logIn = function(){
-            // $scope.data.email="martin.christov@gmail.com";
-            // $scope.data.password="772323";
+
+          if($scope.data.email.length>0&&$scope.data.password.length>0)
             Backend.login($scope.data.email, $scope.data.password).then(function success(d){
                 if(d.hasOwnProperty("identifier")==false){
                     $scope.error="Грешен email или парола.";
@@ -206,7 +202,7 @@ angular.module('kidamom.controllers', [])
           item.photo = item.avatar;
           if (item.id == Backend.profile) $scope.carousel.item = item;
         });
-        $scope.items.push({ id: null, photo: 'sampledata/logout.jpg'})
+        $scope.items.push({ id: null, photo: 'sampledata/logout.jpg', name:"изход"})
         $scope.carousel.loading = false;
       });
       $scope.$on('enter', function () {

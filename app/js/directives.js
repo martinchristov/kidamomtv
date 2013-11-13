@@ -520,7 +520,7 @@ directive('appVersion', ['version', function(version) {
 }])
 
 
-.directive('playmovie', ['$location','depth', function ($location,depth) {
+.directive('playmovie', ['$location','depth', 'Backend', function ($location,depth, Backend) {
 	return {
 		restrict: 'A',
 		link: function (scope, iElement, iAttrs) {
