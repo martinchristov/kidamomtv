@@ -52,3 +52,4 @@ var langLocale = {
 	es: "Espagnol",
 	fr: "Francais"
 }
+var continueFromTime=0;

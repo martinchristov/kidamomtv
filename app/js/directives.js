@@ -163,7 +163,11 @@ directive('appVersion', ['version', function(version) {
 					scope.$parent.movieloading=false;
 					scope.playing=true;
 					scope.menuItem=3;
+					scope.controlsx = scope.menuItem*50+60;
 					player.play();
+					if(continueFromTime!=undefined){
+						player.currentTime = continueFromTime;
+					}
 					hideint = setTimeout(hideControls,5000);
 					setTimeout(function(){
 						$("#watermark").addClass("compact")
@@ -354,12 +358,14 @@ directive('appVersion', ['version', function(version) {
 			})
 			scope.$on("enter",function(){
 				if(scope.showLanguage){
+					continueFromTime = scope.player.currentTime;
 					scope.movieUrl = scope.movie.videos[scope.curLang].sources.tv;
 					scope.player.load();
-					scope.movieloading=true;
-					$("#watermark").removeClass("compact")
+					scope.$parent.movieloading=true;
+					$("#watermark").removeClass("compact");
 					localStorage.lang = scope.languages[scope.curLang].key;
 					scope.showLanguage=false;
+					// window.location.reload();
 				}
 			})
 		}
