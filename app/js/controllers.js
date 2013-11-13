@@ -155,7 +155,7 @@ angular.module('kidamom.controllers', [])
 
   }])
 
-  .controller('Users', ['$scope', 'depth', 'Backend', '$route', function ($scope, depth, Backend, $route) {
+  .controller('Users', ['$scope', 'depth', 'Backend', '$route', '$location', function ($scope, depth, Backend, $route, $location) {
     $scope.carousel = {};
     $scope.data = {};
 
