@@ -162,12 +162,12 @@ angular.module('kidamom.controllers', [])
     $scope.loggedIn = Backend.isAuth();
 
     if (!Backend.isAuth()) {
-        setTimeout(function(){
-            depth.more();
-            LoginContext=true;
-            $("#users input:first").focus();
-            $scope.$apply();
-        },3000);
+        // setTimeout(function(){
+        //     depth.more();
+        //     LoginContext=true;
+        //     $("#users input:first").focus();
+        //     $scope.$apply();
+        // },3000);
         $scope.$on("back",function(){
             if(depth.get()==1){
                 depth.less();
@@ -217,7 +217,9 @@ angular.module('kidamom.controllers', [])
         }
         else {
           Backend.logout();
+          window.location.href="#/";
           window.location.reload();
+          // window.location.reload();
         }
       })
     }

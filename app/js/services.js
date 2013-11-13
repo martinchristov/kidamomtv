@@ -262,6 +262,7 @@ angular.module('kidamom.services', [])
             return service.req('/profile', 'GET', null, true)
         }).then(function success (res) {
             service.setProfile(res);
+            window.location.href="#/";
             window.location.reload();
         });
         return $promise;

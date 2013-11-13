@@ -513,9 +513,9 @@ directive('appVersion', ['version', function(version) {
 			scope.$on("enter", function () {
 				if(depth.get()==0||scope.searchLevel==3){
 					delete localStorage.lang;
-					// if(scope.loggedIn)
+					if(Backend.isAuth()) 
 						$location.path("/play/" + scope.carousel.item.id);
-					// else $location.path("/users")
+					else $location.path("/users")
 				}
 			})
 		}
