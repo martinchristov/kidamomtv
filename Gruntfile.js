@@ -31,6 +31,12 @@ module.exports = function(grunt) {
           "app/js/directives.js",
           "app/js/services.js"
         ],
+        dest:"app/js/app.cc.js"
+      }
+    },
+    uglify:{
+      doit:{
+        src:["app/js/app.cc.js"],
         dest:"app/js/app.min.js"
       }
     },
@@ -53,6 +59,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-recess');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   // Default task(s).
   grunt.registerTask('dist-css', ['recess']);

@@ -202,7 +202,7 @@ angular.module('kidamom.controllers', [])
           item.photo = item.avatar;
           if (item.id == Backend.profile) $scope.carousel.item = item;
         });
-        $scope.items.push({ id: null, photo: 'sampledata/logout.jpg', name:"изход"})
+        $scope.items.push({ id: null, photo: 'img/logout.jpg', name:"изход"})
         $scope.carousel.loading = false;
       });
       $scope.$on('enter', function () {
