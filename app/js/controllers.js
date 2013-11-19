@@ -13,7 +13,7 @@ angular.module('kidamom.controllers', [])
   .controller('Main', ['$scope', 'depth', '$rootScope', 'Menu', function ($scope, depth, rootScope, Menu){
     $scope.Menu = Menu;
     $scope.loading=false;
-
+    $scope.playLabel="пусни";
     $scope.movieloading=true;
   	$scope.isMenuInactive = function(){
   		if(depth.get()==0)return false;
@@ -90,6 +90,11 @@ angular.module('kidamom.controllers', [])
   .controller('Movies', ['$scope','$routeParams', 'Backend', function ($scope, $routeParams, Backend){
     $scope.carousel = {};
     var playlist = $routeParams.playlist;
+    var dict = {
+      "nofavourites":"В момента нямате добавени любими филмчета. Можете да си добавите от нашия сайт.",
+      "nolastwatched":"Нямате последно гледани филмчета."
+    }
+    $scope.noItemsLabel=dict["no"+playlist];
     $scope.Menu.enable();
   	$scope.items = [];
     Backend.getHomeMovies().then(function success(result) {
@@ -139,6 +144,7 @@ angular.module('kidamom.controllers', [])
     $scope.carousel = {};
     $scope.Menu.enable();
     $scope.items = [];
+    $scope.noItemsLabel="В момента нямате плейлисти. Можете да си съставите чрез нашия сайт.";
     Backend.getPlaylists().then(function success(playlists) {
       $scope.items = playlists;
       $scope.carousel.loading = false;
@@ -158,16 +164,16 @@ angular.module('kidamom.controllers', [])
   .controller('Users', ['$scope', 'depth', 'Backend', '$route', '$location', function ($scope, depth, Backend, $route, $location) {
     $scope.carousel = {};
     $scope.data = {};
-
+    $scope.playLabel="зареди профил";
     $scope.loggedIn = Backend.isAuth();
 
+    $scope.back = function(){
+      depth.less();
+      LoginContext=false;
+      $("#users input:first").blur();
+    }
+
     if (!Backend.isAuth()) {
-        setTimeout(function(){
-            depth.more();
-            LoginContext=true;
-            $("#users input:first").focus();
-            $scope.$apply();
-        },3000);
         $scope.$on("back",function(){
             if(depth.get()==1){
                 depth.less();
@@ -182,15 +188,11 @@ angular.module('kidamom.controllers', [])
                 $("#users input:first").focus();
             }
         })
-      // $scope.$on("enter", function () {
-      //   Backend.login($scope.data.email, $scope.data.password).then(function success(){
-      //     window.location.reload();
-      //   });
-      // });
-  $scope.error=""
+        $scope.error=""
+        $scope.data.email="";$scope.data.password="";
         $scope.logIn = function(){
-            // $scope.data.email="martin.christov@gmail.com";
-            // $scope.data.password="772323";
+
+          if($scope.data.email.length>0&&$scope.data.password.length>0)
             Backend.login($scope.data.email, $scope.data.password).then(function success(d){
                 if(d.hasOwnProperty("identifier")==false){
                     $scope.error="Грешен email или парола.";
@@ -206,7 +208,7 @@ angular.module('kidamom.controllers', [])
           item.photo = item.avatar;
           if (item.id == Backend.profile) $scope.carousel.item = item;
         });
-        $scope.items.push({ id: null, photo: 'sampledata/logout.jpg'})
+        $scope.items.push({ id: null, photo: 'img/logout.jpg', name:"изход"})
         $scope.carousel.loading = false;
       });
       $scope.$on('enter', function () {
@@ -217,7 +219,9 @@ angular.module('kidamom.controllers', [])
         }
         else {
           Backend.logout();
+          window.location.href="#/";
           window.location.reload();
+          // window.location.reload();
         }
       })
     }

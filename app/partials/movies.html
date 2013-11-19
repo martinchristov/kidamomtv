@@ -1,5 +1,11 @@
 
+<div class="itemslist" ng-class="{on:items.length>0&&carousel.loading==false}">
+	{{carousel.index+1}} от {{items.length-1}}
+</div>
 <carousel></carousel>
+<div class="noitems" ng-class="{on:items.length==0&&carousel.loading==false}" ng-bind="noItemsLabel">
+	
+</div>
 
 <div class="info" ng-show="carousel.item" playmovie="{{carousel.item.id}}">
 	<h1 ng-bind="carousel.item.title"></h1>

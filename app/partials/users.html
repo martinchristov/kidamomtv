@@ -2,6 +2,9 @@
 	<div ng-switch on="loggedIn">
 		<div ng-switch-when="true">
 			<carousel></carousel>
+			<div class="info">
+				<h1 ng-bind="carousel.item.name"></h1>
+			</div>
 		</div>
 		<div ng-switch-default>
 			<form ng-submit="logIn()">
@@ -12,6 +15,7 @@
 				<div class="clearfix"></div>
 				<button type="submit" class="small">Вход</button>
 			</form>
+				<button class="small back" ng-click="back()">Назад</button>
 		</div>
 	</div>
 </div>

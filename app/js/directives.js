@@ -405,7 +405,7 @@ directive('appVersion', ['version', function(version) {
 			// 3 - carousel
 
 			// scope.keyboard="abcdefghijklmnopqrstuvwxyz< 0123456789";
-			scope.keyboard="абвгдежзийклмнопрстуфхцчшщъьюя< 0123456789";
+			scope.keyboard="< абвгдежзийклмнопрстуфхцчшщъьюя< 0123456789";
 			// scope.keyboard="джу";
 			scope.curChar = 0;
 			scope.center = $(window).width()/2;
@@ -525,16 +525,16 @@ directive('appVersion', ['version', function(version) {
 }])
 
 
-.directive('playmovie', ['$location','depth', function ($location,depth) {
+.directive('playmovie', ['$location','depth', 'Backend', function ($location,depth, Backend) {
 	return {
 		restrict: 'A',
 		link: function (scope, iElement, iAttrs) {
 			scope.$on("enter", function () {
 				if(depth.get()==0||scope.searchLevel==3){
 					delete localStorage.lang;
-					// if(scope.loggedIn)
+					if(Backend.isAuth()) 
 						$location.path("/play/" + scope.carousel.item.id);
-					// else $location.path("/users")
+					else $location.path("/users")
 				}
 			})
 		}
