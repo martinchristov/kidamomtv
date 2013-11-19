@@ -400,7 +400,7 @@ directive('appVersion', ['version', function(version) {
 			// 3 - carousel
 
 			// scope.keyboard="abcdefghijklmnopqrstuvwxyz< 0123456789";
-			scope.keyboard="абвгдежзийклмнопрстуфхцчшщъьюя< 0123456789";
+			scope.keyboard="< абвгдежзийклмнопрстуфхцчшщъьюя< 0123456789";
 			// scope.keyboard="джу";
 			scope.curChar = 0;
 			scope.center = $(window).width()/2;

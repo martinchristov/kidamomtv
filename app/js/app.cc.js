@@ -38122,7 +38122,7 @@ angular.module('kidamom.controllers', [])
   .controller('Main', ['$scope', 'depth', '$rootScope', 'Menu', function ($scope, depth, rootScope, Menu){
     $scope.Menu = Menu;
     $scope.loading=false;
-
+    $scope.playLabel="пусни";
     $scope.movieloading=true;
   	$scope.isMenuInactive = function(){
   		if(depth.get()==0)return false;
@@ -38199,6 +38199,11 @@ angular.module('kidamom.controllers', [])
   .controller('Movies', ['$scope','$routeParams', 'Backend', function ($scope, $routeParams, Backend){
     $scope.carousel = {};
     var playlist = $routeParams.playlist;
+    var dict = {
+      "nofavourites":"В момента нямате добавени любими филмчета. Можете да си добавите от нашия сайт.",
+      "nolastwatched":"Нямате последно гледани филмчета."
+    }
+    $scope.noItemsLabel=dict["no"+playlist];
     $scope.Menu.enable();
   	$scope.items = [];
     Backend.getHomeMovies().then(function success(result) {
@@ -38248,6 +38253,7 @@ angular.module('kidamom.controllers', [])
     $scope.carousel = {};
     $scope.Menu.enable();
     $scope.items = [];
+    $scope.noItemsLabel="В момента нямате плейлисти. Можете да си съставите чрез нашия сайт.";
     Backend.getPlaylists().then(function success(playlists) {
       $scope.items = playlists;
       $scope.carousel.loading = false;
@@ -38267,7 +38273,7 @@ angular.module('kidamom.controllers', [])
   .controller('Users', ['$scope', 'depth', 'Backend', '$route', function ($scope, depth, Backend, $route) {
     $scope.carousel = {};
     $scope.data = {};
-
+    $scope.playLabel="зареди профил";
     $scope.loggedIn = Backend.isAuth();
 
     $scope.back = function(){
@@ -38744,7 +38750,7 @@ directive('appVersion', ['version', function(version) {
 			// 3 - carousel
 
 			// scope.keyboard="abcdefghijklmnopqrstuvwxyz< 0123456789";
-			scope.keyboard="абвгдежзийклмнопрстуфхцчшщъьюя< 0123456789";
+			scope.keyboard="< абвгдежзийклмнопрстуфхцчшщъьюя< 0123456789";
 			// scope.keyboard="джу";
 			scope.curChar = 0;
 			scope.center = $(window).width()/2;
