@@ -184,8 +184,9 @@ directive('appVersion', ['version', function(version) {
 					scope.menuItem=3;
 					scope.controlsx = scope.menuItem*50+60;
 					player.play();
-					if(continueFromTime!=undefined){
-						player.currentTime = continueFromTime;
+					if(scope.continueFromTime!=undefined){
+						player.currentTime = scope.continueFromTime;
+						delete scope.continueFromTime;
 					}
 					hideint = setTimeout(hideControls,5000);
 					setTimeout(function(){
@@ -377,7 +378,7 @@ directive('appVersion', ['version', function(version) {
 			})
 			scope.$on("enter",function(){
 				if(scope.showLanguage){
-					continueFromTime = scope.player.currentTime;
+					scope.continueFromTime = scope.player.currentTime;
 					scope.movieUrl = scope.movie.videos[scope.curLang].sources.tv;
 					scope.player.load();
 					scope.$parent.movieloading=true;
