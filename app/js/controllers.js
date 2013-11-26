@@ -201,15 +201,12 @@ angular.module('kidamom.controllers', [])
       $scope.$on('enter', function () {
         if ($scope.carousel.item.id !== null) {
           Backend.switchProfile($scope.carousel.item.id).then(function success(result) {
-            window.location.reload();
           })
         }
         else {
           Backend.logout();
-          window.location.href="#/";
-          window.location.reload();
-          // window.location.reload();
         }
+        window.location.href="#/";
       })
     }
   }])
