@@ -12,8 +12,6 @@ angular.module('kidamom.controllers', [])
   
   .controller('Main', ['$scope', 'depth', '$rootScope', 'Menu', function ($scope, depth, rootScope, Menu){
     $scope.Menu = Menu;
-    $scope.loading=false;
-    $scope.playLabel="пусни";
     $scope.movieloading=true;
   	$scope.isMenuInactive = function(){
   		if(depth.get()==0)return false;
@@ -155,9 +153,8 @@ angular.module('kidamom.controllers', [])
 
   .controller('Users', ['$scope', 'depth', 'Backend', '$route', '$location', function ($scope, depth, Backend, $route, $location) {
     $scope.data = {};
-    $scope.playLabel="зареди профил";
     $scope.loggedIn = Backend.isAuth();
-    $scope.carousel = {};
+    $scope.carousel = {playLabel: "зареди профил"};
 
     $scope.back = function(){
       depth.less();

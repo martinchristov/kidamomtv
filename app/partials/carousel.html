@@ -4,7 +4,7 @@
 		<div class="item" ng-repeat="item in items | limitTo: 30" ng-class="{current:(item==carousel.item), faded:($index<carousel.index)}">
 			<img ng-src="{{item.photo}}">
 			<div class="playlbl">
-				{{playLabel}}
+				{{carousel.playLabel}}
 			</div>
 		</div>
 	</div>

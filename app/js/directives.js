@@ -92,11 +92,12 @@ directive('appVersion', ['version', function(version) {
 		scope: { 
 			items: "=?items",
 			carousel: "=model",
-			searchLevel: "="
+			searchLevel: "=",
+			playLabel: "="
 		},
 		link: function (scope, iElement, iAttrs) {
 			var max = 30;
-			if (!scope.carousel) scope.carousel = {};
+			if (!scope.carousel) scope.carousel = {playLabel: "пусни"};
 			function init() {
 				if (!scope.items) { 
 					scope.carousel.loading = true; 
