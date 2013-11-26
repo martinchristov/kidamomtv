@@ -1,8 +1,8 @@
 
 <div class="itemslist" ng-class="{on:items.length>0&&carousel.loading==false}">
-	{{carousel.index+1}} от {{items.length-1}}
+	{{carousel.index+1}} от {{carousel.length}}
 </div>
-<carousel></carousel>
+<carousel model="carousel" items="items"></carousel>
 <div class="noitems" ng-class="{on:items.length==0&&carousel.loading==false}" ng-bind="noItemsLabel">
 	
 </div>

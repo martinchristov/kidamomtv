@@ -88,7 +88,6 @@ angular.module('kidamom.controllers', [])
   }])
   
   .controller('Movies', ['$scope','$routeParams', 'Backend', function ($scope, $routeParams, Backend){
-    $scope.carousel = {};
     var playlist = $routeParams.playlist;
     var dict = {
       "nofavourites":"В момента нямате добавени любими филмчета. Можете да си добавите от нашия сайт.",
@@ -96,12 +95,9 @@ angular.module('kidamom.controllers', [])
     }
     $scope.noItemsLabel=dict["no"+playlist];
     $scope.Menu.enable();
-  	$scope.items = [];
     Backend.getHomeMovies().then(function success(result) {
       $scope.items = result[playlist];
-      $scope.carousel.loading = false;
       if ($scope.items.length) {
-        $scope.carousel.item = $scope.items[0];
         $scope.items.forEach(function (item) {
           item.duration = (item.duration/60).toFixed();
         })
@@ -141,17 +137,13 @@ angular.module('kidamom.controllers', [])
     else $scope.playlist = []
   }])
   .controller('Playlists', ['$scope', 'Backend', '$location', function ($scope, Backend, $location){
-    $scope.carousel = {};
     $scope.Menu.enable();
-    $scope.items = [];
     $scope.noItemsLabel="В момента нямате плейлисти. Можете да си съставите чрез нашия сайт.";
     Backend.getPlaylists().then(function success(playlists) {
       $scope.items = playlists;
-      $scope.carousel.loading = false;
       $scope.items.forEach(function (item) {
         if (item.movies.length) item.photo = item.movies[0].photo;
       })
-      $scope.carousel.item = $scope.items && $scope.items[0];
     });
 
     $scope.$on('enter', function () {
@@ -162,10 +154,10 @@ angular.module('kidamom.controllers', [])
   }])
 
   .controller('Users', ['$scope', 'depth', 'Backend', '$route', '$location', function ($scope, depth, Backend, $route, $location) {
-    $scope.carousel = {};
     $scope.data = {};
     $scope.playLabel="зареди профил";
     $scope.loggedIn = Backend.isAuth();
+    $scope.carousel = {};
 
     $scope.back = function(){
       depth.less();
@@ -201,15 +193,13 @@ angular.module('kidamom.controllers', [])
         }
     }
     else {
-      $scope.items = [];
       Backend.getProfiles().then(function success(profiles){
         $scope.items = profiles;
-        $scope.items.forEach(function (item) {
+        $scope.items.forEach(function (item, index) {
           item.photo = item.avatar;
-          if (item.id == Backend.profile) $scope.carousel.item = item;
+          if (item.id == Backend.profile) $scope.carousel.initial = index;
         });
         $scope.items.push({ id: null, photo: 'img/logout.jpg', name:"изход"})
-        $scope.carousel.loading = false;
       });
       $scope.$on('enter', function () {
         if ($scope.carousel.item.id !== null) {

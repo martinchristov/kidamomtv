@@ -38197,7 +38197,6 @@ angular.module('kidamom.controllers', [])
   }])
   
   .controller('Movies', ['$scope','$routeParams', 'Backend', function ($scope, $routeParams, Backend){
-    $scope.carousel = {};
     var playlist = $routeParams.playlist;
     var dict = {
       "nofavourites":"В момента нямате добавени любими филмчета. Можете да си добавите от нашия сайт.",
@@ -38205,12 +38204,9 @@ angular.module('kidamom.controllers', [])
     }
     $scope.noItemsLabel=dict["no"+playlist];
     $scope.Menu.enable();
-  	$scope.items = [];
     Backend.getHomeMovies().then(function success(result) {
       $scope.items = result[playlist];
-      $scope.carousel.loading = false;
       if ($scope.items.length) {
-        $scope.carousel.item = $scope.items[0];
         $scope.items.forEach(function (item) {
           item.duration = (item.duration/60).toFixed();
         })
@@ -38250,17 +38246,13 @@ angular.module('kidamom.controllers', [])
     else $scope.playlist = []
   }])
   .controller('Playlists', ['$scope', 'Backend', '$location', function ($scope, Backend, $location){
-    $scope.carousel = {};
     $scope.Menu.enable();
-    $scope.items = [];
     $scope.noItemsLabel="В момента нямате плейлисти. Можете да си съставите чрез нашия сайт.";
     Backend.getPlaylists().then(function success(playlists) {
       $scope.items = playlists;
-      $scope.carousel.loading = false;
       $scope.items.forEach(function (item) {
         if (item.movies.length) item.photo = item.movies[0].photo;
       })
-      $scope.carousel.item = $scope.items && $scope.items[0];
     });
 
     $scope.$on('enter', function () {
@@ -38270,11 +38262,11 @@ angular.module('kidamom.controllers', [])
 
   }])
 
-  .controller('Users', ['$scope', 'depth', 'Backend', '$route', function ($scope, depth, Backend, $route) {
-    $scope.carousel = {};
+  .controller('Users', ['$scope', 'depth', 'Backend', '$route', '$location', function ($scope, depth, Backend, $route, $location) {
     $scope.data = {};
     $scope.playLabel="зареди профил";
     $scope.loggedIn = Backend.isAuth();
+    $scope.carousel = {};
 
     $scope.back = function(){
       depth.less();
@@ -38310,15 +38302,13 @@ angular.module('kidamom.controllers', [])
         }
     }
     else {
-      $scope.items = [];
       Backend.getProfiles().then(function success(profiles){
         $scope.items = profiles;
-        $scope.items.forEach(function (item) {
+        $scope.items.forEach(function (item, index) {
           item.photo = item.avatar;
-          if (item.id == Backend.profile) $scope.carousel.item = item;
+          if (item.id == Backend.profile) $scope.carousel.initial = index;
         });
         $scope.items.push({ id: null, photo: 'img/logout.jpg', name:"изход"})
-        $scope.carousel.loading = false;
       });
       $scope.$on('enter', function () {
         if ($scope.carousel.item.id !== null) {
@@ -38368,13 +38358,18 @@ directive('appVersion', ['version', function(version) {
 			scope.menu = Menu.getItems();
 			scope.scrollH=50;
 			scope.menuItem=1;
-			scope.$on('$locationChangeSuccess', function (event, newUrl, oldUrl) {
+
+			function selectMenuItem(url) {
 				scope.menu.some(function (item, index) {
-					if (newUrl.indexOf(item.href) !== -1) {
+					if (url.indexOf(item.href) !== -1) {
 						scope.menuItem = index;
 						return true;
 					}
 				})
+			}
+			selectMenuItem($location.$$absUrl);
+			scope.$on('$locationChangeSuccess', function (event, newUrl, oldUrl) {
+				selectMenuItem(newUrl);
 			})
 			scope.$on('keyup',function(){
 				if(depth.get()==0)
@@ -38434,11 +38429,31 @@ directive('appVersion', ['version', function(version) {
 	return {
 		restrict: 'E',
 		templateUrl: 'partials/carousel.html',
+		scope: { 
+			items: "=?items",
+			carousel: "=model",
+			searchLevel: "="
+		},
 		link: function (scope, iElement, iAttrs) {
 			var max = 30;
-			scope.carousel.index = 0;
-			if(scope.hasOwnProperty("items")) scope.carousel.item = scope.items[0];
-			scope.carousel.loading = true;
+			if (!scope.carousel) scope.carousel = {};
+			function init() {
+				if (!scope.items) { 
+					scope.carousel.loading = true; 
+					scope.carousel.length = 0;
+				}
+				else {
+					scope.carousel.loading = false;
+					scope.carousel.index = scope.carousel.initial || scope.carousel.index;
+					scope.carousel.item = scope.items[scope.carousel.index];
+					scope.carousel.length = Math.min(scope.items.length, max);
+				}
+			}
+			init();
+
+			scope.$watch('items', function (newValue) {
+				init();
+			});
 			scope.$on("keyleft",function(){
 				if(scope.searchLevel==3||scope.searchLevel==undefined){
 					scope.carousel.index--;
@@ -38449,10 +38464,9 @@ directive('appVersion', ['version', function(version) {
 			scope.$on("keyright",function(){
 				if(scope.searchLevel==3||scope.searchLevel==undefined){
 					scope.carousel.index++;
-		  			if(scope.carousel.index>= Math.min(scope.items.length, max)) 
-		  				scope.carousel.index= Math.min(scope.items.length, max) - 1;
+		  			if(scope.carousel.index>= scope.carousel.length) 
+		  				scope.carousel.index = scope.carousel.length - 1;
 		  			scope.carousel.item = scope.items[scope.carousel.index];
-
 		  		}
 
 			})
@@ -38529,8 +38543,9 @@ directive('appVersion', ['version', function(version) {
 					scope.menuItem=3;
 					scope.controlsx = scope.menuItem*50+60;
 					player.play();
-					if(continueFromTime!=undefined){
-						player.currentTime = continueFromTime;
+					if(scope.continueFromTime!=undefined){
+						player.currentTime = scope.continueFromTime;
+						delete scope.continueFromTime;
 					}
 					hideint = setTimeout(hideControls,5000);
 					setTimeout(function(){
@@ -38722,7 +38737,7 @@ directive('appVersion', ['version', function(version) {
 			})
 			scope.$on("enter",function(){
 				if(scope.showLanguage){
-					continueFromTime = scope.player.currentTime;
+					scope.continueFromTime = scope.player.currentTime;
 					scope.movieUrl = scope.movie.videos[scope.curLang].sources.tv;
 					scope.player.load();
 					scope.$parent.movieloading=true;
