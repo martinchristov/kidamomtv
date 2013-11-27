@@ -3,9 +3,7 @@
 	<div class="holder" style="width:{{carousel.length*180+160+125}}px; margin-left:{{-carousel.index*180-135}}px">
 		<div class="item" ng-repeat="item in items | limitTo: 30" ng-class="{current:(item==carousel.item), faded:($index<carousel.index)}">
 			<img ng-src="{{item.photo}}">
-			<div class="playlbl">
-				{{carousel.playLabel}}
-			</div>
+			<div class="playlbl" ng-bind="carousel.playLabel"></div>
 		</div>
 	</div>
 </div>

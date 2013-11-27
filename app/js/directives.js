@@ -93,7 +93,6 @@ directive('appVersion', ['version', function(version) {
 			items: "=?items",
 			carousel: "=model",
 			searchLevel: "=",
-			playLabel: "="
 		},
 		link: function (scope, iElement, iAttrs) {
 			var max = 30;
