@@ -33,7 +33,11 @@ angular.module('kidamom.controllers', [])
         case VK_BACK_SPACE:
           which = 'back';
           if(depth.get() > 0)
-          e.preventDefault(); break;
+            e.preventDefault();
+          else {
+            window.close();
+          }
+          break;
         case 38:
           if(!LoginContext)e.preventDefault();
           which = 'keyup'; break;
