@@ -397,14 +397,15 @@ directive('appVersion', ['version', function(version) {
 			})
 			scope.$on("enter",function(){
 				if(scope.showLanguage){
-					scope.continueFromTime = scope.player.currentTime;
-					scope.movieUrl = scope.movie.videos[scope.curLang].sources.tv;
-					scope.player.load();
-					scope.$parent.movieloading=true;
-					$("#watermark").removeClass("compact");
-					localStorage.lang = scope.languages[scope.curLang].key;
+					if (localStorage.lang !== scope.languages[scope.curLang].key) {
+						scope.continueFromTime = scope.player.currentTime;
+						scope.movieUrl = scope.movie.videos[scope.curLang].sources.tv;
+						scope.player.load();
+						scope.$parent.movieloading=true;
+						$("#watermark").removeClass("compact");
+						localStorage.lang = scope.languages[scope.curLang].key;
+					}
 					scope.showLanguage=false;
-					// window.location.reload();
 				}
 			})
 		}
@@ -425,7 +426,7 @@ directive('appVersion', ['version', function(version) {
 			// 3 - carousel
 
 			// scope.keyboard="abcdefghijklmnopqrstuvwxyz< 0123456789";
-			scope.keyboard="< абвгдежзийклмнопрстуфхцчшщъьюя< 0123456789";
+			scope.keyboard="< абвгдежзийклмнопрстуфхцчшщъьюя0123456789";
 			// scope.keyboard="джу";
 			scope.curChar = 0;
 			scope.center = $(window).width()/2;

@@ -293,7 +293,7 @@ angular.module('kidamom.services', [])
         })
     }
     service.search = function (query) {
-        return service.req('/search/', 'GET', [ query ], true);
+        return service.req('/search/', 'GET', [ query ], service.token !== undefined);
     }
     service.searchahead = function (query) {
         return service.req('/search_ahead/', 'GET', [ query ], service.token !== undefined);

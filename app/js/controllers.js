@@ -71,9 +71,6 @@ angular.module('kidamom.controllers', [])
   }])
 
   .controller('Search', ['$scope','depth','$http', '$rootScope', function ($scope, depth, $http, $rootScope) {
-  	$scope.carousel = {};
-			// 	$scope.carousel.index=0;
-			// 	$scope.carousel.item = data[0];
     $scope.$on("enter",function(){
       depth.more();
       if($scope.searchLevel==0){
