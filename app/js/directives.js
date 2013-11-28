@@ -84,6 +84,15 @@ directive('appVersion', ['version', function(version) {
 			})
 		}
 	}
+}]).
+directive('keyboard', [function () {
+	return {
+		restrict: 'E',
+		templateUrl:"partials/keyboard.html",
+		link: function (scope, iElement, iAttrs) {
+			
+		}
+	};
 }])
 .directive('carousel', ['$rootScope', 'Movies', '$location', function ($rootScope, Movies, $location) {
 	return {

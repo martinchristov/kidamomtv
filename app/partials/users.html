@@ -6,8 +6,10 @@
 				<h1 ng-bind="carousel.item.name"></h1>
 			</div>
 		</div>
-		<div ng-switch-default>
-			<form ng-submit="logIn()">
+		<div ng-switch-default class="logincar">
+			<carousel model="carousel" items="items"></carousel>
+
+			<!-- <form ng-submit="logIn()">
 				<div class="error" ng-class="{on:error.length>0}">{{error}}</div>
 				<input type="text" placeholder="Потребител" ng-model="data.email">
 				<div class="clearfix"></div>
@@ -15,7 +17,7 @@
 				<div class="clearfix"></div>
 				<button type="submit" class="small">Вход</button>
 			</form>
-				<button class="small back" ng-click="back()">Назад</button>
+				<button class="small back" ng-click="back()">Назад</button> -->
 		</div>
 	</div>
 </div>

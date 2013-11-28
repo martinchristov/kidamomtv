@@ -1,0 +1,12 @@
+<div id="login-view">
+	<img src="img/logo.png">
+	<form ng-submit="login">
+		<div>Потребител (email):</div>
+		<input type="email" value="asdasdaasd" ng-class="{focus:vertical==1}">
+		<div>Парола:</div>
+		<input type="password" ng-class="{focus:vertical==2}">
+		<button class="enter" ng-class="{focus:vertical==3}">ВЛЕЗ</button>
+		<button class="back" ng-class="{focus:vertical==4}" ng-click="back()">ОБРАТНО</button>
+	</form>
+	<keyboard></keyboard>
+</div>

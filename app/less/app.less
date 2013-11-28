@@ -363,6 +363,62 @@ body{
       }
     }
   }
+  .logincar .carousel{
+    .item:last-child{
+      .playlbl{
+        display:block!important;
+      }
+    }
+  }
+}
+
+#login-view{
+    width: 500px;
+    margin: 40px auto;
+    img{
+        width: 100%;
+        margin-top: 10%;
+    }
+    text-align: center;
+    div{
+        margin-top: 15px;
+        margin-bottom: 5px;
+        color: #666;
+    }
+    form{
+        width:400px;
+        margin: 0 auto;
+    }
+    input{
+        display: block;
+        width: 100%;
+        box-sizing:border-box;
+        font-size:20px;
+        text-align: center;
+        border-radius: 5px;
+        box-shadow: none;
+        border:1px solid #aaa;
+        padding: 5px 0;
+            border-width: 2px;
+        &.focus{
+            border-color:@brandcolor;
+        }
+        .transition(all .3s)
+    }
+    button:not(.focus){
+        background: #999;
+        border-color:#777;
+    }
+    button{
+        width: 250px;
+        margin: 25px auto 0;
+        .transition(all .3s);
+        .scale(1.1);
+        &.back{
+            margin-top: 15px;
+            .scale(0.9)
+        }
+    }
 }
 
 #playlists{

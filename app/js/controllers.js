@@ -164,31 +164,17 @@ angular.module('kidamom.controllers', [])
     }
 
     if (!Backend.isAuth()) {
-        $scope.$on("back",function(){
-            if(depth.get()==1){
-                depth.less();
-                $("#users input:first").blur();
-                LoginContext=false;
-            }
-        })
+        $scope.items = [
+          {
+            id:null,
+            photo:"img/logout.jpg",
+            name:""
+          }
+        ]
+        $scope.carousel.playLabel = "вход";
         $scope.$on("enter",function(){
-            if(depth.get()==0){
-                depth.more();
-                LoginContext=true;
-                $("#users input:first").focus();
-            }
+          $location.path("/login")
         })
-        $scope.error=""
-        $scope.data.email="";$scope.data.password="";
-        $scope.logIn = function(){
-
-          if($scope.data.email.length>0&&$scope.data.password.length>0)
-            Backend.login($scope.data.email, $scope.data.password).then(function success(d){
-                if(d.hasOwnProperty("identifier")==false){
-                    $scope.error="Грешен email или парола.";
-                }
-            });
-        }
     }
     else {
       Backend.getProfiles().then(function success(profiles){
@@ -206,10 +192,35 @@ angular.module('kidamom.controllers', [])
         }
         else {
           Backend.logout();
+          window.location.reload();
         }
         window.location.href="#/";
       })
     }
-  }])
+  }]).
+
+controller('Login', ['$scope', 'Backend', 'depth', '$location', function ($scope, Backend, depth, $location) {
+    $scope.Menu.visible = false;
+    $scope.Menu.disable();
+    $scope.vertical=1;
+
+    $scope.$on("keydown",function(d){
+        if($scope.vertical<4)$scope.vertical++;
+    })
+
+    $scope.$on("keyup",function(d){
+        if($scope.vertical>1)$scope.vertical--;
+    })
+
+    $scope.$on("enter",function(d){
+        if($scope.vertical==3){
+
+        }
+        else if($scope.vertical==4) {
+            $location.path("/");
+            
+        }
+    })
+}])
 
   var LoginContext = false;

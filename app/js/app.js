@@ -16,6 +16,7 @@ var kidamom = angular.module('kidamom', [
 		.when('/movies/:playlist',{controller:"Movies", templateUrl:"partials/movies.html"})
 		.when('/playlists', {controller:"Playlists", templateUrl:"partials/playlists.html"})
 		.when('/users', {controller:"Users", templateUrl:"partials/users.html"})
+		.when('/login', {controller:"Login", templateUrl:"partials/login.html"})
 		.when('/play/:movieid/:playlistid?',  { controller:"Play", templateUrl:"partials/play.html",
 			resolve: {
 				movie: ['$q', '$route', 'Backend', function ($q, $route, Backend) {
