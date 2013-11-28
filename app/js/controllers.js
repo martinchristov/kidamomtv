@@ -202,7 +202,7 @@ angular.module('kidamom.controllers', [])
 controller('Login', ['$scope', 'Backend', 'depth', '$location', function ($scope, Backend, depth, $location) {
     $scope.Menu.visible = false;
     $scope.Menu.disable();
-    $scope.vertical=2;
+    $scope.vertical=1;
     posKeyboard();
     $scope.$on("keydown",function(d){
         if($scope.vertical<4)$scope.vertical++;
@@ -222,6 +222,15 @@ controller('Login', ['$scope', 'Backend', 'depth', '$location', function ($scope
         }
         else $scope.keyboardTop=-150;
     }
+    function showError(){
+        $scope.error=true;
+        setTimeout(function(){
+            $scope.$apply(function(){
+                $scope.error=false;
+            })
+        },5000);
+    }
+    showError();
 
     $scope.$on("enter",function(d){
         if($scope.vertical==3){
