@@ -651,14 +651,15 @@ body{
     top: 0;left: 0;
     width: 100%;
     overflow: hidden;
-    height: 70px;
+    height: 110px;
     .transition(top .3s);
     ul{
-        top: 0;
+        top: 44px;
         position: absolute;
         padding: 0;
         margin: 0;
         list-style: none;
+        .transition(left .3s);
         li{
             width: 40px; height: 40px; line-height: 40px;
             text-align: center;
@@ -676,11 +677,12 @@ body{
         &.focused{
             li.current{
                 position: relative;
+                background: #d0333f;
                 &::before{
                     content:" ";
                     height:44px; width:21px;
                     position: absolute;
-                    background: url(img/cursor.png) no-repeat;
+                    background: url(img/cursor2.png) no-repeat;
                     top: -41px;
                     left:9px;
                 }

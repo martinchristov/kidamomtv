@@ -254,10 +254,10 @@ controller('Login', ['$scope', 'Backend', 'depth', '$location', function ($scope
     })
     function posKeyboard () {
         if($scope.vertical==1){
-            $scope.keyboardTop=290;
+            $scope.keyboardTop=290-40;
         }
         else if($scope.vertical==2){
-            $scope.keyboardTop=370;
+            $scope.keyboardTop=370-40;
         }
         else $scope.keyboardTop=-150;
         $scope.curChar = 0;
