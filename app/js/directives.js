@@ -90,7 +90,7 @@ directive('keyboard', [function () {
 		restrict: 'E',
 		templateUrl:"partials/keyboard.html",
 		link: function (scope, iElement, iAttrs) {
-			
+			scope.keyboard="abcdefghijklmnopqrstuvwxyz< 0123456789!@#$%^&*()_-+=[]{};:?.,";
 		}
 	};
 }])

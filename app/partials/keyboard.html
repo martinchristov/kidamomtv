@@ -1,0 +1,8 @@
+<div id='keyboard' style="top:{{keyboardTop}}px" ng-hide="vertical>2">
+	<div id="cursor" ng-hide="searchLevel!=2" style="left:{{center-10}}px"></div>
+	<ul 
+		style="width:{{keyboard.length*46}}px; left:{{center-curChar*46-23}}px" 
+		ng-class="{focused:searchLevel==2}">
+		<li ng-repeat="char in keyboard" ng-class="{current:$index==curChar}" ng-bind="char"></li>
+	</ul>
+</div>

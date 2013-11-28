@@ -632,6 +632,50 @@ body{
     }
 }
 
+#keyboard{
+    position: absolute;
+    z-index: 999;
+    top: 0;left: 0;
+    width: 100%;
+    overflow: hidden;
+    height: 70px;
+    .transition(top .3s);
+    ul{
+        top: 0;
+        position: absolute;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        li{
+            width: 40px; height: 40px; line-height: 40px;
+            text-align: center;
+            color: white;
+            background: rgba(65,65,65,0.9);
+            float: left;
+            padding: 0;
+            margin: 3px;
+            font-size: 27px;
+            border-radius: 4px;
+            &.current{
+                
+            }
+        }
+        &.focused{
+            li.current{
+                position: relative;
+                &::before{
+                    content:" ";
+                    height:44px; width:21px;
+                    position: absolute;
+                    background: url(img/cursor.png) no-repeat;
+                    top: -41px;
+                    left:9px;
+                }
+            }
+        }
+    }
+}
+
 
 #srcdiv{
     position: absolute;
