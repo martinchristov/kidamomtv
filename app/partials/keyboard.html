@@ -2,7 +2,7 @@
 	<div id="cursor" ng-hide="searchLevel!=2" style="left:{{center-10}}px"></div>
 	<ul 
 		style="width:{{keyboard.length*46}}px; left:{{center-curChar*46-23}}px" 
-		ng-class="{focused:searchLevel==2}">
+		class="focused"> 
 		<li ng-repeat="char in keyboard" ng-class="{current:$index==curChar}" ng-bind="char"></li>
 	</ul>
 </div>
