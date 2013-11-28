@@ -13,6 +13,7 @@ angular.module('kidamom.controllers', [])
   .controller('Main', ['$scope', 'depth', '$rootScope', 'Menu', function ($scope, depth, rootScope, Menu){
     $scope.Menu = Menu;
     $scope.movieloading=true;
+
   	$scope.isMenuInactive = function(){
   		if(depth.get()==0)return false;
   		else return true;

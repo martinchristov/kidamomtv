@@ -203,7 +203,7 @@ angular.module('kidamom.services', [])
     var configBase = { headers: headers };
     var configAuth = angular.copy(configBase);
     var service = { };
-
+    var homeMoviesCache = null;
 
     service.setToken = function (token) {
         service.token = token;
@@ -299,7 +299,11 @@ angular.module('kidamom.services', [])
         return service.req('/search_ahead/', 'GET', [ query ], service.token !== undefined);
     }
     service.getHomeMovies = function  () {
-        return service.req('/home_movies', 'GET', null, service.token !== undefined);
+        if (homeMoviesCache) return $q.when(homeMoviesCache);
+        return service.req('/home_movies', 'GET', null, service.token !== undefined).then(function (result) {
+            homeMoviesCache = result;
+            return result;
+        })
     }
 
     var DEBUG = false;
