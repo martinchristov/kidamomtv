@@ -91,8 +91,10 @@ directive('keyboard', [function () {
 		templateUrl:"partials/keyboard.html",
 		link: function (scope, iElement, iAttrs) {
 			scope.keyboard="abcdefghijklmnopqrstuvwxyz< 0123456789!@#$%^&*()_-+=[]{};:?.,";
+			scope.curChar = 0;
+			scope.center = $(window).width()/2;
 		}
-	};
+	}	
 }])
 .directive('carousel', ['$rootScope', 'Movies', '$location', function ($rootScope, Movies, $location) {
 	return {

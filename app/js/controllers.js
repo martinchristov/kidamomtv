@@ -203,6 +203,8 @@ controller('Login', ['$scope', 'Backend', 'depth', '$location', function ($scope
     $scope.Menu.visible = false;
     $scope.Menu.disable();
     $scope.vertical=1;
+    $scope.pass = $scope.email = "";
+    $scope.error = false;
     posKeyboard();
     $scope.$on("keydown",function(d){
         if($scope.vertical<4)$scope.vertical++;
@@ -213,6 +215,43 @@ controller('Login', ['$scope', 'Backend', 'depth', '$location', function ($scope
         if($scope.vertical>1)$scope.vertical--;
         posKeyboard();
     })
+        //key listeners
+    $scope.$on("keyleft",function(){
+      if (($scope.vertical==1 || $scope.vertical == 2) && $scope.curChar > 0){
+        $scope.curChar--;
+      }
+    })
+    $scope.$on("keyright",function(){
+      if (($scope.vertical == 1 || $scope.vertical == 2) && $scope.curChar < $scope.keyboard.length - 1){
+        $scope.curChar++;
+      }
+    })
+
+    $scope.$on("enter",function(){
+      var ch = $scope.keyboard[$scope.curChar];
+      if ($scope.vertical == 1) {
+        if (ch === "<") $scope.email = $scope.email.slice(0,-1);
+        else $scope.email += ch;
+      }
+      if ($scope.vertical == 2) {
+        if (ch === "<") $scope.pass = $scope.pass.slice(0,-1);
+        else $scope.pass += ch;
+      }
+      if ($scope.vertical == 3) {
+        Backend.login($scope.email, $scope.pass).then(function (response) {
+          if (response.status !== 200) {
+            showError();
+          }
+          else {
+            window.location.href = '#/';
+            window.location.reload();
+          }
+        });
+      }
+      if ($scope.vertical == 4) {
+        $location.path("/");
+      }
+    })
     function posKeyboard () {
         if($scope.vertical==1){
             $scope.keyboardTop=290;
@@ -221,6 +260,7 @@ controller('Login', ['$scope', 'Backend', 'depth', '$location', function ($scope
             $scope.keyboardTop=370;
         }
         else $scope.keyboardTop=-150;
+        $scope.curChar = 0;
     }
     function showError(){
         $scope.error=true;
@@ -230,16 +270,6 @@ controller('Login', ['$scope', 'Backend', 'depth', '$location', function ($scope
             })
         },5000);
     }
-    showError();
-
-    $scope.$on("enter",function(d){
-        if($scope.vertical==3){
-            //Backend.login()
-        }
-        else if($scope.vertical==4) {
-            $location.path("/");
-        }
-    })
 }])
 
   var LoginContext = false;
