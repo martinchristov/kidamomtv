@@ -97,11 +97,6 @@ angular.module('kidamom.controllers', [])
     $scope.Menu.enable();
     Backend.getHomeMovies().then(function success(result) {
       $scope.items = result[playlist];
-      if ($scope.items.length) {
-        $scope.items.forEach(function (item) {
-          item.duration = (item.duration/60).toFixed();
-        })
-      }
     })
   }])
 
