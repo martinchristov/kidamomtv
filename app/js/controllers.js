@@ -225,14 +225,24 @@ controller('Login', ['$scope', 'Backend', 'depth', '$location', function ($scope
 
     $scope.$on("enter",function(){
       var ch = $scope.keyboard[$scope.curChar];
-      if ($scope.vertical == 1) {
-        if (ch === "<") $scope.email = $scope.email.slice(0,-1);
-        else $scope.email += ch;
+
+      if($scope.vertical==1 || $scope.vertical==2){
+        var which = "email"; if($scope.vertical==2)which="pass";
+
+        if($scope.curChar==0){
+            // var shift = $(".shift");
+            $scope.upperCase = !$scope.upperCase;
+
+            if($scope.upperCase)$(".shift").addClass("un");
+                else $(".shift").removeClass("un")
+        }
+        else if(ch=="<") $scope[which] = $scope[which].splice(0,-1);
+        else {
+            if($scope.upperCase)$scope[which]+=ch.toUpperCase();
+            else $scope[which]+=ch;
+        }
       }
-      if ($scope.vertical == 2) {
-        if (ch === "<") $scope.pass = $scope.pass.slice(0,-1);
-        else $scope.pass += ch;
-      }
+
       if ($scope.vertical == 3) {
         Backend.login($scope.email, $scope.pass).then(function (response) {
           if (response.status !== 200) {

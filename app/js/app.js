@@ -4,6 +4,7 @@
 // Declare app level module which depends on filters, and services
 var kidamom = angular.module('kidamom', [
   'ngRoute',
+  'ngSanitize',
   'kidamom.filters',
   'kidamom.services',
   'kidamom.directives',

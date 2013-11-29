@@ -21,9 +21,10 @@ module.exports = function(grunt) {
       compilejs:{
         src:[
           "app/lib/jquery/min.js",
-          "app/lib/angular/angular.js",
-          "app/lib/angular/angular-route.js",
-          "app/bower_components/raphael/raphael.js",
+          "app/lib/angular/angular.min.js",
+          "app/lib/angular/angular-route.min.js",
+          "app/lib/angular/angular-sanitize.min.js",
+          "app/bower_components/raphael/raphael-min.js",
           "app/js/IconFactory.js",
           "app/js/app.js",
           "app/js/controllers.js",

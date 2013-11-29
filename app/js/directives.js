@@ -85,14 +85,19 @@ directive('appVersion', ['version', function(version) {
 		}
 	}
 }]).
-directive('keyboard', [function () {
+directive('keyboard', ["$sce",function ($sce) {
 	return {
 		restrict: 'E',
 		templateUrl:"partials/keyboard.html",
 		link: function (scope, iElement, iAttrs) {
-			scope.keyboard="abcdefghijklmnopqrstuvwxyz< 0123456789!@#$%^&*()_-+=[]{};:?.,";
+			// scope.keyboard="abcdefghijklmnopqrstuvwxyz< 0123456789!@#$%^&*()_-+=[]{};:?.,";
+			scope.keyboard=['<img src="img/shift.png" class="shift">',"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "<", " ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "-", "+", "=", "[", "]", "{", "}", ";", ":", "?", ".", ","];
 			scope.curChar = 0;
 			scope.center = $(window).width()/2;
+
+			scope.rawHtml = function(i) {
+			    return $sce.trustAsHtml(scope.keyboard[i]);
+		  	};
 		}
 	}	
 }])
