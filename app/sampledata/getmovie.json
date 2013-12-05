@@ -5,6 +5,7 @@
 	"desc" :"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquam turpis at leo blandit, ac commodo lorem fermentum.",
 	"duration" :95,
 	"age" : 6,
+<<<<<<< HEAD
 	"url" : "http://analogo.net/projects/kidamomtv/app/sampledata/cloudy.mp4",
 	"videos":[
 		{
@@ -13,6 +14,13 @@
 			"sources":{
 				"tv":"http://analogo.net/projects/kidamomtv/app/sampledata/cloudy.mp4"
 			}
+=======
+	"videos": [
+		{ 
+			"id" : 1,
+			"languageLocale" : "bg",
+			"sources" : { "tv" : "http://analogo.net/projects/kidamomtv/app/sampledata/cloudy.mp4" }
+>>>>>>> 5751220649c1a91d55f3c8a64c5e420a34477ed9
 		}
 	]
 }
