@@ -245,8 +245,8 @@ controller('Login', ['$scope', 'Backend', 'depth', '$location', function ($scope
       }
 
       if ($scope.vertical == 3) {
-        $scope.email="martin.christov@gmail.com";
-        $scope.pass="772321123123213"
+        $scope.email="bgsacho@gmail.com";
+        $scope.pass="kidamom"
         Backend.login($scope.email, $scope.pass).then(function success(data) {
           
         }, function error(response) {
