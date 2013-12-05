@@ -150,28 +150,28 @@ angular.module('kidamom.services', [])
                 return [
                     {
                         title:"Търсене",
-                        icon:"src", tsf:"s1", href:"#/search"
+                        style:'font-size:29px;margin-top:4px',icon:"src", href:"#/search"
                     },{
                         title:"Препоръчани",
-                        icon:"v-5", tsf:"s1", href:"#/movies/recommended"
+                        style:'font-size:34px',icon:"v-5", href:"#/movies/recommended"
                     },{
                         title:"Най-гледани",
-                        icon:"people", tsf:"s1.35", href:"#/movies/popular"
+                        style:'margin:6px 0 0 -7px',icon:"people", href:"#/movies/popular"
                     },{
                         title:"Нови",
-                        icon:"sticker", tsf:"s1.3", href:"#/movies/new"
+                        style:'font-size:37px',icon:"sticker", href:"#/movies/new"
                     },{
                         title:"Последно гледани",
-                        icon:"eye", tsf:"s1.2", href:"#/movies/lastwatched"
+                        style:'margin:8px 0 0 -5px; font-size:25px',icon:"eye", href:"#/movies/lastwatched"
                     },{
                         title:"Любими",
-                        icon:"heart", tsf:"s1", href:"#/movies/favourites"
+                        style:'margin:7px 0 0 -1px',icon:"heart", href:"#/movies/favourites"
                     },{
                         title:"Плейлисти",
-                        icon:"folder", tsf:"s1", href:"#/playlists"
+                        style:'font-size:22px; margin:8px 0 0 -3px;',icon:"folder", href:"#/playlists"
                     },{
                         title:"Профили",
-                        icon:"logout", tsf:"s1", href:"#/users"
+                        style:'font-size:32px;margin:2px 0 0 -2px;',icon:"logout", href:"#/users"
                     }
                 ];
             }
