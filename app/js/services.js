@@ -246,7 +246,7 @@ angular.module('kidamom.services', [])
                     service.logout;
                     window.location.reload();
                 }
-                return response.data 
+                throw response;
             }
         );
     }
@@ -255,13 +255,13 @@ angular.module('kidamom.services', [])
     service.login = function (email, password) {
         if (service.token) return $q.when(service.token);
         var $promise = service.req('/token', 'POST', { email: email, password: password })
-        $promise.then(function success (res) {
-            if(res.hasOwnProperty("identifier")){
-                service.setToken(res.identifier);
+        $promise.then(function success (response) {
+            if(response.hasOwnProperty("identifier")){
+                service.setToken(response.identifier);
             }
             return service.req('/profile', 'GET', null, true)
-        }).then(function success (res) {
-            service.setProfile(res);
+        }).then(function success (response) {
+            service.setProfile(response);
             // window.location.href="#/";
             // window.location.reload();
         });

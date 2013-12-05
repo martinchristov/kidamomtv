@@ -246,12 +246,10 @@ controller('Login', ['$scope', 'Backend', 'depth', '$location', function ($scope
 
       if ($scope.vertical == 3) {
         $scope.email="martin.christov@gmail.com";
-        $scope.pass="772323"
-        Backend.login($scope.email, $scope.pass).success(function (response) {
-          console.log(response);
+        $scope.pass="772321123123213"
+        Backend.login($scope.email, $scope.pass).then(function success(data) {
           
-        })
-        .error(function(){
+        }, function error(response) {
           showError();
         })
       }
