@@ -230,13 +230,14 @@ controller('Login', ['$scope', 'Backend', 'depth', '$location', function ($scope
         var which = "email"; if($scope.vertical==2)which="pass";
 
         if($scope.curChar==0){
-            // var shift = $(".shift");
             $scope.upperCase = !$scope.upperCase;
 
             if($scope.upperCase)$(".shift").addClass("un");
                 else $(".shift").removeClass("un")
         }
-        else if(ch=="<") $scope[which] = $scope[which].splice(0,-1);
+        else if($scope.curChar==30){//backspace
+          $scope[which] = $scope[which].substr(0,$scope[which].length-1)
+        } 
         else {
             if($scope.upperCase)$scope[which]+=ch.toUpperCase();
             else $scope[which]+=ch;
@@ -244,15 +245,15 @@ controller('Login', ['$scope', 'Backend', 'depth', '$location', function ($scope
       }
 
       if ($scope.vertical == 3) {
-        Backend.login($scope.email, $scope.pass).then(function (response) {
-          if (response.status !== 200) {
-            showError();
-          }
-          else {
-            window.location.href = '#/';
-            window.location.reload();
-          }
-        });
+        $scope.email="martin.christov@gmail.com";
+        $scope.pass="772323"
+        Backend.login($scope.email, $scope.pass).success(function (response) {
+          console.log(response);
+          
+        })
+        .error(function(){
+          showError();
+        })
       }
       if ($scope.vertical == 4) {
         $location.path("/");
