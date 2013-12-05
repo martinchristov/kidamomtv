@@ -105,6 +105,7 @@ angular.module('kidamom.controllers', [])
     $scope.Menu.visible = false;
     $scope.Menu.disable();
     $scope.movie = movie;
+    console.log(movie,'asdasd');
     $scope.playlist = playlist.movies;
     $scope.playlistId = playlist.id;
 
@@ -245,10 +246,12 @@ controller('Login', ['$scope', 'Backend', 'depth', '$location', function ($scope
       }
 
       if ($scope.vertical == 3) {
-        $scope.email="martin.christov@gmail.com";
-        $scope.pass="772321123123213"
+        // $scope.email="martin.christov@gmail.com";
+        // $scope.pass="772321123123213"
         Backend.login($scope.email, $scope.pass).then(function success(data) {
-          
+          $("#loading").removeClass("ng-hide")
+          window.location.href="#/";
+          window.location.reload();
         }, function error(response) {
           showError();
         })
@@ -256,6 +259,10 @@ controller('Login', ['$scope', 'Backend', 'depth', '$location', function ($scope
       if ($scope.vertical == 4) {
         $location.path("/");
       }
+    })
+
+    $scope.$on("back",function(){
+      $location.path("/")
     })
     function posKeyboard () {
         if($scope.vertical==1){

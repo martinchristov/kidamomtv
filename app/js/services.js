@@ -150,28 +150,28 @@ angular.module('kidamom.services', [])
                 return [
                     {
                         title:"Търсене",
-                        style:'font-size:29px;margin-top:4px',icon:"src", href:"#/search"
+                        style:'font-size:29px; margin:4px 0 0 3px;',icon:"src", href:"#/search"
                     },{
                         title:"Препоръчани",
                         style:'font-size:34px',icon:"v-5", href:"#/movies/recommended"
                     },{
                         title:"Най-гледани",
-                        style:'margin:6px 0 0 -7px',icon:"people", href:"#/movies/popular"
+                        style:'margin:5px 0 0 -1px',icon:"people", href:"#/movies/popular"
                     },{
                         title:"Нови",
-                        style:'font-size:37px',icon:"sticker", href:"#/movies/new"
+                        style:'font-size:34px',icon:"sticker", href:"#/movies/new"
                     },{
                         title:"Последно гледани",
-                        style:'margin:8px 0 0 -5px; font-size:25px',icon:"eye", href:"#/movies/lastwatched"
+                        style:'margin:8px 0 0 2px; font-size:24px',icon:"eye", href:"#/movies/lastwatched"
                     },{
                         title:"Любими",
-                        style:'margin:7px 0 0 -1px',icon:"heart", href:"#/movies/favourites"
+                        style:'margin:7px 0 0 4px',icon:"heart", href:"#/movies/favourites"
                     },{
                         title:"Плейлисти",
-                        style:'font-size:22px; margin:8px 0 0 -3px;',icon:"folder", href:"#/playlists"
+                        style:'font-size:22px; margin:8px 0 0 6px;',icon:"folder", href:"#/playlists"
                     },{
                         title:"Профили",
-                        style:'font-size:32px;margin:2px 0 0 -2px;',icon:"logout", href:"#/users"
+                        style:'font-size:32px;margin-top:2px;',icon:"logout", href:"#/users"
                     }
                 ];
             }
@@ -179,16 +179,16 @@ angular.module('kidamom.services', [])
                 return [
                     {
                         title:"Търсене",
-                        icon:"src", tsf:"s1", href:"#/search"
+                        style:"font-size:29px; margin:4px 0 0 3px;", icon:"src", href:"#/search"
                     },{
                         title:"Най-гледани",
-                        icon:"people", tsf:"s1.35", href:"#/movies/popular"
+                        style:"margin:5px 0 0 -1px", icon:"people", href:"#/movies/popular"
                     },{
                         title:"Нови",
-                        icon:"sticker", tsf:"s1.3", href:"#/movies/new"
+                        style:"font-size:34px", icon:"sticker", href:"#/movies/new"
                     },{
                         title:"Профили",
-                        icon:"logout", tsf:"s1", href:"#/users"
+                        style:"font-size:32px;margin-top:2px;", icon:"logout", href:"#/users"
                     }
                 ];
             }
@@ -242,9 +242,12 @@ angular.module('kidamom.services', [])
         return $http(config).then(
             function success(response) { return response.data },
             function error(response) {
-                if (response.code == 501) {
+                if (response.status == 501) {
                     service.logout;
                     window.location.reload();
+                }
+                else if(response.status==402){
+                    error402();
                 }
                 throw response;
             }
@@ -254,14 +257,15 @@ angular.module('kidamom.services', [])
     /* POST /token (AUTH) email,password -> identifier */
     service.login = function (email, password) {
         if (service.token) return $q.when(service.token);
+        // email = "martin.christov@gmail.com"; password="772323";
         var $promise = service.req('/token', 'POST', { email: email, password: password })
         $promise.then(function success (response) {
+            service.setProfile(response);
             if(response.hasOwnProperty("identifier")){
                 service.setToken(response.identifier);
             }
             return service.req('/profile', 'GET', null, true)
         }).then(function success (response) {
-            service.setProfile(response);
             // window.location.href="#/";
             // window.location.reload();
         });

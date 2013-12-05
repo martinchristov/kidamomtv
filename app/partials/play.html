@@ -10,7 +10,16 @@
 			<li ng-repeat="control in controls" 
 				ng-class="{current:menuItem==$index, disabled:($index==1&&currentInList==0)||($index==6&&(currentInList+1==playlist.length||playlist.length==0))}" 
 				ng-hide="(control.icon=='play' && playing)||(control.icon=='pause' && !playing)" >
-				<a><i icon iconfill="#fff" data-index="{{$index}}" data-color-class="current:#de2121" class="{{control.icon}}" data-attrs='{"transform":"{{control.tsf}}", "fill":"{{control.fill}}"}' data-stroke="8 rgba(0,0,0,0.5)"></i></a>
+
+				<a>
+					<i 
+						iconfill="#fff" 
+						data-index="{{$index}}" 
+						data-color-class="current:#de2121" 
+						class="icon-{{control.icon}}" 
+						style="{{control.style}}"
+						data-attrs='{"transform":"{{control.tsf}}", "fill":"{{control.fill}}"}' 
+						data-stroke="8 rgba(0,0,0,0.5)"></i></a>
 			</li>
 		</ul>
 		<div class="clearfix"></div>

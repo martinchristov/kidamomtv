@@ -25,7 +25,6 @@ module.exports = function(grunt) {
           "app/lib/angular/angular-route.min.js",
           "app/lib/angular/angular-sanitize.min.js",
           "app/bower_components/raphael/raphael-min.js",
-          "app/js/IconFactory.js",
           "app/js/app.js",
           "app/js/controllers.js",
           "app/js/filters.js",

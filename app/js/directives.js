@@ -52,15 +52,6 @@ directive('appVersion', ['version', function(version) {
 				}
 			})
 
-
-	        $(document).ready(function(){
-	          setTimeout(function(){
-	            iconFactory = new IconFactory("js/icons.json",{fill:"#5b5b5b"});
-	            iconFactory.produce($("body"))
-	          },100);
-	            
-	        })
-
 		}
 	}
 }])
@@ -91,7 +82,7 @@ directive('keyboard', ["$sce",function ($sce) {
 		templateUrl:"partials/keyboard.html",
 		link: function (scope, iElement, iAttrs) {
 			// scope.keyboard="abcdefghijklmnopqrstuvwxyz< 0123456789!@#$%^&*()_-+=[]{};:?.,";
-			scope.keyboard=['<img src="img/shift.png" class="shift">',"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "_", "-", ",", '<img src="img/backspace.png" class="shift">', " ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "+", "=", "[", "]", "{", "}", ";", ":", "?", "."];
+			scope.keyboard=['<img src="img/shift.png" class="shift">',"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "_", "-", ".", '<img src="img/backspace.png" class="shift">', " ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "+", "=", "[", "]", "{", "}", ";", ":", "?", ","];
 			scope.curChar = 0;
 			scope.center = $(window).width()/2;
 
@@ -156,10 +147,7 @@ directive('keyboard', ["$sce",function ($sce) {
 			//instantiate player
 			var player = document.querySelector('video');
 			scope.player = player;
-			setTimeout(function(){
-				//player = videojs("videoplayer",{controls:false});
-				iconFactory.produce($("#controls"))
-			},300);
+			
 			//setup video controls
 			scope.showControls = true;
 			scope.menuItem = 4;
@@ -170,15 +158,15 @@ directive('keyboard', ["$sce",function ($sce) {
 			scope.$parent.movieloading=true;
 
 			scope.controls = [
-				{ action:"search", icon:"src", fill:"#fff", tsf:"" },
-				{ action:"prev", icon:"next", fill:"#fff", tsf:"s0.9r180" },
-				{ action:"backward", icon:"forward", fill:"#fff", tsf:"s1.4r180" },
-				{ action:"pause", icon:"pause", fill:"#fff", tsf:"" },
-				{ action:"play", icon:"play", fill:"#fff", tsf:"" },
-				{ action:"forward", icon:"forward", fill:"#fff", tsf:"s1.4" },
-				{ action:"next", icon:"next", fill:"#fff", tsf:"s0.9" },
-				{ action:"speech", icon:"globe", fill:"#fff", tsf:"s1.1" },
-				{ action:"back", icon:"back", fill:"#fff", tsf:"s0.9" }
+				{ style:"", action:"search", icon:"src", fill:"#fff", tsf:"" },
+				{ style:"-webkit-transform:rotate(180deg);-o-transform:rotate(180deg);margin:-12px 0 0 -1px;", action:"prev", icon:"next", fill:"#fff", tsf:"s0.9r180" },
+				{ style:"-webkit-transform:rotate(180deg);-o-transform:rotate(180deg);font-size:24px;margin:-14px 0 0 7px;", action:"backward", icon:"forward", fill:"#fff", tsf:"s1.4r180" },
+				{ style:"", action:"pause", icon:"pause", fill:"#fff", tsf:"" },
+				{ style:"font-size:30px; margin-top:-2px;", action:"play", icon:"play", fill:"#fff", tsf:"" },
+				{ style:"font-size:24px;margin:2px 0 0 -7px;", action:"forward", icon:"forward", fill:"#fff", tsf:"s1.4" },
+				{ style:"", action:"next", icon:"next", fill:"#fff", tsf:"s0.9" },
+				{ style:"font-size:32px;margin-top:-3px", action:"speech", icon:"globe", fill:"#fff", tsf:"s1.1" },
+				{ style:"font-size:32px;margin-top:-2px", action:"back", icon:"back", fill:"#fff", tsf:"s0.9" }
 			];
 
 			// player.addEventListener("loadstart",function(){

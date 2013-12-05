@@ -55,3 +55,7 @@ var langLocale = {
 	fr: "Francais"
 }
 var continueFromTime=0;
+
+function error402 () {
+	$(".error402").css({display:"block"})
+}
