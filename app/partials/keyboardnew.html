@@ -1,0 +1,7 @@
+<div class="keyboard">
+	<div class="cursor" ng-hide="keyboard.active" stlye="left:{{keyboard.center-10}}px;top:{{keyboard.top}}px"></div>
+	<ul style="width:{{keyboard.keys.length*46}}px;left:{{keyboard.center-keyboard.index*46-23}}px" 
+		class="focused">
+		<li ng-repeat="char in keyboard.keys" ng-class="{current:$index==keyboard.index}" ng-bind="char"></li>
+	</ul>
+</div>

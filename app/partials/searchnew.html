@@ -1,16 +1,13 @@
 <div id="srcdiv">
-	<div id="src-head" ng-show="keyboardActive">
-		<ul style="width:{{sugWidth}}px; left:{{sugPos}}px" ng-class="{focused:keyboardActive}">
-			<li ng-repeat="sug in suggestions" ng-class="{current:$index==curSug}">{{sug}}</li>
+	<div id="src-head" ng-show="keyboard.visible">
+		<ul style="width:{{sug.width}}px; left:{{sug.pos}}px" ng-class="{focused:keyboard.active}">
+			<li>{{sug.text}}</li>
 		</ul>
 		<div class="clearfix"></div>
-		<div id="cursor" ng-show="keyboardActive" style="left:{{center-10}}px"></div>
-		<ul style="width:{{keyboard.length*46}}px; left:{{center-curChar*46-23}}px" ng-class="{focused:keyboardActive}">
-			<li ng-repeat="char in keyboard" ng-class="{current:$index==curChar}" ng-bind="char"></li>
-		</ul>
+		<keyboardnew model="keyboard"></keyboardnew>
 	</div>
 	<div ng-hide="searchLevel<1" ng-class="{unfocused:searchLevel<3}">
-		<carousel model="carousel" items="items"></carousel>
+		<carousel model="carousel" items="items" searchLevel="searchLevel"></carousel>
 		<div class="info"  ng-show="carousel.item" playmovie="{{carousel.item.id}}">
 			<h1 ng-bind="carousel.item.title"></h1>
 			<p ng-bind="carousel.item.description"></p>
