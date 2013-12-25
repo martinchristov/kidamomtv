@@ -27,7 +27,6 @@ angular.module('kidamom.controllers', [])
       switch(e.which){
         case VK_ENTER:
           holdint = setTimeout(function(){
-            console.log('setting interval');
               holdint = setInterval(hold,300);
           },2000);
           which = "enter"; break;
@@ -51,6 +50,20 @@ angular.module('kidamom.controllers', [])
         case 39:
           if(!LoginContext)e.preventDefault();
           which = 'keyright'; break;
+        case VK_PLAY:
+          which='play';break;
+        case VK_PAUSE:
+          which='pause';break;
+        case VK_STOP:
+          which='stop';break;
+        case VK_TRACK_NEXT:
+          which='next';break;
+        case VK_TRACK_PREV:
+          which='prev';break;
+        case VK_FAST_FWD:
+          which='fwd';break;
+        case VK_REWIND:
+          which='rwd';break;
       }
       if(which!="")
         rootScope.$broadcast(which);

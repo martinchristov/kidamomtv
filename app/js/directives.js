@@ -364,6 +364,54 @@ directive('keyboard', ["$sce",function ($sce) {
 						history.back();
 				}
 			})
+
+			//native RC keys
+
+			scope.$on("play",function(){
+				if(scope.playing==false){
+					scope.playing=true;
+					scope.menuItem=3;
+					player.play();
+				}
+			})
+			scope.$on("pause",function(){
+				if(scope.playing){
+					scope.playing=false;
+					scope.menuItem=4;
+					player.pause();
+				}
+			})
+			scope.$on("stop",function(){
+				$location.path("/")
+			})
+			scope.$on("fwd",function(){
+				player.currentTime += 30;
+				scope.progress=player.currentTime/player.duration;
+			})
+			scope.$on("rwd",function(){
+				player.currentTime -= 30;
+				scope.progress=player.currentTime/player.duration;
+			})
+			scope.$on("prev",function(){
+				if(scope.playlist){
+					if (scope.currentInList > 0) {
+							var movieid = scope.playlist[scope.currentInList - 1].id;
+							var playlistid = scope.playlistId;
+							$location.path('/play/' + movieid + "/" + playlistid);
+							$location.replace();
+						}
+				}
+			})
+			scope.$on("next",function(){
+				if(scope.playlist){
+					if (scope.currentInList < scope.playlist.length - 1) {
+							var movieid = scope.playlist[scope.currentInList + 1].id;
+							var playlistid = scope.playlistId;
+							$location.path('/play/' + movieid + "/" + playlistid);
+							$location.replace();
+						}
+				}
+			})
 		}
 	};
 }])

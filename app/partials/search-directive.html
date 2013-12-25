@@ -1,5 +1,5 @@
 <div id="srcdiv">
-	<div id="src-head" ng-hide="searchLevel<1">
+	<div id="src-head" ng-show="searchLevel>0">
 		<ul style="width:{{sugWidth}}px; left:{{sugPos}}px" ng-class="{focused:searchLevel==1}">
 			<li ng-repeat="sug in suggestions" ng-class="{current:$index==curSug}">{{sug}}</li>
 		</ul>
