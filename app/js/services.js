@@ -338,3 +338,27 @@ angular.module('kidamom.services', [])
 
     return service;
 }])
+.service('Models', [function ModelsService() {
+    var models = {};
+    models.carousel = function () {
+        return {
+            loading: false,
+            active: false,
+            items: [],
+            index: null,
+            selected: null,
+            playLabel: "пусни"
+        }
+    }
+    models.keyboard = function () {
+        return {
+            active: false,
+            keys: [],
+            index: null,
+            selected: null,
+            top: 0,
+            center: 0,
+        }
+    }
+    return models;
+}])

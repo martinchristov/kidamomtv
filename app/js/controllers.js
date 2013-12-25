@@ -84,18 +84,24 @@ angular.module('kidamom.controllers', [])
     }
   }])
 
-  .controller('Search', ['$scope','depth','$http', '$rootScope', function ($scope, depth, $http, $rootScope) {
-    $scope.$on("enter",function(){
+  .controller('Search', ['$scope','$timeout', 'depth', 'Models', function ($scope, $timeout, depth, Models) {
+    $scope.carousel = Models.carousel();
+    $scope.keyboard = Models.keyboard();
+    $scope.keyboard.visible = false;
+
+    $scope.$on('enter', function () {
       depth.more();
-      if($scope.searchLevel==0){
-        setTimeout(function(){
-            $scope.searchLevel=2;
-            $scope.$apply();
-        },20);
+      if (!$scope.keyboard.active) {
+        $timeout(function () { $scope.keyboard.active = true; $scope.keyboard.visible = true; }, 20);
       }
     })
-    $scope.$on("back",function(){
-      if(depth.get()==1)$scope.searchLevel=0;
+
+    $scope.$on('back', function () {
+      if (depth.get() == 1) {
+        $scope.keyboard.visible = false;
+        $scope.keyboard.active = false;
+        $scope.carousel.active = false;
+      }
       depth.less();
     })
   }])

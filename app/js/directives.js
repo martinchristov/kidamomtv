@@ -122,14 +122,14 @@ directive('keyboard', ["$sce",function ($sce) {
 				init();
 			});
 			scope.$on("keyleft",function(){
-				if(scope.searchLevel==3||scope.searchLevel==undefined){
+				if(scope.searchLevel==3 || scope.carousel.active || (scope.carousel.active === undefined && scope.searchLevel === undefined)){
 					scope.carousel.index--;
 		  			if(scope.carousel.index<0)scope.carousel.index=0;
 			  		scope.carousel.item = scope.items[scope.carousel.index];
 			  	}
 			})
 			scope.$on("keyright",function(){
-				if(scope.searchLevel==3||scope.searchLevel==undefined){
+				if(scope.searchLevel==3 || scope.carousel.active || (scope.carousel.active === undefined && scope.searchLevel === undefined)){
 					scope.carousel.index++;
 		  			if(scope.carousel.index>= scope.carousel.length) 
 		  				scope.carousel.index = scope.carousel.length - 1;
@@ -464,79 +464,53 @@ directive('keyboard', ["$sce",function ($sce) {
 	};
 }])
 
-.directive('search', ['$rootScope', 'depth', '$http', 'Backend', function ($rootScope, depth, $http, Backend) {
+.directive('search', ['$rootScope', 'depth', '$timeout', 'Backend', function ($rootScope, depth, $timeout, Backend) {
 	return {
 		restrict: 'E',
 		replace:true,
 		templateUrl:"partials/search-directive.html",
 		link: function (scope, iElement, iAttrs) {
 			scope.items=[];
-			scope.searchLevel = 0;
-			//levels represent vertical focus.
-			// 1 are suggestions
-			// 2 - keyboard
-			// 3 - carousel
 
 			// scope.keyboard="abcdefghijklmnopqrstuvwxyz< 0123456789";
 			scope.keyboard="< абвгдежзийклмнопрстуфхцчшщъьюя0123456789";
 			// scope.keyboard="джу";
-			scope.curChar = 0;
 			scope.center = $(window).width()/2;
 
-			// depth.more();
-
-			scope.suggestions = [
-				""
-			]
-			scope.curSug=0;
-
-			var sugsDom = $("#src-head ul:first");
-			function evalSugWidth () {
+			scope.sug = {};
+			scope.sug.text = "";
+			scope.sug.dom = $("#src-head ul:first");
+			scope.sug.evalWidth = function () {
 				var w = 0;
-				sugsDom.find('li').each(function(){
+				scope.sug.dom.find('li').each(function(){
 					w+=$(this).width()+26;
 				})
-				scope.sugWidth=w;
+				scope.sug.width=w;
 			}
-			function evalSugPos () {
-				var cur = $(sugsDom.find('li')[scope.curSug]);
+			scope.sug.evalPos = function () {
+				var cur = $(scope.sug.dom.find('li')[scope.sug.current]);
 				try{
-					scope.sugPos = scope.center - cur.position().left - cur.width() - 15;
+					scope.sug.pos = scope.center - cur.position().left - cur.width() - 15;
 				}
 				catch(e){
-					console.log(scope.curSug, sugsDom.find('li'))
+					console.log(scope.sug.current, scope.sug.dom.find('li'))
 				}
-				
 			}
-			setTimeout(function(){
-      			scope.carousel.loading = false;
-				evalSugWidth();
-				evalSugPos();
-				scope.$apply();
-			},100);
-
+			$timeout(function () {
+				scope.carousel.loading = false;
+				scope.sug.evalWidth();
+				scope.sug.evalPos();
+			}, 100);
 
 			//key listeners
 			scope.$on("keyleft",function(){
-				if(scope.searchLevel==1){
-					if(scope.curSug>0){
-						scope.curSug--;
-						evalSugPos();
-					}
-				}
-				else if(scope.searchLevel==2){
-					if(scope.curChar>0)scope.curChar--;
+				if (scope.keyboardActive && scope.curChar > 0) {
+					scope.curChar--;
 				}
 			})
 			scope.$on("keyright",function(){
-				if(scope.searchLevel==1){
-					if(scope.curSug<scope.suggestions.length-1){
-						scope.curSug++;
-						evalSugPos();
-					}
-				}
-				else if(scope.searchLevel==2){
-					if(scope.curChar<scope.keyboard.length-1)scope.curChar++;
+				if (scope.keyboardActive && scope.curChar < scope.keyboard.length) {
+					scope.curChar++;
 				}
 			})
 
@@ -597,13 +571,175 @@ directive('keyboard', ["$sce",function ($sce) {
 	};
 }])
 
+.directive('searchnew', ['depth', 'Backend', '$timeout', function (depth, Backend, $timeout) {
+	return {
+		restrict : 'E',
+		replace : true,
+		templateUrl : "partials/searchnew.html",
+		link: function (scope, iElement, iAttrs) {
+			scope.keyboard.keys = "< абвгдежзийклмнопрстуфхцчшщъьюя0123456789";
+			scope.keyboard.center = $(window).width()/2;
+
+			scope.$on('enter', function () {
+				if (scope.keyboard.active) {
+					if (scope.keyboard.selected != "<") {
+						scope.sug.text += scope.keyboard.selected;
+					}
+					else {
+						scope.sug.text = scope.sug.text.slice(0, -1);
+					}
+					$timeout(function(){
+						scope.sug.evalWidth();
+						scope.sug.evalPos();
+					},300);
+					// Load suggestions
+					if (scope.sug.text.length >= 3) {
+						scope.carousel.loading = true;
+						var promise = Backend.search(scope.sug.text);
+						promise.then(function(res){
+							scope.items=res;
+							scope.items.forEach(function (item) {
+				          		item.duration = (item.duration/60).toFixed();
+				        	})
+							scope.carousel.item = scope.items[0];
+							scope.carousel.loading = false;
+						})
+					}
+				}// if (scope.keyboard.active)
+				else if (scope.carousel.active) {
+
+				}
+			})
+
+			scope.$on('keyup', function () {
+				if (scope.carousel.active) {
+					console.log('up');
+					scope.carousel.active = false;
+					scope.keyboard.active = true;
+				}
+			})
+			scope.$on('keydown', function () {
+				if (scope.keyboard.active) {
+					console.log('down')
+					scope.carousel.active = true;
+					scope.keyboard.active = false;
+				}
+			})
+			scope.sug = {};
+			scope.sug.text = "";
+			scope.sug.dom = $("#src-head ul:first");
+			scope.sug.evalWidth = function () {
+				var w = 0;
+				scope.sug.dom.find('li').each(function(){
+					w+=$(this).width()+26;
+				})
+				scope.sug.width=w;
+			}
+			scope.sug.evalPos = function () {
+				var cur = $(scope.sug.dom.find('li'));
+				try{
+					scope.sug.pos = scope.keyboard.center - cur.position().left - cur.width() - 15;
+				}
+				catch(e){
+					console.log(scope.sug.current, scope.sug.dom.find('li'))
+				}
+			}
+			$timeout(function () {
+				scope.carousel.loading = false;
+				scope.sug.evalWidth();
+				scope.sug.evalPos();
+			}, 100);
+			/*
+			scope.$on("keydown",function(){
+				if(scope.searchLevel<3&&depth.get()>0&&scope.searchOn!=false){
+					if(scope.items.length==0&&scope.searchLevel==2)return;
+					scope.searchLevel++;
+				}
+			})
+			scope.$on("keyup",function(){
+				if(scope.searchLevel>1&&scope.searchOn!=false)scope.searchLevel--;
+			})
+
+			scope.$on("enter",function(){
+				if(scope.searchLevel==1){
+					scope.carousel.loading = true;
+					var promise = Backend.search(scope.suggestions[scope.curSug])
+					promise.then(function(res){
+						// scope.items = res;
+						scope.items=res;
+						scope.items.forEach(function (item) {
+				          item.duration = (item.duration/60).toFixed();
+				        })
+						scope.carousel.item = scope.items[0];
+						scope.searchLevel=3;
+						scope.carousel.loading = false;
+					})
+				}
+				if(scope.searchLevel==2){
+					var ch = scope.keyboard[scope.curChar];
+					if(scope.curSug>0){
+						scope.suggestions = [scope.suggestions[scope.curSug]];
+						scope.curSug=0;
+					}
+					if(ch!="<")
+						scope.suggestions[scope.curSug]+=scope.keyboard[scope.curChar];
+					else scope.suggestions[scope.curSug] = scope.suggestions[scope.curSug].substr(0,scope.suggestions[scope.curSug].length-1)
+					
+
+					var prom = Backend.searchahead(scope.suggestions[scope.curSug])
+					prom.then(function(res){
+						//success
+						scope.suggestions = [scope.suggestions[0]];
+						for(var i in res){
+							scope.suggestions.push(res[i].title)
+						}
+					})
+					setTimeout(function(){
+						evalSugWidth();
+						evalSugPos();
+						scope.$apply();
+					},300);
+					
+					// scope.$apply();
+				}
+			})*/
+		}
+	};
+}])
+
+.directive('keyboardnew', [ function () {
+	return {
+		restrict: 'E',
+		templateUrl: 'partials/keyboardnew.html',
+		scope: {
+			keyboard: "=model",
+		},
+		link: function (scope, iElement, iAttrs) {
+			scope.goto = function (newIndex) {
+				if (scope.keyboard.keys.length < newIndex + 1) return;
+				scope.keyboard.index = newIndex;
+				scope.keyboard.selected = scope.keyboard.keys[newIndex];
+			}
+			scope.left = function () { if (scope.keyboard.active) return scope.goto(scope.keyboard.index - 1); }
+			scope.right = function () { if (scope.keyboard.active) return scope.goto(scope.keyboard.index + 1); }
+
+
+			if (scope.keyboard.index === null) {
+				scope.goto(0)
+			}
+			scope.$on('keyleft', scope.left);
+			scope.$on('keyright', scope.right);
+		}
+	}
+}])
+
 
 .directive('playmovie', ['$location','depth', 'Backend', function ($location,depth, Backend) {
 	return {
 		restrict: 'A',
 		link: function (scope, iElement, iAttrs) {
 			scope.$on("enter", function () {
-				if(depth.get()==0||scope.searchLevel==3){
+				if(depth.get()==0||scope.searchLevel==3|| scope.carousel.active){
 					delete localStorage.lang;
 					if(Backend.isAuth()) 
 						$location.path("/play/" + scope.carousel.item.id);
