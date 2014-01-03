@@ -1,5 +1,5 @@
 <div id="srcdiv">
-	<div id="src-head" ng-show="keyboardActive">
+	<div id="src-head" ng-show="keyboardActive" class="ng-hide">
 		<ul style="width:{{sugWidth}}px; left:{{sugPos}}px" ng-class="{focused:keyboardActive}">
 			<li ng-repeat="sug in suggestions" ng-class="{current:$index==curSug}">{{sug}}</li>
 		</ul>

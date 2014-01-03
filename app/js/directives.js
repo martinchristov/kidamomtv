@@ -104,6 +104,7 @@ directive('keyboard', ["$sce",function ($sce) {
 		link: function (scope, iElement, iAttrs) {
 			var max = 30;
 			if (!scope.carousel) scope.carousel = {playLabel: "пусни"};
+			scope.carousel.visible=true;
 			function init() {
 				if (!scope.items) { 
 					scope.carousel.loading = true; 
@@ -271,7 +272,7 @@ directive('keyboard', ["$sce",function ($sce) {
 					hideint = setTimeout(hideControls,5000)
 				}
 				else {
-					if(scope.searchLevel<1&&scope.showLanguage!=true)scope.showControls=true;
+					if(!scope.searchOn&&scope.showLanguage!=true)scope.showControls=true;
 				}
 			})
 			var hideint= 0;
@@ -336,7 +337,13 @@ directive('keyboard', ["$sce",function ($sce) {
 						setTimeout(function(){
 							scope.showControls=false;
 							scope.searchOn=true;
-							scope.searchLevel=2;
+							// scope.searchLevel=2;
+
+							scope.keyboard.active = true; 
+							scope.keyboard.visible = true;
+							scope.carousel.visible = true;
+							scope.carousel.active=false;
+
 							scope.$apply();
 						},20);
 					}
@@ -354,14 +361,18 @@ directive('keyboard', ["$sce",function ($sce) {
 					scope.showControls=true;
 				}
 				else{
-					if(scope.searchLevel>0){
-						depth.less();
-						scope.searchLevel=0;
+					if(scope.searchOn){
+						// depth.less();
+						// scope.searchLevel=0;
 						scope.showControls=true;
 						scope.searchOn=false;
+						scope.keyboard.visible=false;
+						scope.keyboard.active=false;
+						scope.carousel.visible=false;
+						scope.carousel.active=false;
 					}
 					else
-						history.back();
+						location.path("/")
 				}
 			})
 
@@ -579,6 +590,8 @@ directive('keyboard', ["$sce",function ($sce) {
 		link: function (scope, iElement, iAttrs) {
 			scope.keyboard.keys = "< абвгдежзийклмнопрстуфхцчшщъьюя0123456789";
 			scope.keyboard.center = $(window).width()/2;
+
+			scope.items=[];
 
 			scope.$on('enter', function () {
 				if (scope.keyboard.active) {

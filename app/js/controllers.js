@@ -119,12 +119,17 @@ angular.module('kidamom.controllers', [])
     })
   }])
 
-  .controller('Play', ['$scope', '$routeParams', '$http', 'movie', 'playlist', function ($scope, $routeParams, $http, movie, playlist) {
-    $scope.carousel = {};
+  .controller('Play', ['$scope', '$routeParams', '$http', 'movie', 'playlist', 'Models', function ($scope, $routeParams, $http, movie, playlist, Models) {
+    $scope.carousel = Models.carousel();
+    $scope.keyboard = Models.keyboard();
+    $scope.keyboard.visible = false;
+
+
+    // $scope.carousel = {};
     $scope.Menu.visible = false;
     $scope.Menu.disable();
     $scope.movie = movie;
-    console.log(movie,'asdasd');
+
     $scope.playlist = playlist.movies;
     $scope.playlistId = playlist.id;
 

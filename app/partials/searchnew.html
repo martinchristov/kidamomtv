@@ -1,12 +1,12 @@
 <div id="srcdiv">
 	<div id="src-head" ng-show="keyboard.visible">
-		<ul style="width:{{sug.width}}px; left:{{sug.pos}}px" ng-class="{focused:keyboard.active}">
+		<ul style="width:{{sug.width}}px; left:{{sug.pos}}px">
 			<li>{{sug.text}}</li>
 		</ul>
 		<div class="clearfix"></div>
 		<keyboardnew model="keyboard"></keyboardnew>
 	</div>
-	<div ng-hide="searchLevel<1" ng-class="{unfocused:searchLevel<3}">
+	<div ng-hide="searchLevel<1" ng-class="{unfocused:carousel.active==false}">
 		<carousel model="carousel" items="items" searchLevel="searchLevel"></carousel>
 		<div class="info"  ng-show="carousel.item" playmovie="{{carousel.item.id}}">
 			<h1 ng-bind="carousel.item.title"></h1>

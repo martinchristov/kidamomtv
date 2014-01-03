@@ -1,4 +1,4 @@
-<div class="carousel">
+<div class="carousel" ng-hide="!carousel.visible">
 	<div class="loading" ng-class="{on:carousel.loading}">зареждане...</div>
 	<div class="holder" style="width:{{carousel.length*180+160+125+50}}px; margin-left:{{-carousel.index*180-135}}px">
 		<div class="item" ng-repeat="item in items | limitTo: 30" ng-class="{current:(item==carousel.item), faded:($index<carousel.index)}">
