@@ -372,7 +372,7 @@ directive('keyboard', ["$sce",function ($sce) {
 						scope.carousel.active=false;
 					}
 					else
-						location.path("/")
+						$location.path("/")
 				}
 			})
 
