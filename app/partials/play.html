@@ -3,7 +3,7 @@
 	<div id="movieloader" ng-class="{off:movieloading==false}">
 		<div class="label">зареждане...</div>
 	</div>
-	<video id="videoplayer" videoplayer ng-src="{{movieUrl}}">
+	<video id="videoplayer" videoplayer ng-src="{{movieUrl}}" type="application/vnd.apple.mpegurl">
 	</video>
 	<div id="controls" ng-class="{show:showControls, wplaylist:playlist.length>0}">
 		<ul style="width:{{(controls.length-1)*50+50}}px; margin-left:{{center-controlsx}}px" id="controls-ul">
