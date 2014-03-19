@@ -217,13 +217,28 @@ angular.module('kidamom.services', [])
     service.logout = function () {
         service.token = null;
         service.profile = null;
-        delete localStorage.token;
+        delete localStorage.token ;
         delete localStorage.profile;
         delete configAuth.headers.AUTHORIZATION;
     }
+    // service.logout();
 
     service.isAuth = function () {
         return service.token !== undefined;
+    }
+
+    service.validateToken = function(token){
+        // var headers = 
+        var config = {
+            url:appURI.api+'/token',
+            method:'GET',
+            headers:{
+                'X_API_KEY' : 'kidamomsonytv',
+                'Accept'    : 'application/vnd.kidamom.com;version=1',
+                'AUTHORIZATION':token
+            }
+        }
+        return $http(config);
     }
 
     service.req = function (uri, method, data, auth) {
@@ -260,9 +275,9 @@ angular.module('kidamom.services', [])
         // email = "martin.christov@gmail.com"; password="772323";
         var $promise = service.req('/token', 'POST', { email: email, password: password })
         $promise.then(function success (response) {
-            service.setProfile(response);
+            // service.setProfile(response);
             if(response.hasOwnProperty("identifier")){
-                service.setToken(response.identifier);
+                // service.setToken(response.identifier);
             }
             return service.req('/profile', 'GET', null, true)
         }).then(function success (response) {

@@ -266,13 +266,13 @@ directive('keyboard', ["$sce",function ($sce) {
 
 			//control actions on enter
 			window.$location = $location;
-			scope.$on("keypress",function(){
+			scope.$on("keypress",function(e,which){
 				if(scope.showControls){
 					clearInterval(hideint);
 					hideint = setTimeout(hideControls,5000)
 				}
 				else {
-					if(!scope.searchOn&&scope.showLanguage!=true)scope.showControls=true;
+					if(!scope.searchOn&&scope.showLanguage!=true&&which!='back')scope.showControls=true;
 				}
 			})
 			var hideint= 0;
@@ -733,7 +733,9 @@ directive('keyboard', ["$sce",function ($sce) {
 				scope.keyboard.index = newIndex;
 				scope.keyboard.selected = scope.keyboard.keys[newIndex];
 			}
-			scope.left = function () { if (scope.keyboard.active) return scope.goto(scope.keyboard.index - 1); }
+			scope.left = function () { 
+				if (scope.keyboard.active && scope.keyboard.index>0) return scope.goto(scope.keyboard.index - 1); 
+			}
 			scope.right = function () { if (scope.keyboard.active) return scope.goto(scope.keyboard.index + 1); }
 
 

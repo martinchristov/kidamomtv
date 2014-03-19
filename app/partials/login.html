@@ -1,13 +1,15 @@
 <div id="login-view">
-	<div class="error" ng-show="error"><span>Грешен потребител или парола :/</span></div>
 	<img src="img/logo.png">
 	<form ng-submit="login">
-		<div>Потребител (email):</div>
-		<input type="text" ng-class="{focus:vertical==1}" ng-model="email">
+		<div>Отидете на<br><b>www.kidamom.com/activate</b><br>
+		през компютър<br>
+		и въведете този код:<br>
+		<b ng-bind="activationCode"></b></div>
+		<!-- <input type="text" ng-class="{focus:vertical==1}" ng-model="email">
 		<div>Парола:</div>
 		<input type="password" ng-class="{focus:vertical==2}" ng-model="pass">
 		<button class="enter" ng-class="{focus:vertical==3}">ВЛЕЗ</button>
-		<button class="back" ng-class="{focus:vertical==4}" ng-click="back()">ОБРАТНО</button>
+		<button class="back" ng-class="{focus:vertical==4}" ng-click="back()">ОБРАТНО</button> -->
 	</form>
-	<keyboard></keyboard>
+	<!-- <keyboard></keyboard> -->
 </div>

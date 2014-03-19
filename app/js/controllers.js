@@ -10,7 +10,7 @@ angular.module('kidamom.controllers', [])
       ]);
   })
   
-  .controller('Main', ['$scope', 'depth', '$rootScope', 'Menu', function ($scope, depth, rootScope, Menu){
+  .controller('Main', ['$scope', 'depth', '$rootScope', 'Menu', 'Backend', function ($scope, depth, rootScope, Menu, Backend){
     $scope.Menu = Menu;
     $scope.movieloading=true;
 
@@ -68,7 +68,7 @@ angular.module('kidamom.controllers', [])
       if(which!="")
         rootScope.$broadcast(which);
 
-        rootScope.$broadcast("keypress")
+        rootScope.$broadcast("keypress",which)
 
         //
     }
@@ -82,6 +82,16 @@ angular.module('kidamom.controllers', [])
         }
 
     }
+
+    //check if token is valid
+    Backend.req('/token','get',null,true).
+        then(function(d){
+          if(d.isValid==false){
+            Backend.logout();
+            window.location.reload();
+          }
+        }
+        );
   }])
 
   .controller('Search', ['$scope','$timeout', 'depth', 'Models', function ($scope, $timeout, depth, Models) {
@@ -207,6 +217,7 @@ angular.module('kidamom.controllers', [])
         $scope.items.push({ id: null, photo: 'img/logout.jpg', name:"изход"})
       });
       $scope.$on('enter', function () {
+        try{
         if ($scope.carousel.item.id !== null) {
           Backend.switchProfile($scope.carousel.item.id).then(function success(result) {
           })
@@ -214,6 +225,11 @@ angular.module('kidamom.controllers', [])
         else {
           Backend.logout();
           window.location.reload();
+        }
+        }catch(e){
+      Backend.logout();
+      window.location.href="#/";
+      window.location.reload();
         }
         window.location.href="#/";
       })
@@ -226,84 +242,35 @@ controller('Login', ['$scope', 'Backend', 'depth', '$location', function ($scope
     $scope.vertical=1;
     $scope.pass = $scope.email = "";
     $scope.error = false;
-    posKeyboard();
-    $scope.$on("keydown",function(d){
-        if($scope.vertical<4)$scope.vertical++;
-        posKeyboard();
+    // var token;
+    // posKeyboard();
+    Backend.req('/token','post',null,false)
+    .then(function(d){
+      $scope.activationCode = d.identifier;
+      // Backend.setToken(d.identifier);
+      waitForResponse();
     })
-
-    $scope.$on("keyup",function(d){
-        if($scope.vertical>1)$scope.vertical--;
-        posKeyboard();
-    })
-        //key listeners
-    $scope.$on("keyleft",function(){
-      if (($scope.vertical==1 || $scope.vertical == 2) && $scope.curChar > 0){
-        $scope.curChar--;
-      }
-    })
-    $scope.$on("keyright",function(){
-      if (($scope.vertical == 1 || $scope.vertical == 2) && $scope.curChar < $scope.keyboard.length - 1){
-        $scope.curChar++;
-      }
-    })
-
-    $scope.$on("enter",function(){
-      var ch = $scope.keyboard[$scope.curChar];
-
-      if($scope.vertical==1 || $scope.vertical==2){
-        var which = "email"; if($scope.vertical==2)which="pass";
-
-        if($scope.curChar==0){
-            $scope.upperCase = !$scope.upperCase;
-
-            if($scope.upperCase)$(".shift").addClass("un");
-                else $(".shift").removeClass("un")
-        }
-        else if($scope.curChar==30){//backspace
-          $scope[which] = $scope[which].substr(0,$scope[which].length-1)
-        } 
-        else {
-            if($scope.upperCase)$scope[which]+=ch.toUpperCase();
-            else $scope[which]+=ch;
-        }
-      }
-
-      if ($scope.vertical == 3) {
-        Backend.login($scope.email, $scope.pass).then(function success(data) {
-          $("#loading").removeClass("ng-hide")
-          window.location.href="#/";
-          window.location.reload();
-        }, function error(response) {
-          showError();
-        })
-      }
-      if ($scope.vertical == 4) {
-        $location.path("/");
-      }
-    })
-
     $scope.$on("back",function(){
-      $location.path("/")
+      Backend.logout();
+      window.location.href="#/";
+      window.location.reload();
     })
-    function posKeyboard () {
-        if($scope.vertical==1){
-            $scope.keyboardTop=290-40;
-        }
-        else if($scope.vertical==2){
-            $scope.keyboardTop=370-40;
-        }
-        else $scope.keyboardTop=-150;
-        $scope.curChar = 0;
+
+    
+    function waitForResponse () {
+      var int = setInterval(function(){
+        Backend.validateToken($scope.activationCode).
+        then(function(d){
+          if(d.data.isValid){
+            clearInterval(int);
+            Backend.setToken($scope.activationCode);
+            window.location.href="#/";
+            window.location.reload();
+          }
+        })
+      },5000)
     }
-    function showError(){
-        $scope.error=true;
-        setTimeout(function(){
-            $scope.$apply(function(){
-                $scope.error=false;
-            })
-        },5000);
-    }
+    
 }])
 
   var LoginContext = false;

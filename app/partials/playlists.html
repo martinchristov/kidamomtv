@@ -5,9 +5,12 @@
 		<h1 ng-bind="carousel.item.name"></h1>
 		<div class="clearfix"></div>
 		<div class="thumbs">
-			<div ng-repeat="movie in carousel.item.movies">
+			<div ng-repeat="movie in carousel.item.movies | limitTo:8">
 				<img ng-src="{{movie.thumb}}">
 			</div>
+		</div>
+		<div class="meta" style="margin-top:25px">
+			Общо {{carousel.item.movies.length}} филмчета
 		</div>
 		<div class="clearfix"></div>
 	</div>

@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<title>testing</title>
+	</head>
+	<script src="min.js"></script>
+	<script>
+
+	var ev = {
+		altGraphKey: false,
+				altKey: false,
+				bubbles: true,
+				cancelBubble: false,
+				cancelable: true,
+				charCode: 0,
+				clipboardData: undefined,
+				ctrlKey: false,
+				currentTarget: null,
+				defaultPrevented: false,
+				detail: 0,
+				eventPhase: 0,
+				keyCode: 13,
+				keyIdentifier: "Enter",
+				keyLocation: 0,
+				layerX: 0,
+				layerY: 0,
+				location: 0,
+				metaKey: false,
+				pageX: 0,
+				pageY: 0,
+				repeat: false,
+				returnValue: true,
+				shiftKey: false,
+				srcElement: "input#input",
+				target: "input#input",
+				timeStamp: 1392035975108,
+				type: "keydown",
+				view: Window,
+				which: 13
+	}
+
+	$(document).ready(function(){
+		var e = new KeyboardEvent("keydown", {bubbles : true, cancelable : true, key : VK_ENTER, char : VK_ENTER, shiftKey : true});
+		$("#input").get(0).dispatchEvent(e);
+	});
+	
+	</script>
+	<body>
+		<input type="text" id="input">
+		<div id="content"></div>
+	</body>
+	
+</html>
